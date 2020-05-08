@@ -22,7 +22,4 @@ public class CustomerController {
     public  String list(){
         return  "list";
     }
-    public String huangxiao(){
-        return "huangxiao";
-    }
 }
