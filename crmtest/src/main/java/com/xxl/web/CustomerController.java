@@ -19,4 +19,7 @@ public class CustomerController {
     public String register(){
         return  "index";
     }
+    public  String list(){
+        return  "list";
+    }
 }
