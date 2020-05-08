@@ -16,4 +16,7 @@ public class CustomerController {
     public  String login(){
         return "customer";
     }
+    public String register(){
+        return  "index";
+    }
 }
