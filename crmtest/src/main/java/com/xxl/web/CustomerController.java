@@ -22,4 +22,8 @@ public class CustomerController {
     public  String list(){
         return  "list";
     }
+    public  String rain(){
+        return  "rain";
+    }
+
 }
