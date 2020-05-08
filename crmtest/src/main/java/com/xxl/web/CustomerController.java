@@ -22,7 +22,11 @@ public class CustomerController {
     public  String list(){
         return  "list";
     }
-    public  String rain(){
+
+    public  String rain() {
         return "rain";
+    }
+    public  String huangxiao(){
+        return "huangxiao";
     }
 }
