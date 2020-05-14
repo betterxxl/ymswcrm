@@ -29,10 +29,10 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/user")
+@RequestMapping("/system/user")
 public class SysUserController extends BaseController
 {
-    private String prefix = "mapper.system/user";
+    private String prefix = "system/user";
 
     @Autowired
     private ISysUserService userService;
@@ -46,14 +46,14 @@ public class SysUserController extends BaseController
     @Autowired
     private SysPasswordService passwordService;
 
-    @RequiresPermissions("mapper.system:user:view")
+    @RequiresPermissions("system:user:view")
     @GetMapping()
     public String user()
     {
         return prefix + "/user";
     }
 
-    @RequiresPermissions("mapper.system:user:list")
+    @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUser user)
@@ -64,7 +64,7 @@ public class SysUserController extends BaseController
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:user:export")
+    @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysUser user)
@@ -75,7 +75,7 @@ public class SysUserController extends BaseController
     }
 
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @RequiresPermissions("mapper.system:user:import")
+    @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
@@ -87,7 +87,7 @@ public class SysUserController extends BaseController
         return AjaxResult.success(message);
     }
 
-    @RequiresPermissions("mapper.system:user:view")
+    @RequiresPermissions("system:user:view")
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate()
@@ -110,7 +110,7 @@ public class SysUserController extends BaseController
     /**
      * 新增保存用户
      *//*
-    @RequiresPermissions("mapper.system:user:add")
+    @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -137,7 +137,7 @@ public class SysUserController extends BaseController
     /**
      * 新增保存用户
      */
-    @RequiresPermissions("mapper.system:user:add")
+    @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -172,7 +172,7 @@ public class SysUserController extends BaseController
     /**
      * 修改保存用户
      */
-    @RequiresPermissions("mapper.system:user:edit")
+    @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -191,7 +191,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.updateUser(user));
     }
 
-    @RequiresPermissions("mapper.system:user:resetPwd")
+    @RequiresPermissions("system:user:resetPwd")
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
@@ -200,7 +200,7 @@ public class SysUserController extends BaseController
         return prefix + "/resetPwd";
     }
 
-    @RequiresPermissions("mapper.system:user:resetPwd")
+    @RequiresPermissions("system:user:resetPwd")
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
@@ -220,7 +220,7 @@ public class SysUserController extends BaseController
         return error();
     }
 
-    @RequiresPermissions("mapper.system:user:remove")
+    @RequiresPermissions("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
@@ -270,7 +270,7 @@ public class SysUserController extends BaseController
      * 用户状态修改
      */
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:user:edit")
+    @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
     public AjaxResult changeStatus(SysUser user)

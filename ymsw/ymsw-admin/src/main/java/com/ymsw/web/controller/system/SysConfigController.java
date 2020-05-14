@@ -25,15 +25,15 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/config")
+@RequestMapping("/system/config")
 public class SysConfigController extends BaseController
 {
-    private String prefix = "mapper.system/config";
+    private String prefix = "system/config";
 
     @Autowired
     private ISysConfigService configService;
 
-    @RequiresPermissions("mapper.system:config:view")
+    @RequiresPermissions("system:config:view")
     @GetMapping()
     public String config()
     {
@@ -43,7 +43,7 @@ public class SysConfigController extends BaseController
     /**
      * 查询参数配置列表
      */
-    @RequiresPermissions("mapper.system:config:list")
+    @RequiresPermissions("system:config:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysConfig config)
@@ -54,7 +54,7 @@ public class SysConfigController extends BaseController
     }
 
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:config:export")
+    @RequiresPermissions("system:config:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysConfig config)
@@ -76,7 +76,7 @@ public class SysConfigController extends BaseController
     /**
      * 新增保存参数配置
      */
-    @RequiresPermissions("mapper.system:config:add")
+    @RequiresPermissions("system:config:add")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -103,7 +103,7 @@ public class SysConfigController extends BaseController
     /**
      * 修改保存参数配置
      */
-    @RequiresPermissions("mapper.system:config:edit")
+    @RequiresPermissions("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -120,7 +120,7 @@ public class SysConfigController extends BaseController
     /**
      * 删除参数配置
      */
-    @RequiresPermissions("mapper.system:config:remove")
+    @RequiresPermissions("system:config:remove")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

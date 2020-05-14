@@ -26,15 +26,15 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/dict")
+@RequestMapping("/system/dict")
 public class SysDictTypeController extends BaseController
 {
-    private String prefix = "mapper.system/dict/type";
+    private String prefix = "system/dict/type";
 
     @Autowired
     private ISysDictTypeService dictTypeService;
 
-    @RequiresPermissions("mapper.system:dict:view")
+    @RequiresPermissions("system:dict:view")
     @GetMapping()
     public String dictType()
     {
@@ -42,7 +42,7 @@ public class SysDictTypeController extends BaseController
     }
 
     @PostMapping("/list")
-    @RequiresPermissions("mapper.system:dict:list")
+    @RequiresPermissions("system:dict:list")
     @ResponseBody
     public TableDataInfo list(SysDictType dictType)
     {
@@ -52,7 +52,7 @@ public class SysDictTypeController extends BaseController
     }
 
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:dict:export")
+    @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysDictType dictType)
@@ -76,7 +76,7 @@ public class SysDictTypeController extends BaseController
      * 新增保存字典类型
      */
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
-    @RequiresPermissions("mapper.system:dict:add")
+    @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(@Validated SysDictType dict)
@@ -103,7 +103,7 @@ public class SysDictTypeController extends BaseController
      * 修改保存字典类型
      */
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:dict:edit")
+    @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(@Validated SysDictType dict)
@@ -117,7 +117,7 @@ public class SysDictTypeController extends BaseController
     }
 
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
-    @RequiresPermissions("mapper.system:dict:remove")
+    @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
@@ -135,7 +135,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 查询字典详细
      */
-    @RequiresPermissions("mapper.system:dict:list")
+    @RequiresPermissions("system:dict:list")
     @GetMapping("/detail/{dictId}")
     public String detail(@PathVariable("dictId") Long dictId, ModelMap mmap)
     {

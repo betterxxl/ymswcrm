@@ -25,22 +25,22 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/post")
+@RequestMapping("/system/post")
 public class SysPostController extends BaseController
 {
-    private String prefix = "mapper.system/post";
+    private String prefix = "system/post";
 
     @Autowired
     private ISysPostService postService;
 
-    @RequiresPermissions("mapper.system:post:view")
+    @RequiresPermissions("system:post:view")
     @GetMapping()
     public String operlog()
     {
         return prefix + "/post";
     }
 
-    @RequiresPermissions("mapper.system:post:list")
+    @RequiresPermissions("system:post:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysPost post)
@@ -51,7 +51,7 @@ public class SysPostController extends BaseController
     }
 
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:post:export")
+    @RequiresPermissions("system:post:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysPost post)
@@ -61,7 +61,7 @@ public class SysPostController extends BaseController
         return util.exportExcel(list, "岗位数据");
     }
 
-    @RequiresPermissions("mapper.system:post:remove")
+    @RequiresPermissions("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
@@ -89,7 +89,7 @@ public class SysPostController extends BaseController
     /**
      * 新增保存岗位
      */
-    @RequiresPermissions("mapper.system:post:add")
+    @RequiresPermissions("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -120,7 +120,7 @@ public class SysPostController extends BaseController
     /**
      * 修改保存岗位
      */
-    @RequiresPermissions("mapper.system:post:edit")
+    @RequiresPermissions("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody

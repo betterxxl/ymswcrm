@@ -2,141 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92c8bbc0-5e95-4093-8c6e-d44f68b49780" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/META-INF/ymsw-admin.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-common/ymsw-common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-framework/ymsw-framework.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-generator/ymsw-generator.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/config/ScheduleConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/controller/SysJobController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/controller/SysJobLogController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/domain/SysJob.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/domain/SysJobLog.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/mapper/SysJobLogMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/mapper/SysJobMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/service/ISysJobLogService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/service/ISysJobService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/service/impl/SysJobLogServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/service/impl/SysJobServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/task/RyTask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/AbstractQuartzJob.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/CronUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/JobInvokeUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/QuartzDisallowConcurrentExecution.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/QuartzJobExecution.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/ScheduleUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/mapper.quartz/SysJobLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/mapper.quartz/SysJobMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/templates.monitor.job/add.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/templates.monitor.job/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/templates.monitor.job/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/templates.monitor.job/job.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/src/main/resources/templates.monitor.job/jobLog.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/config/ScheduleConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/controller/SysJobController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/controller/SysJobLogController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/domain/SysJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/domain/SysJobLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/mapper/SysJobLogMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/mapper/SysJobMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/service/ISysJobLogService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/service/ISysJobService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/service/impl/SysJobLogServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/service/impl/SysJobServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/task/RyTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/AbstractQuartzJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/CronUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/JobInvokeUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/QuartzDisallowConcurrentExecution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/QuartzJobExecution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/com/ymsw/quartz/util/ScheduleUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/mapper.quartz/SysJobLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/mapper.quartz/SysJobMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/templates.monitor.job/add.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/templates.monitor.job/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/templates.monitor.job/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/templates.monitor.job/job.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/target/classes/templates.monitor.job/jobLog.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-quartz/ymsw-quartz.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysConfigMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDeptMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDictDataMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDictTypeMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysLogininforMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysMenuMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysNoticeMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysOperLogMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysPostMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleDeptMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleMenuMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserOnlineMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserPostMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserRoleMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysConfigServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysDeptServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysDictDataServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysDictTypeServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysLogininforServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysMenuServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysNoticeServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysOperLogServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysPostServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysRoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysUserOnlineServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysUserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysConfigMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysDeptMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysDictDataMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysDictTypeMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysLogininforMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysMenuMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysNoticeMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysOperLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysPostMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysRoleDeptMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysRoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysRoleMenuMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserOnlineMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserPostMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserRoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysConfigServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysConfigServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDeptServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDeptServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDictDataServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDictDataServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDictTypeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysDictTypeServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysLogininforServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysLogininforServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysMenuServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysMenuServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysNoticeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysNoticeServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysOperLogServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysOperLogServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysPostServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysPostServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysRoleServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysRoleServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysUserOnlineServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysUserOnlineServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysUserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-system/target/classes/com/ymsw/system/service/impl/SysUserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysConfigMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysDeptMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysDictDataMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysDictTypeMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysLogininforMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysMenuMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysNoticeMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysOperLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysPostMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysRoleDeptMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysRoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysRoleMenuMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysUserMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysUserOnlineMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysUserPostMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/target/classes/mapper.system/SysUserRoleMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ymsw-system/ymsw-system.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDeptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDeptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysNoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysNoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysRoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysRoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/zxt/css/ry-ui.css" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/css/ry-ui.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/zxt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/zxt/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/zxt/js/ry-ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/js/ry-ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/zxt/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/zxt/css/ry-ui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/zxt/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/zxt/js/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/zxt/js/ry-ui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/zxt/login.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -156,7 +38,125 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/templates/system/role/role.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="63" column="10" lean-forward="true" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/js/common.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDeptController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+              <folding>
+                <element signature="e#1204#1205#0" expanded="true" />
+                <element signature="e#1243#1244#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysRoleController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+              <folding>
+                <element signature="e#1360#1361#0" expanded="true" />
+                <element signature="e#1399#1400#0" expanded="true" />
+                <element signature="e#1980#1989#0" expanded="true" />
+                <element signature="e#2140#2141#0" expanded="true" />
+                <element signature="e#2178#2179#0" expanded="true" />
+                <element signature="e#5418#5419#0" expanded="true" />
+                <element signature="e#5478#5479#0" expanded="true" />
+                <element signature="e#5624#5625#0" expanded="true" />
+                <element signature="e#5683#5684#0" expanded="true" />
+                <element signature="e#5789#5790#0" expanded="true" />
+                <element signature="e#5828#5829#0" expanded="true" />
+                <element signature="e#7020#7021#0" expanded="true" />
+                <element signature="e#7087#7088#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysUserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="478">
+              <caret line="278" column="54" lean-forward="true" selection-start-line="278" selection-start-column="54" selection-end-line="278" selection-end-column="54" />
+              <folding>
+                <element signature="e#1563#1564#0" expanded="true" />
+                <element signature="e#1602#1603#0" expanded="true" />
+                <element signature="e#2183#2192#0" expanded="true" />
+                <element signature="e#2567#2576#0" expanded="true" />
+                <element signature="e#3058#3067#0" expanded="true" />
+                <element signature="e#8133#8134#0" expanded="true" />
+                <element signature="e#8209#8210#0" expanded="true" />
+                <element signature="e#8351#8352#0" expanded="true" />
+                <element signature="e#8408#8409#0" expanded="true" />
+                <element signature="e#8553#8554#0" expanded="true" />
+                <element signature="e#8610#8611#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysProfileController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="26" column="11" lean-forward="true" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysPostController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1724">
+              <caret line="122" column="39" selection-start-line="122" selection-start-column="39" selection-end-line="122" selection-end-column="39" />
+              <folding>
+                <element signature="e#1180#1181#0" expanded="true" />
+                <element signature="e#1219#1220#0" expanded="true" />
+                <element signature="e#1800#1809#0" expanded="true" />
+                <element signature="e#2351#2352#0" expanded="true" />
+                <element signature="e#2389#2390#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysNoticeController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
+              <folding>
+                <element signature="e#1045#1046#0" expanded="true" />
+                <element signature="e#1086#1087#0" expanded="true" />
+                <element signature="e#1478#1479#0" expanded="true" />
+                <element signature="e#1516#1517#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -164,10 +164,13 @@
       <find>quartz</find>
       <find>selectOnlineById</find>
       <find>zxt</find>
+      <find>服务器错误，请联系管理员！</find>
+      <find>mapper.system</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>ymsw</replace>
+      <replace>system</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -176,12 +179,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/exception/user/UserException.java" />
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/poi/ExcelUtil.java" />
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/html/EscapeUtil.java" />
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/exception/base/BaseException.java" />
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/reflect/ReflectUtils.java" />
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/security/PermissionUtils.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/config/Global.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/StringUtils.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/utils/ServletUtils.java" />
@@ -227,6 +224,12 @@
         <option value="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysOperLogServiceImpl.java" />
         <option value="$PROJECT_DIR$/ymsw-framework/src/main/java/com/ymsw/framework/manager/factory/AsyncFactory.java" />
         <option value="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper/system/SysUserRoleMapper.xml" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysUserController.java" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDeptController.java" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysRoleController.java" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysProfileController.java" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysPostController.java" />
+        <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysNoticeController.java" />
       </list>
     </option>
   </component>
@@ -317,43 +320,7 @@
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-quartz" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-quartz" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-quartz" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -361,19 +328,44 @@
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
               <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -468,7 +460,7 @@
       <workItem from="1589362153186" duration="753000" />
       <workItem from="1589363100731" duration="288000" />
       <workItem from="1589363429260" duration="818000" />
-      <workItem from="1589364276386" duration="1914000" />
+      <workItem from="1589364276386" duration="5093000" />
     </task>
     <task id="LOCAL-00001" summary="项目新版本">
       <created>1589358383614</created>
@@ -477,11 +469,18 @@
       <option name="project" value="LOCAL" />
       <updated>1589358383614</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="项目新版本">
+      <created>1589420475719</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1589420475719</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17009000" />
+    <option name="totallyTimeSpent" value="20188000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -494,9 +493,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8453608" visible="true" weight="0.30277187" />
-      <window_info id="Structure" order="1" sideWeight="0.15463917" side_tool="true" visible="true" weight="0.30277187" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8853211" visible="true" weight="0.30277187" />
+      <window_info id="Structure" order="1" sideWeight="0.1146789" side_tool="true" visible="true" weight="0.30277187" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -505,7 +505,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5077951" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4599109" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27171493" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -572,63 +572,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="项目新版本" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/ISysConfigService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysPostMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="14" column="15" lean-forward="true" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysLogininforServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/domain/SysPost.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/demo/controller/DemoFormController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/AbstractQuartzJob.java" />
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/resources/mapper.quartz/SysJobLogMapper.xml" />
-    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/mybatis/mybatis-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/domain/SysJob.java" />
     <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/mapper/SysJobMapper.java" />
     <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/resources/mapper.generator/GenTableColumnMapper.xml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -848,6 +791,114 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/templates/system/role/role.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="63" column="10" lean-forward="true" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/static/ymsw/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDeptController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+          <folding>
+            <element signature="e#1204#1205#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysRoleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+          <folding>
+            <element signature="e#1360#1361#0" expanded="true" />
+            <element signature="e#1399#1400#0" expanded="true" />
+            <element signature="e#1980#1989#0" expanded="true" />
+            <element signature="e#2140#2141#0" expanded="true" />
+            <element signature="e#2178#2179#0" expanded="true" />
+            <element signature="e#5418#5419#0" expanded="true" />
+            <element signature="e#5478#5479#0" expanded="true" />
+            <element signature="e#5624#5625#0" expanded="true" />
+            <element signature="e#5683#5684#0" expanded="true" />
+            <element signature="e#5789#5790#0" expanded="true" />
+            <element signature="e#5828#5829#0" expanded="true" />
+            <element signature="e#7020#7021#0" expanded="true" />
+            <element signature="e#7087#7088#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysUserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="278" column="54" lean-forward="true" selection-start-line="278" selection-start-column="54" selection-end-line="278" selection-end-column="54" />
+          <folding>
+            <element signature="e#1563#1564#0" expanded="true" />
+            <element signature="e#1602#1603#0" expanded="true" />
+            <element signature="e#2183#2192#0" expanded="true" />
+            <element signature="e#2567#2576#0" expanded="true" />
+            <element signature="e#3058#3067#0" expanded="true" />
+            <element signature="e#8133#8134#0" expanded="true" />
+            <element signature="e#8209#8210#0" expanded="true" />
+            <element signature="e#8351#8352#0" expanded="true" />
+            <element signature="e#8408#8409#0" expanded="true" />
+            <element signature="e#8553#8554#0" expanded="true" />
+            <element signature="e#8610#8611#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysProfileController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="26" column="11" lean-forward="true" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysPostController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1724">
+          <caret line="122" column="39" selection-start-line="122" selection-start-column="39" selection-end-line="122" selection-end-column="39" />
+          <folding>
+            <element signature="e#1180#1181#0" expanded="true" />
+            <element signature="e#1219#1220#0" expanded="true" />
+            <element signature="e#1800#1809#0" expanded="true" />
+            <element signature="e#2351#2352#0" expanded="true" />
+            <element signature="e#2389#2390#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysNoticeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
+          <folding>
+            <element signature="e#1045#1046#0" expanded="true" />
+            <element signature="e#1086#1087#0" expanded="true" />
+            <element signature="e#1478#1479#0" expanded="true" />
+            <element signature="e#1516#1517#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

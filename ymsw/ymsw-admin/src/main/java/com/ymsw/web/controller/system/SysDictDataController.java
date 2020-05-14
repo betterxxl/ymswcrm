@@ -24,15 +24,15 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/dict/data")
+@RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController
 {
-    private String prefix = "mapper.system/dict/data";
+    private String prefix = "system/dict/data";
 
     @Autowired
     private ISysDictDataService dictDataService;
 
-    @RequiresPermissions("mapper.system:dict:view")
+    @RequiresPermissions("system:dict:view")
     @GetMapping()
     public String dictData()
     {
@@ -40,7 +40,7 @@ public class SysDictDataController extends BaseController
     }
 
     @PostMapping("/list")
-    @RequiresPermissions("mapper.system:dict:list")
+    @RequiresPermissions("system:dict:list")
     @ResponseBody
     public TableDataInfo list(SysDictData dictData)
     {
@@ -50,7 +50,7 @@ public class SysDictDataController extends BaseController
     }
 
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:dict:export")
+    @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysDictData dictData)
@@ -74,7 +74,7 @@ public class SysDictDataController extends BaseController
      * 新增保存字典类型
      */
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
-    @RequiresPermissions("mapper.system:dict:add")
+    @RequiresPermissions("system:dict:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(@Validated SysDictData dict)
@@ -97,7 +97,7 @@ public class SysDictDataController extends BaseController
      * 修改保存字典类型
      */
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:dict:edit")
+    @RequiresPermissions("system:dict:edit")
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(@Validated SysDictData dict)
@@ -107,7 +107,7 @@ public class SysDictDataController extends BaseController
     }
 
     @Log(title = "字典数据", businessType = BusinessType.DELETE)
-    @RequiresPermissions("mapper.system:dict:remove")
+    @RequiresPermissions("system:dict:remove")
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

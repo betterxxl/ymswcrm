@@ -25,12 +25,12 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/user/profile")
+@RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController
 {
     private static final Logger log = LoggerFactory.getLogger(SysProfileController.class);
 
-    private String prefix = "mapper.system/user/profile";
+    private String prefix = "system/user/profile";
 
     @Autowired
     private ISysUserService userService;

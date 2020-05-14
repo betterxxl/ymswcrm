@@ -25,22 +25,22 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/menu")
+@RequestMapping("/system/menu")
 public class SysMenuController extends BaseController
 {
-    private String prefix = "mapper.system/menu";
+    private String prefix = "system/menu";
 
     @Autowired
     private ISysMenuService menuService;
 
-    @RequiresPermissions("mapper.system:menu:view")
+    @RequiresPermissions("system:menu:view")
     @GetMapping()
     public String menu()
     {
         return prefix + "/menu";
     }
 
-    @RequiresPermissions("mapper.system:menu:list")
+    @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
     @ResponseBody
     public List<SysMenu> list(SysMenu menu)
@@ -54,7 +54,7 @@ public class SysMenuController extends BaseController
      * 删除菜单
      */
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
-    @RequiresPermissions("mapper.system:menu:remove")
+    @RequiresPermissions("system:menu:remove")
     @GetMapping("/remove/{menuId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("menuId") Long menuId)
@@ -96,7 +96,7 @@ public class SysMenuController extends BaseController
      * 新增保存菜单
      */
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
-    @RequiresPermissions("mapper.system:menu:add")
+    @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(@Validated SysMenu menu)
@@ -124,7 +124,7 @@ public class SysMenuController extends BaseController
      * 修改保存菜单
      */
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:menu:edit")
+    @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(@Validated SysMenu menu)

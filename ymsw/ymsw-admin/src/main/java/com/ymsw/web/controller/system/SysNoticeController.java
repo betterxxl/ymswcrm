@@ -22,15 +22,15 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/notice")
+@RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController
 {
-    private String prefix = "mapper.system/notice";
+    private String prefix = "system/notice";
 
     @Autowired
     private ISysNoticeService noticeService;
 
-    @RequiresPermissions("mapper.system:notice:view")
+    @RequiresPermissions("system:notice:view")
     @GetMapping()
     public String notice()
     {
@@ -40,7 +40,7 @@ public class SysNoticeController extends BaseController
     /**
      * 查询公告列表
      */
-    @RequiresPermissions("mapper.system:notice:list")
+    @RequiresPermissions("system:notice:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysNotice notice)
@@ -62,7 +62,7 @@ public class SysNoticeController extends BaseController
     /**
      * 新增保存公告
      */
-    @RequiresPermissions("mapper.system:notice:add")
+    @RequiresPermissions("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -85,7 +85,7 @@ public class SysNoticeController extends BaseController
     /**
      * 修改保存公告
      */
-    @RequiresPermissions("mapper.system:notice:edit")
+    @RequiresPermissions("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -98,7 +98,7 @@ public class SysNoticeController extends BaseController
     /**
      * 删除公告
      */
-    @RequiresPermissions("mapper.system:notice:remove")
+    @RequiresPermissions("system:notice:remove")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

@@ -28,10 +28,10 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/role")
+@RequestMapping("/system/role")
 public class SysRoleController extends BaseController
 {
-    private String prefix = "mapper.system/role";
+    private String prefix = "system/role";
 
     @Autowired
     private ISysRoleService roleService;
@@ -39,14 +39,14 @@ public class SysRoleController extends BaseController
     @Autowired
     private ISysUserService userService;
 
-    @RequiresPermissions("mapper.system:role:view")
+    @RequiresPermissions("system:role:view")
     @GetMapping()
     public String role()
     {
         return prefix + "/role";
     }
 
-    @RequiresPermissions("mapper.system:role:list")
+    @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysRole role)
@@ -57,7 +57,7 @@ public class SysRoleController extends BaseController
     }
 
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("mapper.system:role:export")
+    @RequiresPermissions("system:role:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysRole role)
@@ -79,7 +79,7 @@ public class SysRoleController extends BaseController
     /**
      * 新增保存角色
      */
-    @RequiresPermissions("mapper.system:role:add")
+    @RequiresPermissions("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -112,7 +112,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存角色
      */
-    @RequiresPermissions("mapper.system:role:edit")
+    @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -145,7 +145,7 @@ public class SysRoleController extends BaseController
     /**
      * 保存角色分配数据权限
      */
-    @RequiresPermissions("mapper.system:role:edit")
+    @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/authDataScope")
     @ResponseBody
@@ -161,7 +161,7 @@ public class SysRoleController extends BaseController
         return error();
     }
 
-    @RequiresPermissions("mapper.system:role:remove")
+    @RequiresPermissions("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
@@ -210,7 +210,7 @@ public class SysRoleController extends BaseController
      * 角色状态修改
      */
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:role:edit")
+    @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
     public AjaxResult changeStatus(SysRole role)
@@ -222,7 +222,7 @@ public class SysRoleController extends BaseController
     /**
      * 分配用户
      */
-    @RequiresPermissions("mapper.system:role:edit")
+    @RequiresPermissions("system:role:edit")
     @GetMapping("/authUser/{roleId}")
     public String authUser(@PathVariable("roleId") Long roleId, ModelMap mmap)
     {
@@ -233,7 +233,7 @@ public class SysRoleController extends BaseController
     /**
      * 查询已分配用户角色列表
      */
-    @RequiresPermissions("mapper.system:role:list")
+    @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
     public TableDataInfo allocatedList(SysUser user)
@@ -278,7 +278,7 @@ public class SysRoleController extends BaseController
     /**
      * 查询未分配用户角色列表
      */
-    @RequiresPermissions("mapper.system:role:list")
+    @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
     public TableDataInfo unallocatedList(SysUser user)

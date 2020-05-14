@@ -26,22 +26,22 @@ import java.util.List;
  * @author ymsw
  */
 @Controller
-@RequestMapping("/mapper.system/dept")
+@RequestMapping("/system/dept")
 public class SysDeptController extends BaseController
 {
-    private String prefix = "mapper.system/dept";
+    private String prefix = "system/dept";
 
     @Autowired
     private ISysDeptService deptService;
 
-    @RequiresPermissions("mapper.system:dept:view")
+    @RequiresPermissions("system:dept:view")
     @GetMapping()
     public String dept()
     {
         return prefix + "/dept";
     }
 
-    @RequiresPermissions("mapper.system:dept:list")
+    @RequiresPermissions("system:dept:list")
     @PostMapping("/list")
     @ResponseBody
     public List<SysDept> list(SysDept dept)
@@ -64,7 +64,7 @@ public class SysDeptController extends BaseController
      * 新增保存部门
      */
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
-    @RequiresPermissions("mapper.system:dept:add")
+    @RequiresPermissions("system:dept:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(@Validated SysDept dept)
@@ -96,7 +96,7 @@ public class SysDeptController extends BaseController
      * 保存
      */
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("mapper.system:dept:edit")
+    @RequiresPermissions("system:dept:edit")
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(@Validated SysDept dept)
@@ -117,7 +117,7 @@ public class SysDeptController extends BaseController
      * 删除
      */
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
-    @RequiresPermissions("mapper.system:dept:remove")
+    @RequiresPermissions("system:dept:remove")
     @GetMapping("/remove/{deptId}")
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId)
