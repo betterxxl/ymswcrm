@@ -211,8 +211,8 @@
         <module>ymsw-common</module>
         <module>ymsw-framework</module>
         <module>ymsw-generator</module>
-        <module>ymsw-quartz</module>
         <module>ymsw-system</module>
+        <module>ymsw-quartz</module>
     </modules>
     <build>
     <plugins>

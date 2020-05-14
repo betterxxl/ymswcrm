@@ -133,7 +133,7 @@ xss:
 # 阿里短信服务相关配置
 aliconfig:
   accessKeyId: LTAI4GKXypUGuc4HfBQDawFv
-  accessKeySecret: XXXXXXX
+  accessKeySecret: PUJgaM0U8HlVKt6M70lanQ8AfYy1DH
   templateCode: SMS_189555643
   signName: 英茂商务
 
