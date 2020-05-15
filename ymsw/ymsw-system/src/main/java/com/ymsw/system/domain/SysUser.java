@@ -83,6 +83,17 @@ public class SysUser extends BaseEntity
     /** 离职时间     */
     private Date leaveTime;
 
+    /** 岗位名称     */
+    private String postName;
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
     public Date getLeaveTime() {
         return leaveTime;
     }

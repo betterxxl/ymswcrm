@@ -41,11 +41,9 @@
 									手机号码：<input type="text" name="phonenumber"/>
 								</li>
 								<li>
-									员工状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+									员工状态：<select name="status" th:with="type=${@dict.getType('sys_user_status')}">
 										<option value="">所有</option>
-										<!-- <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option> -->
-										<option value="0">在职</option>
-										<option value="1">离职</option>
+										 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 									</select>
 								</li>
 								<!-- <li class="select-time">
@@ -130,12 +128,6 @@
 		            title: '用户ID',
 		            visible: false
 		        },
-		       /* {
-		            field: 'loginName',
-		            title: '登录账号',
-		            halign: 'center',
-		            align: 'center'
-		        },*/
 		        {
 		            field: 'userName',
 		            title: '姓名',
@@ -148,6 +140,12 @@
 		            halign: 'center',
 		            align: 'center'
 		        },
+				{
+					field: 'postName',
+					title: '职位',
+					halign: 'center',
+					align: 'center'
+				},
 		        {
 		            field: 'email',
 		            title: '邮箱',
