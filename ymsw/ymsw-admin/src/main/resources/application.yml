@@ -126,14 +126,14 @@ xss:
   # 过滤开关
   enabled: true
   # 排除链接（多个用逗号分隔）
-  excludes: /mapper.system/notice/*
+  excludes: /system/notice/*
   # 匹配链接
-  urlPatterns: /mapper.system/*,/monitor/*,/tool/*
+  urlPatterns: /system/*,/monitor/*,/tool/*
 
 # 阿里短信服务相关配置
 aliconfig:
   accessKeyId: LTAI4GKXypUGuc4HfBQDawFv
-  accessKeySecret: PUJgaM0U8HlVKt6M70lanQ8AfYy1DH
+  accessKeySecret: XXXXX
   templateCode: SMS_189555643
   signName: 英茂商务
 
