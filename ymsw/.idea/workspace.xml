@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92c8bbc0-5e95-4093-8c6e-d44f68b49780" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysConfigMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDeptMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDictDataMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysDictTypeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysLogininforMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysMenuMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysNoticeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysOperLogMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysPostMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleDeptMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysRoleMenuMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserOnlineMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserPostMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserRoleMapper.java" afterDir="false" />
+    <list default="true" id="92c8bbc0-5e95-4093-8c6e-d44f68b49780" name="Default Changelist" comment="更新impl文件">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/img/login-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/static/img/login-background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/static/ymsw/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/static/ymsw/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/system/user/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/system/user/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/system/user/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-admin/target/classes/templates/system/user/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/generator.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ymsw-generator/target/classes/generator.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/mapper.generator/GenTableColumnMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/mapper.generator/GenTableMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/templates.tool.gen/edit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/templates.tool.gen/gen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ymsw-generator/target/classes/templates.tool.gen/importTable.html" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,7 +35,17 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -61,7 +68,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/core/page/PageDomain.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/xss/XssHttpServletRequestWrapper.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/exception/file/FileException.java" />
         <option value="$PROJECT_DIR$/ymsw-common/src/main/java/com/ymsw/common/core/domain/AjaxResult.java" />
@@ -112,6 +118,7 @@
         <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDictTypeController.java" />
         <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysDictDataController.java" />
         <option value="$PROJECT_DIR$/ymsw-admin/src/main/java/com/ymsw/web/controller/system/SysConfigController.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -133,19 +140,7 @@
       <expand>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="ymsw" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="ymsw-common" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="ymsw-framework" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="ymsw-system" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="ymsw-admin" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
       </expand>
       <select />
@@ -166,14 +161,16 @@
     <option name="height" value="1074" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
+      <flattenPackages ProjectPane="false" />
+      <hideEmptyPackages ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -184,52 +181,31 @@
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
               <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ymsw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ymsw" type="462c0819:PsiDirectoryNode" />
-              <item name="ymsw-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="ymsw-framework" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -241,6 +217,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/.gitignore" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/ymsw-system/src/main/resources/mapper/system" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -248,7 +225,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -320,6 +297,7 @@
       <workItem from="1589363100731" duration="288000" />
       <workItem from="1589363429260" duration="818000" />
       <workItem from="1589364276386" duration="5673000" />
+      <workItem from="1589511456693" duration="1532000" />
     </task>
     <task id="LOCAL-00001" summary="项目新版本">
       <created>1589358383614</created>
@@ -360,7 +338,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20768000" />
+    <option name="totallyTimeSpent" value="24562000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -373,9 +351,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.9293478" visible="true" weight="0.30277187" />
-      <window_info id="Structure" order="1" sideWeight="0.07065217" side_tool="true" visible="true" weight="0.30277187" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.798441" visible="true" weight="0.30916846" />
+      <window_info id="Structure" order="1" sideWeight="0.20155902" side_tool="true" visible="true" weight="0.30916846" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -384,13 +363,13 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5077951" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.38530067" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5835189" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.31514478" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32925472" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32850778" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32962137" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
@@ -452,29 +431,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="更新impl文件" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/resources/mapper.quartz/SysJobMapper.xml" />
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/controller/SysJobController.java" />
-    <entry file="jar://D:/maven/repository/org/quartz-scheduler/quartz/2.3.0/quartz-2.3.0.jar!/org/quartz/simpl/SimpleThreadPool.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#16605#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/maven/repository/org/springframework/boot/spring-boot-devtools/2.1.1.RELEASE/spring-boot-devtools-2.1.1.RELEASE.jar!/org/springframework/boot/devtools/restart/classloader/RestartClassLoader.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="93" selection-start-line="93" selection-end-line="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/task/RyTask.java" />
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/QuartzJobExecution.java" />
-    <entry file="file://$PROJECT_DIR$/ymsw-quartz/src/main/java/com/ymsw/quartz/util/ScheduleUtils.java" />
-    <entry file="file://$PROJECT_DIR$/../crmtest/src/main/java/com/xxl/web/CustomerController.java" />
     <entry file="jar://D:/maven/repository/org/springframework/spring-beans/5.1.3.RELEASE/spring-beans-5.1.3.RELEASE.jar!/org/springframework/beans/factory/annotation/AutowiredAnnotationBeanPostProcessor.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -500,13 +456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="62" column="15" selection-start-line="62" selection-start-column="15" selection-end-line="62" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -567,13 +516,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysConfigMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="43" lean-forward="true" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysConfigMapper.xml" />
     <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/service/impl/SysPostServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -633,16 +576,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserOnlineMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="24" column="4" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserRoleMapper.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserOnlineMapper.xml" />
+    <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/resources/mapper.system/SysUserRoleMapper.xml" />
     <entry file="file://$PROJECT_DIR$/ymsw-system/src/main/java/com/ymsw/system/mapper/SysUserOnlineMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -834,6 +769,57 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/java/com/ymsw/generator/mapper/GenTableColumnMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/java/com/ymsw/generator/controller/GenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/resources/mapper/generator/GenTableColumnMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/resources/mapper/generator/GenTableMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/resources/templates/tool/gen/edit.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-generator/src/main/resources/templates/tool/gen/gen.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2312">
+          <caret line="136" column="26" selection-start-line="136" selection-start-column="26" selection-end-line="136" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ymsw-admin/src/main/resources/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="89" column="7" selection-start-line="89" selection-start-column="7" selection-end-line="89" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
         </state>
       </provider>
     </entry>

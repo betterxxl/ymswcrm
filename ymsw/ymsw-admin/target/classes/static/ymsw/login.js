@@ -15,12 +15,10 @@ $.validator.setDefaults({
 });
 
 function login() {
-	$.modal.loading($("#btnSubmit").data("loading"));
 	var phone = $.common.trim($("input[name='phone']").val());
     var code = $.common.trim($("input[name='code']").val());
     var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
     if (!myreg.test(phone)) {
-        $.modal.closeLoading();
         $.modal.msg("请输入正确的手机号码！");
     }else {
         $.ajax({
@@ -128,11 +126,9 @@ function getParam(paramName) {
 var countdown = 60;
 
 $('#numbtn').on('click',function(){
-    $.modal.loading($("#btnSubmit").data("loading"));
     var phone = $.common.trim($("input[name='phone']").val());
     var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
     if (!myreg.test(phone)) {
-        $.modal.closeLoading();
         $.modal.msg("请输入正确的手机号码！");
     }else {
         var obj = $("#numbtn");
@@ -145,10 +141,7 @@ $('#numbtn').on('click',function(){
             },
             success: function(r) {
                 if (r.code == 0) {
-                    $.modal.closeLoading();
-                } else {
-                    $.modal.closeLoading();
-                    $.modal.msg(r.msg);
+                    $.modal.msg("验证码已发送！");
                 }
             }
         });
