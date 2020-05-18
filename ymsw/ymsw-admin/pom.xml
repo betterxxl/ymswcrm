@@ -67,6 +67,11 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-generator</artifactId>
         </dependency>
+        <!--客户模块-->
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-customer</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

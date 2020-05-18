@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymsw.customer.mapper.YmswCollectionPoolMapper">
+    
+    <resultMap type="YmswCollectionPool" id="YmswCollectionPoolResult">
+        <result property="cpId"    column="cp_id"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="addTime"    column="add_time"    />
+        <result property="cpType"    column="cp_type"    />
+    </resultMap>
+
+    <sql id="selectYmswCollectionPoolVo">
+        select cp_id, customer_id, user_id, add_time, cp_type from ymsw_collection_pool
+    </sql>
+
+    <select id="selectYmswCollectionPoolList" parameterType="YmswCollectionPool" resultMap="YmswCollectionPoolResult">
+        <include refid="selectYmswCollectionPoolVo"/>
+        <where>  
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="addTime != null "> and add_time = #{addTime}</if>
+            <if test="cpType != null  and cpType != ''"> and cp_type = #{cpType}</if>
+        </where>
+    </select>
+    
+    <select id="selectYmswCollectionPoolById" parameterType="Long" resultMap="YmswCollectionPoolResult">
+        <include refid="selectYmswCollectionPoolVo"/>
+        where cp_id = #{cpId}
+    </select>
+        
+    <insert id="insertYmswCollectionPool" parameterType="YmswCollectionPool">
+        insert into ymsw_collection_pool
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cpId != null ">cp_id,</if>
+            <if test="customerId != null ">customer_id,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="addTime != null ">add_time,</if>
+            <if test="cpType != null  and cpType != ''">cp_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cpId != null ">#{cpId},</if>
+            <if test="customerId != null ">#{customerId},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="addTime != null ">#{addTime},</if>
+            <if test="cpType != null  and cpType != ''">#{cpType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYmswCollectionPool" parameterType="YmswCollectionPool">
+        update ymsw_collection_pool
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerId != null ">customer_id = #{customerId},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="addTime != null ">add_time = #{addTime},</if>
+            <if test="cpType != null  and cpType != ''">cp_type = #{cpType},</if>
+        </trim>
+        where cp_id = #{cpId}
+    </update>
+
+    <delete id="deleteYmswCollectionPoolById" parameterType="Long">
+        delete from ymsw_collection_pool where cp_id = #{cpId}
+    </delete>
+
+    <delete id="deleteYmswCollectionPoolByIds" parameterType="String">
+        delete from ymsw_collection_pool where cp_id in 
+        <foreach item="cpId" collection="array" open="(" separator="," close=")">
+            #{cpId}
+        </foreach>
+    </delete>
+    
+</mapper>

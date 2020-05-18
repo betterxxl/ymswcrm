@@ -203,6 +203,13 @@
                 <version>${ymsw.version}</version>
             </dependency>
 
+            <!-- 客户模块-->
+            <dependency>
+                <groupId>com.ymsw</groupId>
+                <artifactId>ymsw-customer</artifactId>
+                <version>${ymsw.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -213,6 +220,7 @@
         <module>ymsw-generator</module>
         <module>ymsw-system</module>
         <module>ymsw-quartz</module>
+        <module>ymsw-customer</module>
     </modules>
     <build>
     <plugins>
