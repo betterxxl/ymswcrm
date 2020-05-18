@@ -33,7 +33,7 @@
             	</li>
             	<li>
             		<div class="user-panel">
-            			<a class="menuItem" title="个人中心" th:href="@{/mapper.system/user/profile}">
+            			<a class="menuItem" title="个人中心" th:href="@{/system/user/profile}">
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
 		                    	<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}" class="img-circle" alt="User Image">
@@ -184,7 +184,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li class="mt5">
-								<a th:href="@{/mapper.system/user/profile}" class="menuItem">
+								<a th:href="@{/system/user/profile}" class="menuItem">
 								<i class="fa fa-user"></i> 个人中心</a>
 							</li>
 							<!--<li>
