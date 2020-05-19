@@ -50,7 +50,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      * @return 客户信息表
      */
     @Override
-    @DataScope(userAlias = "u")
+    @DataScope(deptAlias = "d", userAlias = "u")
     public List<YmswCustomer> selectYmswCustomerList(YmswCustomer ymswCustomer) {
         return ymswCustomerMapper.selectYmswCustomerList(ymswCustomer);
     }

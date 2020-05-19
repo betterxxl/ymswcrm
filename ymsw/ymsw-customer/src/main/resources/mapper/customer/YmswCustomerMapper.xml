@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectYmswCustomerList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
         select u.user_name, customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer yc left join sys_user u on yc.user_id = u.user_id
+        left join sys_dept d on u.dept_id = d.dept_id
         where 1=1
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>
@@ -62,7 +63,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="channel != null  and channel != ''"> and channel = #{channel}</if>
             <if test="remarkTime != null "> and remark_time = #{remarkTime}</if>
             <if test="distributeTime != null "> and distribute_time = #{distributeTime}</if>
-<!--        </where>-->
         <!-- 数据范围过滤 -->
         ${params.dataScope}
     </select>

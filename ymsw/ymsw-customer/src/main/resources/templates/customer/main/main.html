@@ -28,11 +28,11 @@
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <li>
+                            <!--<li>
                                 <select name="deptId">
                                     <option value="">所属组织</option>
                                 </select>
-                            </li>
+                            </li>-->
                             <li>
                                 <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}">
                                     <option value="">未跟进天数</option>
