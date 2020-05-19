@@ -51,7 +51,7 @@
                                 <input type="text" class="time-input" id="endTime" placeholder="最后备注结束" name="params[endRemarkTime]"/>
                             </li>
                             <li>
-                                <div class="form-group" style="margin-left: 4px">
+                                <div style="margin-left: 4px">
                                     <div class="checkbox check-box">
                                         <label><input type="checkbox" name="hasCar" value="1"> <i></i>房</label>
                                     </div>
@@ -75,9 +75,9 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <li style="margin-left: 50px">
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+<!--                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>-->
                             </li>
                         </ul>
                     </div>
@@ -128,6 +128,7 @@
                 striped: true,//隔行换色
                 sortName: "distributeTime",
                 sortOrder: "desc",
+                showToggle: false,
                 modalName: "客户信息表",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
                     if (field == 'customerName' || field == 'customerSex' || field == 'customerBirth' || field == 'customerQuota' || field == 'customerStatus') {

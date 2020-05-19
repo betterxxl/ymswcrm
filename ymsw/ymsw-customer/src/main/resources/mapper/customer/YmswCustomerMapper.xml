@@ -41,30 +41,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dept d on u.dept_id = d.dept_id
         where 1=1
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
-            <if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>
-            <if test="customerPhone != null  and customerPhone != ''"> and customer_phone = #{customerPhone}</if>
+            <!--<if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>-->
+            <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
-            <if test="customerBirth != null "> and customer_birth = #{customerBirth}</if>
-            <if test="customerQuota != null "> and customer_quota = #{customerQuota}</if>
+            <!--<if test="customerBirth != null "> and customer_birth = #{customerBirth}</if>-->
+            <!--<if test="customerQuota != null "> and customer_quota = #{customerQuota}</if>-->
             <if test="customerStar != null "> and customer_star = #{customerStar}</if>
-            <if test="applyTime != null "> and apply_time = #{applyTime}</if>
+            <!--<if test="applyTime != null "> and apply_time = #{applyTime}</if>-->
             <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
             <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
             <if test="hasWarranty != null  and hasWarranty != ''"> and has_warranty = #{hasWarranty}</if>
             <if test="hasWeilidai != null  and hasWeilidai != ''"> and has_weilidai = #{hasWeilidai}</if>
             <if test="hasCreditCard != null  and hasCreditCard != ''"> and has_credit_card = #{hasCreditCard}</if>
             <if test="hasAccumulation != null  and hasAccumulation != ''"> and has_accumulation = #{hasAccumulation}</if>
-            <if test="isOverdue != null  and isOverdue != ''"> and is_overdue = #{isOverdue}</if>
+            <if test="hasSocial != null  and hasSocial != ''"> and has_social = #{hasSocial}</if>
+            <!--<if test="isOverdue != null  and isOverdue != ''"> and is_overdue = #{isOverdue}</if>-->
             <if test="customerType != null  and customerType != ''"> and customer_type = #{customerType}</if>
-            <if test="deptId != null "> and dept_id = #{deptId}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="customerOccupation != null  and customerOccupation != ''"> and customer_occupation = #{customerOccupation}</if>
+            <!--<if test="deptId != null "> and dept_id = #{deptId}</if>-->
+            <!--<if test="userId != null "> and user_id = #{userId}</if>-->
+            <!--<if test="customerOccupation != null  and customerOccupation != ''"> and customer_occupation = #{customerOccupation}</if>-->
             <if test="customerSalary != null  and customerSalary != ''"> and customer_salary = #{customerSalary}</if>
-            <if test="channel != null  and channel != ''"> and channel = #{channel}</if>
-            <if test="remarkTime != null "> and remark_time = #{remarkTime}</if>
-            <if test="distributeTime != null "> and distribute_time = #{distributeTime}</if>
-        <!-- 数据范围过滤 -->
-        ${params.dataScope}
+            <!--<if test="channel != null  and channel != ''"> and channel = #{channel}</if>-->
+            <!--<if test="distributeTime != null "> and distribute_time = #{distributeTime}</if>-->
+            <!-- 未跟进天数，当前时间减去最后备注时间得到天数 -->
+            <if test="params.noDays != null and params.noDays != ''"> and datediff(NOW(),remark_time)>= #{params.noDays}</if>
+            <if test="params.beginRemarkTime != null and params.beginRemarkTime != ''"><!-- 备注开始时间检索 -->
+                AND date_format(remark_time,'%y%m%d') &gt;= date_format(#{params.beginRemarkTime},'%y%m%d')
+            </if>
+            <if test="params.endRemarkTime != null and params.endRemarkTime != ''"><!-- 备注结束时间检索 -->
+                AND date_format(remark_time,'%y%m%d') &lt;= date_format(#{params.endRemarkTime},'%y%m%d')
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
     </select>
     
     <select id="selectYmswCustomerById" parameterType="Long" resultMap="YmswCustomerResult">
