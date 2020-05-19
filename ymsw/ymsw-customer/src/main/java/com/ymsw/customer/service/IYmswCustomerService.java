@@ -1,5 +1,6 @@
 package com.ymsw.customer.service;
 
+import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.customer.domain.YmswCustomer;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface IYmswCustomerService
      * @param ymswCustomer 客户信息表
      * @return 结果
      */
-    public int insertYmswCustomer(YmswCustomer ymswCustomer);
+    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer);
 
     /**
      * 修改客户信息表

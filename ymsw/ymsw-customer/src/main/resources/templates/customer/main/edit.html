@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">性别 0男 1女 2未知：</label>
+                <label class="col-sm-3 control-label">性别：</label>
                 <div class="col-sm-8">
                     <select name="customerSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}" required>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSex}"></option>
@@ -29,14 +29,14 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单：</label>
+                <label class="col-sm-3 control-label">客户状态：</label>
                 <div class="col-sm-8">
                     <select name="customerStatus" class="form-control m-b" th:with="type=${@dict.getType('customer_status')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStatus}"></option>
                     </select>
                 </div>
             </div>
-            <div class="form-group">    
+            <!--<div class="form-group">
                 <label class="col-sm-3 control-label">出生日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
@@ -44,7 +44,7 @@
                         <input name="customerBirth" th:value="${#dates.format(ymswCustomer.customerBirth, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">    
                 <label class="col-sm-3 control-label">额度(万)：</label>
                 <div class="col-sm-8">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">客户类型1 新客户2 再分配客户：</label>
+                <label class="col-sm-3 control-label">客户类型：</label>
                 <div class="col-sm-8">
                     <select name="customerType" class="form-control m-b" th:with="type=${@dict.getType('customer_type')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerType}"></option>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">职业1上班2 做生意3 未知：</label>
+                <label class="col-sm-3 control-label">职业：</label>
                 <div class="col-sm-8">
                     <select name="customerOccupation" class="form-control m-b" th:with="type=${@dict.getType('customer_occupation')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerOccupation}"></option>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">薪资方式1代发2转账3现金4未知：</label>
+                <label class="col-sm-3 control-label">薪资方式：</label>
                 <div class="col-sm-8">
                     <select name="customerSalary" class="form-control m-b" th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>

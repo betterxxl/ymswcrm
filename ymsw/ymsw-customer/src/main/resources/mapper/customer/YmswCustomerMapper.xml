@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerStatus"    column="customer_status"    />
         <result property="customerBirth"    column="customer_birth"    />
         <result property="customerQuota"    column="customer_quota"    />
+        <result property="customerStar"    column="customer_star"    />
         <result property="applyTime"    column="apply_time"    />
         <result property="hasHouse"    column="has_house"    />
         <result property="hasCar"    column="has_car"    />
@@ -28,14 +29,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="channel"    column="channel"    />
         <result property="remarkTime"    column="remark_time"    />
         <result property="distributeTime"    column="distribute_time"    />
+        <result property="userName"    column="user_name"    />
     </resultMap>
 
     <sql id="selectYmswCustomerVo">
-        select customer_id, customer_name, customer_sex, customer_phone, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, dept_id, user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer
+        select customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, dept_id, user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer
     </sql>
 
     <select id="selectYmswCustomerList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
-        <include refid="selectYmswCustomerVo"/>
+        select u.user_name, customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer yc left join sys_user u on yc.user_id = u.user_id
         <where>  
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>
@@ -43,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
             <if test="customerBirth != null "> and customer_birth = #{customerBirth}</if>
             <if test="customerQuota != null "> and customer_quota = #{customerQuota}</if>
+            <if test="customerStar != null "> and customer_star = #{customerStar}</if>
             <if test="applyTime != null "> and apply_time = #{applyTime}</if>
             <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
             <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
@@ -60,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remarkTime != null "> and remark_time = #{remarkTime}</if>
             <if test="distributeTime != null "> and distribute_time = #{distributeTime}</if>
         </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
     </select>
     
     <select id="selectYmswCustomerById" parameterType="Long" resultMap="YmswCustomerResult">
@@ -76,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerStatus != null  and customerStatus != ''">customer_status,</if>
             <if test="customerBirth != null ">customer_birth,</if>
             <if test="customerQuota != null ">customer_quota,</if>
+            <if test="customerStar != null ">customer_star,</if>
             <if test="applyTime != null ">apply_time,</if>
             <if test="hasHouse != null  and hasHouse != ''">has_house,</if>
             <if test="hasCar != null  and hasCar != ''">has_car,</if>
@@ -83,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasWeilidai != null  and hasWeilidai != ''">has_weilidai,</if>
             <if test="hasCreditCard != null  and hasCreditCard != ''">has_credit_card,</if>
             <if test="hasAccumulation != null  and hasAccumulation != ''">has_accumulation,</if>
+            <if test="hasSocial != null  and hasSocial != ''">has_social,</if>
             <if test="isOverdue != null  and isOverdue != ''">is_overdue,</if>
             <if test="customerType != null  and customerType != ''">customer_type,</if>
             <if test="deptId != null ">dept_id,</if>
@@ -100,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerStatus != null  and customerStatus != ''">#{customerStatus},</if>
             <if test="customerBirth != null ">#{customerBirth},</if>
             <if test="customerQuota != null ">#{customerQuota},</if>
+            <if test="customerStar != null ">#{customerStar},</if>
             <if test="applyTime != null ">#{applyTime},</if>
             <if test="hasHouse != null  and hasHouse != ''">#{hasHouse},</if>
             <if test="hasCar != null  and hasCar != ''">#{hasCar},</if>
@@ -107,6 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasWeilidai != null  and hasWeilidai != ''">#{hasWeilidai},</if>
             <if test="hasCreditCard != null  and hasCreditCard != ''">#{hasCreditCard},</if>
             <if test="hasAccumulation != null  and hasAccumulation != ''">#{hasAccumulation},</if>
+            <if test="hasSocial != null  and hasSocial != ''">#{hasSocial},</if>
             <if test="isOverdue != null  and isOverdue != ''">#{isOverdue},</if>
             <if test="customerType != null  and customerType != ''">#{customerType},</if>
             <if test="deptId != null ">#{deptId},</if>
@@ -158,5 +167,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{customerId}
         </foreach>
     </delete>
-    
+
+    <select id="selectLastYmswCustomerByPhone" parameterType="String" resultMap="YmswCustomerResult">
+        select customer_id, customer_name, customer_phone, apply_time from ymsw_customer
+        where customer_phone = #{customerPhone} order by apply_time desc limit 1
+    </select>
 </mapper>
