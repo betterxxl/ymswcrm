@@ -7,91 +7,73 @@
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
-                <form id="formId">
+                <form id="formId" class="form-horizontal">
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>姓名：</p>
-                                <input type="text" name="customerName"/>
+                                <input type="text" name="customerName" placeholder="姓名"/>
                             </li>
                             <li>
-                                <p>性别 0男 1女 2未知：</p>
-                                <select name="customerSex" th:with="type=${@dict.getType('sys_user_sex')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <input type="text" name="customerPhone" placeholder="手机号"/>
                             </li>
                             <li>
-                                <p>手机号：</p>
-                                <input type="text" name="customerPhone"/>
-                            </li>
-                            <li>
-                                <p>客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单：</p>
                                 <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}">
-                                    <option value="">所有</option>
+                                    <option value="">客户状态</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <li class="select-time">
-                                <p>出生日期：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCustomerBirth]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCustomerBirth]"/>
+                            <li>
+                                <select name="customerStar" th:with="type=${@dict.getType('customer_star')}">
+                                    <option value="">星级</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
-                                <p>额度(万)：</p>
-                                <input type="text" name="customerQuota"/>
-                            </li>
-                            <li class="select-time">
-                                <p>申请时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginApplyTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endApplyTime]"/>
+                                <select name="deptId">
+                                    <option value="">所属组织</option>
+                                </select>
                             </li>
                             <li>
-                                <p>客户类型1 新客户2 再分配客户：</p>
+                                <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}">
+                                    <option value="">未跟进天数</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
                                 <select name="customerType" th:with="type=${@dict.getType('customer_type')}">
-                                    <option value="">所有</option>
+                                    <option value="">所有客户</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
-                            </li>
-                            <li>
-                                <p>部门id：</p>
-                                <input type="text" name="deptId"/>
-                            </li>
-                            <li>
-                                <p>用户id：</p>
-                                <input type="text" name="userId"/>
-                            </li>
-                            <li>
-                                <p>职业1上班2 做生意3 未知：</p>
-                                <select name="customerOccupation" th:with="type=${@dict.getType('customer_occupation')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>薪资方式1代发2转账3现金4未知：</p>
-                                <select name="customerSalary" th:with="type=${@dict.getType('customer_salary')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>null：</p>
-                                <input type="text" name="channel"/>
                             </li>
                             <li class="select-time">
-                                <p>null：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginRemarkTime]"/>
+                                <input type="text" class="time-input" id="startTime" placeholder="最后备注开始" name="params[beginRemarkTime]"/>
                                 <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endRemarkTime]"/>
+                                <input type="text" class="time-input" id="endTime" placeholder="最后备注结束" name="params[endRemarkTime]"/>
                             </li>
-                            <li class="select-time">
-                                <p>null：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginDistributeTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endDistributeTime]"/>
+                            <li>
+                                <div class="form-group" style="margin-left: 4px">
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasCar" value="1"> <i></i>房</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasHouse" value="1"> <i></i>车</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasWarranty" value="1"> <i></i>保单</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasSocial" value="1"> <i></i>社保</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasWeilidai" value="1"> <i></i>微粒贷</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="hasAccumulation" value="1"> <i></i>公积金</label>
+                                    </div>
+                                    <div class="checkbox check-box">
+                                        <label><input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资</label>
+                                    </div>
+                                </div>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -103,10 +85,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-danger" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
+                    <i class="fa fa-plus"></i> 新增客户
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="customer:main:edit">
+                <a class="btn btn-danger" onclick="">
+                    <i class="fa fa-plus"></i> 放入公共池
+                </a>
+                <a class="btn btn-danger" onclick="">
+                    <i class="fa fa-plus"></i> 加入收藏夹
+                </a>
+                <!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="customer:main:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:main:remove">
@@ -114,7 +102,7 @@
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="customer:main:export">
                     <i class="fa fa-download"></i> 导出
-                 </a>
+                 </a>-->
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -127,9 +115,7 @@
         var removeFlag = [[${@permission.hasPermi('customer:main:remove')}]];
         var customerSexDatas = [[${@dict.getType('sys_user_sex')}]];
         var customerStatusDatas = [[${@dict.getType('customer_status')}]];
-        var customerTypeDatas = [[${@dict.getType('customer_type')}]];
-        var customerOccupationDatas = [[${@dict.getType('customer_occupation')}]];
-        var customerSalaryDatas = [[${@dict.getType('customer_salary')}]];
+        var customerStarDatas = [[${@dict.getType('customer_star')}]];
         var prefix = ctx + "customer/main";
 
         $(function() {
@@ -139,119 +125,118 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
+                striped: true,//隔行换色
+                sortName: "distributeTime",
+                sortOrder: "desc",
                 modalName: "客户信息表",
+                onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
+                    if (field == 'customerName' || field == 'customerSex' || field == 'customerBirth' || field == 'customerQuota' || field == 'customerStatus') {
+                        $.operate.editTab(row.customerId);
+                    }
+                },
                 columns: [{
                     checkbox: true
                 },
                 {
-                    field : 'customerId', 
-                    title : 'id编号',
-                    visible: false
+                    field : 'customerId',
+                    title : '编号',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80
                 },
                 {
-                    field : 'customerName', 
-                    title : '姓名'
+                    field : 'customerName',
+                    title : '姓名',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80
                 },
                 {
-                    field : 'customerSex', 
-                    title : '性别 0男 1女 2未知',
+                    field : 'customerSex',
+                    title : '性别',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(customerSexDatas, value);
                     }
                 },
                 {
-                    field : 'customerPhone', 
-                    title : '手机号'
+                    field : 'customerBirth',
+                    title : '年龄',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80,
+                    formatter: function(value, row, index) {
+                        var date = new Date();
+                        return date.getFullYear()-value;
+                    }
                 },
                 {
-                    field : 'customerStatus', 
-                    title : '客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单',
+                    field : 'customerQuota',
+                    title : '额度(万)',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80,
+                },
+                {
+                    field : 'customerStar',
+                    title : '星级',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80,
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(customerStarDatas, value);
+                    }
+                },
+                {
+                    field : 'customerStatus',
+                    title : '客户状态',
+                    halign: 'center',
+                    align: 'center',
+                    width: 140,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(customerStatusDatas, value);
                     }
                 },
                 {
-                    field : 'customerBirth', 
-                    title : '出生日期'
+                    field : 'userName',
+                    title : '归属顾问',
+                    halign: 'center',
+                    align: 'center',
+                    width: 80,
                 },
                 {
-                    field : 'customerQuota', 
-                    title : '额度(万)'
+                    field : '',
+                    title : '备注',
+                    halign: 'center',
+                    align: 'left'
                 },
                 {
-                    field : 'applyTime', 
-                    title : '申请时间'
+                    field : 'distributeTime',
+                    title : '分配时间',
+                    halign: 'center',
+                    align: 'center',
+                    width: 140,
+                    sortable: true
                 },
                 {
-                    field : 'hasHouse', 
-                    title : '有无房0无1有2 未知'
+                    field : 'remarkTime',
+                    title : '备注时间',
+                    halign: 'center',
+                    align: 'center',
+                    width: 140,
+                    sortable: true
                 },
                 {
-                    field : 'hasCar', 
-                    title : '有无车0无1有2 未知'
+                    field : 'applyTime',
+                    title : '申请时间',
+                    halign: 'center',
+                    align: 'center',
+                    width: 140,
+                    sortable: true
                 },
-                {
-                    field : 'hasWarranty', 
-                    title : '有无保单0无1有2 未知'
-                },
-                {
-                    field : 'hasWeilidai', 
-                    title : '微粒贷0无1有2未知'
-                },
-                {
-                    field : 'hasCreditCard', 
-                    title : '信用卡0无1有2未知'
-                },
-                {
-                    field : 'hasAccumulation', 
-                    title : '公积金0无1有2未知'
-                },
-                {
-                    field : 'isOverdue', 
-                    title : '逾期0无1有2未知'
-                },
-                {
-                    field : 'customerType', 
-                    title : '客户类型1 新客户2 再分配客户',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(customerTypeDatas, value);
-                    }
-                },
-                {
-                    field : 'deptId', 
-                    title : '部门id'
-                },
-                {
-                    field : 'userId', 
-                    title : '用户id'
-                },
-                {
-                    field : 'customerOccupation', 
-                    title : '职业1上班2 做生意3 未知',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(customerOccupationDatas, value);
-                    }
-                },
-                {
-                    field : 'customerSalary', 
-                    title : '薪资方式1代发2转账3现金4未知',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(customerSalaryDatas, value);
-                    }
-                },
-                {
-                    field : 'channel', 
-                    title : 'null'
-                },
-                {
-                    field : 'remarkTime', 
-                    title : 'null'
-                },
-                {
-                    field : 'distributeTime', 
-                    title : 'null'
-                },
-                {
+                /*{
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
@@ -260,7 +245,7 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.customerId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                }*/]
             };
             $.table.init(options);
         });

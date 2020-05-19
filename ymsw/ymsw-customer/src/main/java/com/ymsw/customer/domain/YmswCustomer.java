@@ -36,12 +36,16 @@ public class YmswCustomer extends BaseEntity
     private String customerStatus;
 
     /** 出生日期 */
-    @Excel(name = "出生日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date customerBirth;
+    @Excel(name = "出生日期", width = 30)
+    private String customerBirth;
 
     /** 额度(万) */
     @Excel(name = "额度(万)")
     private Integer customerQuota;
+
+    /** 星级 */
+    @Excel(name = "星级")
+    private Integer customerStar;
 
     /** 申请时间 */
     @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -70,6 +74,10 @@ public class YmswCustomer extends BaseEntity
     /** 公积金0无1有2未知 */
     @Excel(name = "公积金0无1有2未知")
     private String hasAccumulation;
+
+    /** 有无社保0无1有2未知 */
+    @Excel(name = "有无社保0无1有2未知")
+    private String hasSocial;
 
     /** 逾期0无1有2未知 */
     @Excel(name = "逾期0无1有2未知")
@@ -107,7 +115,18 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "null", width = 30, dateFormat = "yyyy-MM-dd")
     private Date distributeTime;
 
-    public void setCustomerId(Long customerId) 
+    /** 归属顾问名字 */
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setCustomerId(Long customerId)
     {
         this.customerId = customerId;
     }
@@ -139,7 +158,15 @@ public class YmswCustomer extends BaseEntity
         this.customerPhone = customerPhone;
     }
 
-    public String getCustomerPhone() 
+    public Integer getCustomerStar() {
+        return customerStar;
+    }
+
+    public void setCustomerStar(Integer customerStar) {
+        this.customerStar = customerStar;
+    }
+
+    public String getCustomerPhone()
     {
         return customerPhone;
     }
@@ -152,12 +179,12 @@ public class YmswCustomer extends BaseEntity
     {
         return customerStatus;
     }
-    public void setCustomerBirth(Date customerBirth) 
+    public void setCustomerBirth(String customerBirth)
     {
         this.customerBirth = customerBirth;
     }
 
-    public Date getCustomerBirth() 
+    public String getCustomerBirth()
     {
         return customerBirth;
     }
@@ -238,7 +265,15 @@ public class YmswCustomer extends BaseEntity
         this.isOverdue = isOverdue;
     }
 
-    public String getIsOverdue() 
+    public String getHasSocial() {
+        return hasSocial;
+    }
+
+    public void setHasSocial(String hasSocial) {
+        this.hasSocial = hasSocial;
+    }
+
+    public String getIsOverdue()
     {
         return isOverdue;
     }

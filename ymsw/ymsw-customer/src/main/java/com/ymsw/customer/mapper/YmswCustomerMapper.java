@@ -58,4 +58,12 @@ public interface YmswCustomerMapper
      * @return 结果
      */
     public int deleteYmswCustomerByIds(String[] customerIds);
+
+    /**
+     * 通过手机号码查询该客户最后一次申请时间的记录
+     *
+     * @param customerPhone 客户手机号码
+     * @return 结果
+     */
+    public YmswCustomer selectLastYmswCustomerByPhone(String customerPhone);
 }
