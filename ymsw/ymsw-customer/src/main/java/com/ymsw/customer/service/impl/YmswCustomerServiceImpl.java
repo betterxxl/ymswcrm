@@ -7,6 +7,7 @@ import com.ymsw.common.annotation.DataScope;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
+
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
@@ -17,8 +18,6 @@ import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.common.core.text.Convert;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * 客户信息表Service业务层处理
