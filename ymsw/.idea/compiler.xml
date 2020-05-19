@@ -10,6 +10,7 @@
         <module name="ymsw-common" />
         <module name="ymsw-system" />
         <module name="ymsw-generator" />
+        <module name="ymsw-customer" />
         <module name="ymsw-framework" />
         <module name="ymsw-admin" />
       </profile>

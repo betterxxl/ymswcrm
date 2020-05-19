@@ -75,7 +75,8 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">岗位：</label>
                         <div class="col-sm-8">
-                            <select id="post" class="form-control select2-multiple" multiple>
+<!--                            <select id="post" class="form-control select2-multiple" multiple>-->
+                            <select id="post" class="form-control">
 								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:selected="${post.flag}" th:disabled="${post.status == '1'}"></option>
 							</select>
                         </div>
@@ -210,12 +211,12 @@
 		
 		function doSubmit(index, layero){
 			var tree = layero.find("iframe")[0].contentWindow.$._tree;
-			if ($.tree.notAllowParents(tree)) {
+			// if ($.tree.notAllowParents(tree)) {  //不允许选择父节点作为部门
     			var body = layer.getChildFrame('body', index);
     			$("#treeId").val(body.find('#treeId').val());
     			$("#treeName").val(body.find('#treeName').val());
     			layer.close(index);
-			}
+			// }
 		}
 
 		$(function() {
