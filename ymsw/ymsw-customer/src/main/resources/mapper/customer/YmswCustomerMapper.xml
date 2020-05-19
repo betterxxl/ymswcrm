@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <!--<if test="isOverdue != null  and isOverdue != ''"> and is_overdue = #{isOverdue}</if>-->
             <if test="customerType != null  and customerType != ''"> and customer_type = #{customerType}</if>
             <!--<if test="deptId != null "> and dept_id = #{deptId}</if>-->
-            <!--<if test="userId != null "> and user_id = #{userId}</if>-->
+            <if test="userId != null "> and yc.user_id = #{userId}</if>
             <!--<if test="customerOccupation != null  and customerOccupation != ''"> and customer_occupation = #{customerOccupation}</if>-->
             <if test="customerSalary != null  and customerSalary != ''"> and customer_salary = #{customerSalary}</if>
             <!--<if test="channel != null  and channel != ''"> and channel = #{channel}</if>-->
@@ -72,112 +72,112 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND date_format(remark_time,'%y%m%d') &lt;= date_format(#{params.endRemarkTime},'%y%m%d')
             </if>
             <!-- 数据范围过滤 -->
-            ${params.dataScope}
-    </select>
-    
-    <select id="selectYmswCustomerById" parameterType="Long" resultMap="YmswCustomerResult">
-        <include refid="selectYmswCustomerVo"/>
-        where customer_id = #{customerId}
-    </select>
-        
-    <insert id="insertYmswCustomer" parameterType="YmswCustomer" useGeneratedKeys="true" keyProperty="customerId">
-        insert into ymsw_customer
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="customerName != null  and customerName != ''">customer_name,</if>
-            <if test="customerSex != null  and customerSex != ''">customer_sex,</if>
-            <if test="customerPhone != null  and customerPhone != ''">customer_phone,</if>
-            <if test="customerStatus != null  and customerStatus != ''">customer_status,</if>
-            <if test="customerBirth != null ">customer_birth,</if>
-            <if test="customerQuota != null ">customer_quota,</if>
-            <if test="customerStar != null ">customer_star,</if>
-            <if test="applyTime != null ">apply_time,</if>
-            <if test="hasHouse != null  and hasHouse != ''">has_house,</if>
-            <if test="hasCar != null  and hasCar != ''">has_car,</if>
-            <if test="hasWarranty != null  and hasWarranty != ''">has_warranty,</if>
-            <if test="hasWeilidai != null  and hasWeilidai != ''">has_weilidai,</if>
-            <if test="hasCreditCard != null  and hasCreditCard != ''">has_credit_card,</if>
-            <if test="hasAccumulation != null  and hasAccumulation != ''">has_accumulation,</if>
-            <if test="hasSocial != null  and hasSocial != ''">has_social,</if>
-            <if test="isOverdue != null  and isOverdue != ''">is_overdue,</if>
-            <if test="customerType != null  and customerType != ''">customer_type,</if>
-            <if test="deptId != null ">dept_id,</if>
-            <if test="userId != null ">user_id,</if>
-            <if test="customerOccupation != null  and customerOccupation != ''">customer_occupation,</if>
-            <if test="customerSalary != null  and customerSalary != ''">customer_salary,</if>
-            <if test="channel != null  and channel != ''">channel,</if>
-            <if test="remarkTime != null ">remark_time,</if>
-            <if test="distributeTime != null ">distribute_time,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="customerName != null  and customerName != ''">#{customerName},</if>
-            <if test="customerSex != null  and customerSex != ''">#{customerSex},</if>
-            <if test="customerPhone != null  and customerPhone != ''">#{customerPhone},</if>
-            <if test="customerStatus != null  and customerStatus != ''">#{customerStatus},</if>
-            <if test="customerBirth != null ">#{customerBirth},</if>
-            <if test="customerQuota != null ">#{customerQuota},</if>
-            <if test="customerStar != null ">#{customerStar},</if>
-            <if test="applyTime != null ">#{applyTime},</if>
-            <if test="hasHouse != null  and hasHouse != ''">#{hasHouse},</if>
-            <if test="hasCar != null  and hasCar != ''">#{hasCar},</if>
-            <if test="hasWarranty != null  and hasWarranty != ''">#{hasWarranty},</if>
-            <if test="hasWeilidai != null  and hasWeilidai != ''">#{hasWeilidai},</if>
-            <if test="hasCreditCard != null  and hasCreditCard != ''">#{hasCreditCard},</if>
-            <if test="hasAccumulation != null  and hasAccumulation != ''">#{hasAccumulation},</if>
-            <if test="hasSocial != null  and hasSocial != ''">#{hasSocial},</if>
-            <if test="isOverdue != null  and isOverdue != ''">#{isOverdue},</if>
-            <if test="customerType != null  and customerType != ''">#{customerType},</if>
-            <if test="deptId != null ">#{deptId},</if>
-            <if test="userId != null ">#{userId},</if>
-            <if test="customerOccupation != null  and customerOccupation != ''">#{customerOccupation},</if>
-            <if test="customerSalary != null  and customerSalary != ''">#{customerSalary},</if>
-            <if test="channel != null  and channel != ''">#{channel},</if>
-            <if test="remarkTime != null ">#{remarkTime},</if>
-            <if test="distributeTime != null ">#{distributeTime},</if>
-         </trim>
-    </insert>
+            <!--${params.dataScope}-->
+</select>
 
-    <update id="updateYmswCustomer" parameterType="YmswCustomer">
-        update ymsw_customer
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="customerName != null  and customerName != ''">customer_name = #{customerName},</if>
-            <if test="customerSex != null  and customerSex != ''">customer_sex = #{customerSex},</if>
-            <if test="customerPhone != null  and customerPhone != ''">customer_phone = #{customerPhone},</if>
-            <if test="customerStatus != null  and customerStatus != ''">customer_status = #{customerStatus},</if>
-            <if test="customerBirth != null ">customer_birth = #{customerBirth},</if>
-            <if test="customerQuota != null ">customer_quota = #{customerQuota},</if>
-            <if test="applyTime != null ">apply_time = #{applyTime},</if>
-            <if test="hasHouse != null  and hasHouse != ''">has_house = #{hasHouse},</if>
-            <if test="hasCar != null  and hasCar != ''">has_car = #{hasCar},</if>
-            <if test="hasWarranty != null  and hasWarranty != ''">has_warranty = #{hasWarranty},</if>
-            <if test="hasWeilidai != null  and hasWeilidai != ''">has_weilidai = #{hasWeilidai},</if>
-            <if test="hasCreditCard != null  and hasCreditCard != ''">has_credit_card = #{hasCreditCard},</if>
-            <if test="hasAccumulation != null  and hasAccumulation != ''">has_accumulation = #{hasAccumulation},</if>
-            <if test="isOverdue != null  and isOverdue != ''">is_overdue = #{isOverdue},</if>
-            <if test="customerType != null  and customerType != ''">customer_type = #{customerType},</if>
-            <if test="deptId != null ">dept_id = #{deptId},</if>
-            <if test="userId != null ">user_id = #{userId},</if>
-            <if test="customerOccupation != null  and customerOccupation != ''">customer_occupation = #{customerOccupation},</if>
-            <if test="customerSalary != null  and customerSalary != ''">customer_salary = #{customerSalary},</if>
-            <if test="channel != null  and channel != ''">channel = #{channel},</if>
-            <if test="remarkTime != null ">remark_time = #{remarkTime},</if>
-            <if test="distributeTime != null ">distribute_time = #{distributeTime},</if>
-        </trim>
-        where customer_id = #{customerId}
-    </update>
+<select id="selectYmswCustomerById" parameterType="Long" resultMap="YmswCustomerResult">
+    <include refid="selectYmswCustomerVo"/>
+    where customer_id = #{customerId}
+</select>
 
-    <delete id="deleteYmswCustomerById" parameterType="Long">
-        delete from ymsw_customer where customer_id = #{customerId}
-    </delete>
+<insert id="insertYmswCustomer" parameterType="YmswCustomer" useGeneratedKeys="true" keyProperty="customerId">
+    insert into ymsw_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="customerName != null  and customerName != ''">customer_name,</if>
+        <if test="customerSex != null  and customerSex != ''">customer_sex,</if>
+        <if test="customerPhone != null  and customerPhone != ''">customer_phone,</if>
+        <if test="customerStatus != null  and customerStatus != ''">customer_status,</if>
+        <if test="customerBirth != null ">customer_birth,</if>
+        <if test="customerQuota != null ">customer_quota,</if>
+        <if test="customerStar != null ">customer_star,</if>
+        <if test="applyTime != null ">apply_time,</if>
+        <if test="hasHouse != null  and hasHouse != ''">has_house,</if>
+        <if test="hasCar != null  and hasCar != ''">has_car,</if>
+        <if test="hasWarranty != null  and hasWarranty != ''">has_warranty,</if>
+        <if test="hasWeilidai != null  and hasWeilidai != ''">has_weilidai,</if>
+        <if test="hasCreditCard != null  and hasCreditCard != ''">has_credit_card,</if>
+        <if test="hasAccumulation != null  and hasAccumulation != ''">has_accumulation,</if>
+        <if test="hasSocial != null  and hasSocial != ''">has_social,</if>
+        <if test="isOverdue != null  and isOverdue != ''">is_overdue,</if>
+        <if test="customerType != null  and customerType != ''">customer_type,</if>
+        <if test="deptId != null ">dept_id,</if>
+        <if test="userId != null ">user_id,</if>
+        <if test="customerOccupation != null  and customerOccupation != ''">customer_occupation,</if>
+        <if test="customerSalary != null  and customerSalary != ''">customer_salary,</if>
+        <if test="channel != null  and channel != ''">channel,</if>
+        <if test="remarkTime != null ">remark_time,</if>
+        <if test="distributeTime != null ">distribute_time,</if>
+     </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="customerName != null  and customerName != ''">#{customerName},</if>
+        <if test="customerSex != null  and customerSex != ''">#{customerSex},</if>
+        <if test="customerPhone != null  and customerPhone != ''">#{customerPhone},</if>
+        <if test="customerStatus != null  and customerStatus != ''">#{customerStatus},</if>
+        <if test="customerBirth != null ">#{customerBirth},</if>
+        <if test="customerQuota != null ">#{customerQuota},</if>
+        <if test="customerStar != null ">#{customerStar},</if>
+        <if test="applyTime != null ">#{applyTime},</if>
+        <if test="hasHouse != null  and hasHouse != ''">#{hasHouse},</if>
+        <if test="hasCar != null  and hasCar != ''">#{hasCar},</if>
+        <if test="hasWarranty != null  and hasWarranty != ''">#{hasWarranty},</if>
+        <if test="hasWeilidai != null  and hasWeilidai != ''">#{hasWeilidai},</if>
+        <if test="hasCreditCard != null  and hasCreditCard != ''">#{hasCreditCard},</if>
+        <if test="hasAccumulation != null  and hasAccumulation != ''">#{hasAccumulation},</if>
+        <if test="hasSocial != null  and hasSocial != ''">#{hasSocial},</if>
+        <if test="isOverdue != null  and isOverdue != ''">#{isOverdue},</if>
+        <if test="customerType != null  and customerType != ''">#{customerType},</if>
+        <if test="deptId != null ">#{deptId},</if>
+        <if test="userId != null ">#{userId},</if>
+        <if test="customerOccupation != null  and customerOccupation != ''">#{customerOccupation},</if>
+        <if test="customerSalary != null  and customerSalary != ''">#{customerSalary},</if>
+        <if test="channel != null  and channel != ''">#{channel},</if>
+        <if test="remarkTime != null ">#{remarkTime},</if>
+        <if test="distributeTime != null ">#{distributeTime},</if>
+     </trim>
+</insert>
 
-    <delete id="deleteYmswCustomerByIds" parameterType="String">
-        delete from ymsw_customer where customer_id in 
-        <foreach item="customerId" collection="array" open="(" separator="," close=")">
-            #{customerId}
-        </foreach>
-    </delete>
+<update id="updateYmswCustomer" parameterType="YmswCustomer">
+    update ymsw_customer
+    <trim prefix="SET" suffixOverrides=",">
+        <if test="customerName != null  and customerName != ''">customer_name = #{customerName},</if>
+        <if test="customerSex != null  and customerSex != ''">customer_sex = #{customerSex},</if>
+        <if test="customerPhone != null  and customerPhone != ''">customer_phone = #{customerPhone},</if>
+        <if test="customerStatus != null  and customerStatus != ''">customer_status = #{customerStatus},</if>
+        <if test="customerBirth != null ">customer_birth = #{customerBirth},</if>
+        <if test="customerQuota != null ">customer_quota = #{customerQuota},</if>
+        <if test="applyTime != null ">apply_time = #{applyTime},</if>
+        <if test="hasHouse != null  and hasHouse != ''">has_house = #{hasHouse},</if>
+        <if test="hasCar != null  and hasCar != ''">has_car = #{hasCar},</if>
+        <if test="hasWarranty != null  and hasWarranty != ''">has_warranty = #{hasWarranty},</if>
+        <if test="hasWeilidai != null  and hasWeilidai != ''">has_weilidai = #{hasWeilidai},</if>
+        <if test="hasCreditCard != null  and hasCreditCard != ''">has_credit_card = #{hasCreditCard},</if>
+        <if test="hasAccumulation != null  and hasAccumulation != ''">has_accumulation = #{hasAccumulation},</if>
+        <if test="isOverdue != null  and isOverdue != ''">is_overdue = #{isOverdue},</if>
+        <if test="customerType != null  and customerType != ''">customer_type = #{customerType},</if>
+        <if test="deptId != null ">dept_id = #{deptId},</if>
+        <if test="userId != null ">user_id = #{userId},</if>
+        <if test="customerOccupation != null  and customerOccupation != ''">customer_occupation = #{customerOccupation},</if>
+        <if test="customerSalary != null  and customerSalary != ''">customer_salary = #{customerSalary},</if>
+        <if test="channel != null  and channel != ''">channel = #{channel},</if>
+        <if test="remarkTime != null ">remark_time = #{remarkTime},</if>
+        <if test="distributeTime != null ">distribute_time = #{distributeTime},</if>
+    </trim>
+    where customer_id = #{customerId}
+</update>
 
-    <select id="selectLastYmswCustomerByPhone" parameterType="String" resultMap="YmswCustomerResult">
-        select customer_id, customer_name, customer_phone, apply_time from ymsw_customer
-        where customer_phone = #{customerPhone} order by apply_time desc limit 1
-    </select>
+<delete id="deleteYmswCustomerById" parameterType="Long">
+    delete from ymsw_customer where customer_id = #{customerId}
+</delete>
+
+<delete id="deleteYmswCustomerByIds" parameterType="String">
+    delete from ymsw_customer where customer_id in
+    <foreach item="customerId" collection="array" open="(" separator="," close=")">
+        #{customerId}
+    </foreach>
+</delete>
+
+<select id="selectLastYmswCustomerByPhone" parameterType="String" resultMap="YmswCustomerResult">
+    select customer_id, customer_name, customer_phone, apply_time from ymsw_customer
+    where customer_phone = #{customerPhone} order by apply_time desc limit 1
+</select>
 </mapper>

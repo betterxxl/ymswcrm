@@ -7,6 +7,7 @@ import com.ymsw.common.annotation.DataScope;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
+import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,10 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      * @return 客户信息表
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+//    @DataScope(deptAlias = "d", userAlias = "u")
     public List<YmswCustomer> selectYmswCustomerList(YmswCustomer ymswCustomer) {
+        Long userId = ShiroUtils.getUserId();
+        ymswCustomer.setUserId(userId);
         return ymswCustomerMapper.selectYmswCustomerList(ymswCustomer);
     }
 
