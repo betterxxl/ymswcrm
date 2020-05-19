@@ -46,9 +46,9 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
-		var addFlag = [[${@permission.hasPermi('mapper.system:dept:add')}]];
-		var editFlag = [[${@permission.hasPermi('mapper.system:dept:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('mapper.system:dept:remove')}]];
+		var addFlag = [[${@permission.hasPermi('system:dept:add')}]];
+		var editFlag = [[${@permission.hasPermi('system:dept:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('system:dept:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var prefix = ctx + "system/dept"
 
