@@ -16,6 +16,15 @@ public class YMSWApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(YMSWApplication.class, args);
-        System.out.println("\"(♥◠‿◠)ﾉﾞ  客户管理系统启动成功   ლ(´ڡ`ლ)ﾞ))");
+        System.out.println("(♥◠‿◠)ﾉﾞ  贷款客户管理系统启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
+                " .-------.       ____     __        \n" +
+                " |  _ _   \\      \\   \\   /  /    \n" +
+                " | ( ' )  |       \\  _. /  '       \n" +
+                " |(_ o _) /        _( )_ .'         \n" +
+                " | (_,_).' __  ___(_ o _)'          \n" +
+                " |  |\\ \\  |  ||   |(_,_)'         \n" +
+                " |  | \\ `'   /|   `-'  /           \n" +
+                " |  |  \\    /  \\      /           \n" +
+                " ''-'   `'-'    `-..-'              ");
     }
 }
