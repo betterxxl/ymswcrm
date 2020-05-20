@@ -1,118 +1,76 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('修改客户信息表')"/>
+    <th:block th:include="include :: header('客户详情')"/>
     <th:block th:include="include :: datetimepicker-css"/>
 </head>
 <body class="white-bg">
 <input id="userId" name="userId" type="hidden" th:value="${ymswCustomer.customerId}"/>
-<section class="section-content">
-    <div class="row">
-        <div class="col-sm-2 pr5">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title ibox-title-gray dashboard-header gray-bg">
-                    <strong>个人资料</strong>
-                </div>
-                <div class="ibox-content">
-                    <ul class="list-group list-group-striped">
-                        <li class="list-group-item"><i class="fa fa-user"></i>
-                            <b class="font-noraml">姓名：</b>
-                            <p class="pull-right">[[${ymswCustomer.customerName}]]</p>
-                        </li>
-                        <li class="list-group-item"><i class="fa fa-phone"></i>
-                            <b class="font-noraml">手机：</b>
-                            <p class="pull-right">[[${ymswCustomer.customerPhone}]]</p>
-                        </li>
-                        <li class="list-group-item"><i class="fa fa-female"></i>
-                            <b class="font-noraml">性别：</b>
-                            <p class="pull-right" th:with="sex=${ymswCustomer.customerSex}" th:text="${@dict.getLabel('sys_user_sex', sex)}"></p>
-                        </li>
-                        <li class="list-group-item"><i class="fa fa-user-o"></i>
-                            <b class="font-noraml">年龄：</b>
-                            <p class="pull-right">[[${ymswCustomer.customerBirth}]]</p>
-                        </li>
-                        <li class="list-group-item"><i class="fa fa-money"></i>
-                            <b class="font-noraml">额度（万）：</b>
-                            <p class="pull-right">[[${ymswCustomer.customerQuota}]]</p>
-                        </li>
-                    </ul>
-                </div>
+<!--<section class="section-content">-->
+    <div class="ibox-content">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">姓名：</label>
+                <input type="text" class="form-control" id="exampleInputName2" readonly th:value="${ymswCustomer.customerName}">
             </div>
-        </div>
-
-        <div class="col-sm-10 about">
-            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-                <form class="form-horizontal m" id="form-main-edit" th:object="${ymswCustomer}">
-                    <!--<div class="form-group">
-                        <label class="col-sm-3 control-label">申请时间：</label>
-                        <div class="col-sm-8">
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input name="applyTime" th:value="${#dates.format(ymswCustomer.applyTime, 'yyyy-MM-dd')}"
-                                       class="form-control" placeholder="yyyy-MM-dd" type="text">
-                            </div>
-                        </div>
-                    </div>-->
-                    <!--<div class="form-group">
-                        <label class="col-sm-3 control-label">客户类型：</label>
-                        <div class="col-sm-8">
-                            <select name="customerType" class="form-control m-b" th:with="type=${@dict.getType('customer_type')}">
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
-                                        th:field="*{customerType}"></option>
-                            </select>
-                        </div>
-                    </div>-->
-                    <input name="customerId" th:field="*{customerId}" type="hidden">
-                    <strong>基础资料</strong><hr>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">星级：</label>
-                        <div class="col-sm-8">
-                            <select name="customerStatus" class="form-control m-b"
-                                    th:with="type=${@dict.getType('customer_star')}">
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
-                                        th:field="*{customerStar}"></option>
-                            </select>
-                        </div>
-                        <label class="col-sm-3 control-label">客户状态：</label>
-                        <div class="col-sm-8">
-                            <select name="customerStatus" class="form-control m-b"
-                                    th:with="type=${@dict.getType('customer_status')}">
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
-                                        th:field="*{customerStatus}"></option>
-                            </select>
-                        </div>
+            <div class="form-group" style="margin-left: 20px">
+                <label for="exampleInputEmail2">手机：</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswCustomer.customerPhone}">
+            </div>
+            <div class="form-group" style="margin-left: 20px">
+                <label for="exampleInputEmail2">性别：</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:with="sex=${ymswCustomer.customerSex}" th:value="${@dict.getLabel('sys_user_sex', sex)}">
+            </div>
+            <div class="form-group" style="margin-left: 20px">
+                <label for="exampleInputEmail2">年龄：</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswCustomer.customerBirth}">
+            </div>
+            <div class="form-group" style="margin-left: 20px">
+                <label for="exampleInputEmail2">额度（万）：</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswCustomer.customerQuota}">
+            </div>
+        </div><hr>
+        <div>
+            <form class="form-inline" id="form-main-edit" th:object="${ymswCustomer}">
+                <input name="customerId" th:field="*{customerId}" type="hidden">
+                    <div class="input-group col-xs-2">
+                        <div class="input-group-addon" style="background-color: #efefef;">星级</div>
+                        <select name="customerStar" class="form-control" th:with="type=${@dict.getType('customer_star')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStar}"></option>
+                        </select>
                     </div>
 
+                    <div class="input-group col-xs-2" style="margin-left: 20px">
+                        <div class="input-group-addon" style="background-color: #efefef;">状态：</div>
+                        <select name="customerStatus" class="form-control"
+                                th:with="type=${@dict.getType('customer_status')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStatus}"></option>
+                        </select>
+                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">职业：</label>
-                        <div class="col-sm-8">
-                            <select name="customerOccupation" class="form-control m-b"
-                                    th:with="type=${@dict.getType('customer_occupation')}">
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
-                                        th:field="*{customerOccupation}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">薪资方式：</label>
-                        <div class="col-sm-8">
-                            <select name="customerSalary" class="form-control m-b"
-                                    th:with="type=${@dict.getType('customer_salary')}">
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
-                                        th:field="*{customerSalary}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">channel：</label>
-                        <div class="col-sm-8">
-                            <input name="channel" th:field="*{channel}" class="form-control" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label"></label>
-                        <div class="col-sm-8">
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">职业：</div>
+                    <select name="customerOccupation" class="form-control"
+                            th:with="type=${@dict.getType('customer_occupation')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerOccupation}"></option>
+                    </select>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">渠道：</div>
+                    <select name="customerSalary" class="form-control"
+                            th:with="type=${@dict.getType('customer_salary')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
+                    </select>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">薪资：</div>
+                    <select name="customerSalary" class="form-control"
+                            th:with="type=${@dict.getType('customer_salary')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
+                    </select>
+                </div>
+                <div style="margin-top: 10px">
+                    <div class="input-group">
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasHouse">房</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasCar">车</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasSocial">社保</label>
@@ -121,103 +79,13 @@
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasAccumulation">公积金</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasWeilidai">微粒贷</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasWeilidai">逾期</label>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-            <!--<div class="ibox float-e-margins">
-                <div class="ibox-title ibox-title-gray dashboard-header">
-                    <h5>基本资料</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#user_info" data-toggle="tab" aria-expanded="true">基本资料</a></li>
-                            <li><a href="#modify_password" data-toggle="tab" aria-expanded="false">修改密码</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            &lt;!&ndash;用户信息&ndash;&gt;
-                            <div class="tab-pane active" id="user_info" th:object="${user}">
-                                <form class="form-horizontal" id="form-user-edit">
-                                    &lt;!&ndash;隐藏ID&ndash;&gt;
-                                    <input name="id" id="id" type="hidden">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">姓名：</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="userName" th:field="*{userName}" placeholder="请输入用户名称">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">业务手机：</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="phonenumber" maxlength="11" th:field="*{phonenumber}" placeholder="请输入手机号码">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">邮箱：</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="email" th:field="*{email}" placeholder="请输入邮箱">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">性别：</label>
-                                        <div class="col-sm-10">
-                                            <div class="radio-box">
-												<input type="radio" id="radio1" th:field="*{sex}" name="sex" value="0">
-												<label for="radio1">男</label>
-											</div>
-											<div class="radio-box">
-												<input type="radio" id="radio2" th:field="*{sex}" name="sex" value="1">
-												<label for="radio2">女</label>
-											</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            &lt;!&ndash;修改密码&ndash;&gt;
-                            <div class="tab-pane" id="modify_password">
-                                <form class="form-horizontal" id="form-user-resetPwd">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">旧密码：</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" name="oldPassword" placeholder="请输入旧密码">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">新密码：</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="请输入新密码">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">确认密码：</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" name="confirmPassword" placeholder="请确认密码">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="submitChangPassword()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>-->
+            </form>
         </div>
+        <hr>
     </div>
-</section>
+<!--</section>-->
 
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: datetimepicker-js"/>
