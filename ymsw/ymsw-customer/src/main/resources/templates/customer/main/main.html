@@ -2,39 +2,115 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('客户信息表列表')" />
+    <style>
+        #bootstrap-table>thead>tr {background-color: #dd4b39;color: white}
+    </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
+                <form id="formId" class="form-inline">
+                    <div class="row">
+                        <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">星级</div>
+                            <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户类型</div>
+                            <select name="customerType" th:with="type=${@dict.getType('customer_type')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户状态</div>
+                            <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">未跟进天数</div>
+                            <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="input-group col-xs-2" style="margin-left: 5px">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
+                            <input type="text" class="form-control" name="customerName">
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                            <input type="text" class="form-control" name="customerPhone">
+                            <!--                            </div>-->
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">最后备注开始</div>
+                            <input type="text" class="time-input form-control" id="startTime" name="params[beginRemarkTime]" />
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">最后备注结束</div>
+                            <input type="text" class="time-input form-control" id="endTime" name="params[endRemarkTime]"/>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="checkbox check-box" style="margin-left: 5px">
+                            <input type="checkbox" name="hasCar" value="1"> <i></i>房
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="hasHouse" value="1"> <i></i>车
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="hasWarranty" value="1"> <i></i>保单
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="hasSocial" value="1"> <i></i>社保
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="hasWeilidai" value="1"> <i></i>微粒贷
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="hasAccumulation" value="1"> <i></i>公积金
+                        </div>
+                        <div class="checkbox check-box">
+                            <input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资
+                        </div>
+                        <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    </div>
+                </form>
+            </div>
+            <!--<div class="col-sm-12 search-collapse">
                 <form id="formId" class="form-horizontal">
                     <div class="select-list">
                         <ul>
                             <li>
-                                <input type="text" name="customerName" placeholder="姓名"/>
+                                <input type="text" name="customerName" placeholder="姓名" class="input-lg"/>
                             </li>
                             <li>
-                                <input type="text" name="customerPhone" placeholder="手机号"/>
+                                <input type="text" name="customerPhone" placeholder="手机号" style="margin-left: 100px"  class="input-lg"/>
                             </li>
                             <li>
-                                <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}">
+                                <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}" style="margin-left: 100px">
                                     <option value="">客户状态</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
-                                <select name="customerStar" th:with="type=${@dict.getType('customer_star')}">
+                                <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" style="margin-left: 100px">
                                     <option value="">星级</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <!--<li>
-                                <select name="deptId">
-                                    <option value="">所属组织</option>
-                                </select>
-                            </li>-->
                             <li>
-                                <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}">
+                                <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}" style="margin-left: 100px">
                                     <option value="">未跟进天数</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
@@ -46,43 +122,43 @@
                                 </select>
                             </li>
                             <li class="select-time">
-                                <input type="text" class="time-input" id="startTime" placeholder="最后备注开始" name="params[beginRemarkTime]"/>
+                                <input type="text" class="time-input" id="startTime" placeholder="最后备注开始" name="params[beginRemarkTime]"  style="margin-left: 100px"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="最后备注结束" name="params[endRemarkTime]"/>
                             </li>
                             <li>
-                                <div style="margin-left: 4px">
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasCar" value="1"> <i></i>房</label>
+                                <div>
+                                    <div class="checkbox check-box" style="margin-left: 100px">
+                                        <input type="checkbox" name="hasCar" value="1"> <i></i>房
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasHouse" value="1"> <i></i>车</label>
+                                    <div class="checkbox check-box" style="margin-left: 30px">
+                                        <input type="checkbox" name="hasHouse" value="1"> <i></i>车
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasWarranty" value="1"> <i></i>保单</label>
+                                    <div class="checkbox check-box"style="margin-left: 30px">
+                                        <input type="checkbox" name="hasWarranty" value="1"> <i></i>保单
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasSocial" value="1"> <i></i>社保</label>
+                                    <div class="checkbox check-box"style="margin-left: 70px">
+                                        <input type="checkbox" name="hasSocial" value="1"> <i></i>社保
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasWeilidai" value="1"> <i></i>微粒贷</label>
+                                    <div class="checkbox check-box"style="margin-left: 30px">
+                                        <input type="checkbox" name="hasWeilidai" value="1"> <i></i>微粒贷
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="hasAccumulation" value="1"> <i></i>公积金</label>
+                                    <div class="checkbox check-box"style="margin-left: 140px">
+                                        <input type="checkbox" name="hasAccumulation" value="1"> <i></i>公积金
                                     </div>
-                                    <div class="checkbox check-box">
-                                        <label><input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资</label>
+                                    <div class="checkbox check-box"style="margin-left: 30px">
+                                        <input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资
                                     </div>
                                 </div>
                             </li>
-                            <li style="margin-left: 50px">
+                            <li style="margin-left: 100px">
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-<!--                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>-->
+&lt;!&ndash;                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>&ndash;&gt;
                             </li>
                         </ul>
                     </div>
                 </form>
-            </div>
+            </div>-->
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-danger" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">

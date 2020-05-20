@@ -14,10 +14,10 @@
                     <h5>个人资料</h5>
                 </div>
                 <div class="ibox-content">
-                    <div class="text-center">
+                    <!--<div class="text-center">
                         <p><img class="img-circle img-lg" th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}"></p>
                         <p><a href="javascript:avatar()">修改头像</a></p>
-                    </div>
+                    </div>-->
                     <ul class="list-group list-group-striped">
                         <li class="list-group-item"><i class="fa fa-user"></i>
                             <b class="font-noraml">姓名：</b>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-sm-9 about">
             <!--<div class="ibox float-e-margins">
                 <div class="ibox-title ibox-title-gray dashboard-header">
@@ -100,7 +100,7 @@
                                     </div>
                                 </form>
                             </div>
-                            
+
                             &lt;!&ndash;修改密码&ndash;&gt;
                             <div class="tab-pane" id="modify_password">
                                 <form class="form-horizontal" id="form-user-resetPwd">

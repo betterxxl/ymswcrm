@@ -1,5 +1,7 @@
 package com.ymsw.customer.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -97,6 +99,11 @@ public class YmswCustomerController extends BaseController
     public String edit(@PathVariable("customerId") Long customerId, ModelMap mmap)
     {
         YmswCustomer ymswCustomer = ymswCustomerService.selectYmswCustomerById(customerId);
+        //计算年龄
+        String customerBirth = ymswCustomer.getCustomerBirth();
+        Calendar date = Calendar.getInstance();
+        int age = Integer.valueOf(date.get(Calendar.YEAR))-Integer.valueOf(customerBirth);
+        ymswCustomer.setCustomerBirth(String.valueOf(age));//赋值age为年龄
         mmap.put("ymswCustomer", ymswCustomer);
         return prefix + "/edit";
     }
