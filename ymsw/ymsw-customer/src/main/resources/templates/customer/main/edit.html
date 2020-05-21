@@ -57,7 +57,7 @@
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;">渠道：</div>
-                    <select name="customerSalary" class="form-control"
+                    <select name="channel" class="form-control"
                             th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
                     </select>
@@ -71,16 +71,27 @@
                 </div>
                 <div style="margin-top: 10px">
                     <div class="input-group">
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasHouse">房</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasCar">车</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasSocial">社保</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasWarranty">保单</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasCreditCard">信用卡</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasAccumulation">公积金</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasWeilidai">微粒贷</label>
-                            <label class="checkbox-inline check-box"><input type="checkbox" value="1" name="hasWeilidai">逾期</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasHouse}" id="hasHouse" th:attr ="checked=*{hasHouse}==1?true:false">房</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasCar}" id="hasCar" th:attr ="checked=*{hasCar}==1?true:false">车</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasSocial}" id="hasSocial" th:attr ="checked=*{hasSocial}==1?true:false">社保</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasWarranty}" id="hasWarranty" th:attr ="checked=*{hasWarranty}==1?true:false">保单</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasCreditCard}" id="hasCreditCard" th:attr ="checked=*{hasCreditCard}==1?true:false">信用卡</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasAccumulation}" id="hasAccumulation" th:attr ="checked=*{hasAccumulation}==1?true:false">公积金</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasWeilidai}" id="hasWeilidai" th:attr ="checked=*{hasWeilidai}==1?true:false">微粒贷</label>
+                            <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{isOverdue}" id="isOverdue" th:attr ="checked=*{isOverdue}==1?true:false">逾期</label>
                     </div>
                 </div>
+                <div class="input-group" style="margin-top: 10px;width: 100%">
+                    <label for="exampleInputName2">备注：</label>
+                    <textarea class="form-control" rows="2" name="remark"></textarea>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-sm-offset-5 col-sm-10">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                    </div>
+                </div>
+
             </form>
         </div>
         <hr>
@@ -97,33 +108,27 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/edit", $('#form-main-edit').serialize());
+            var data = $("#form-main-edit").serializeArray();
+            var hasHouse = $("input[id='hasHouse']").is(':checked') == true ? 1 : 0;
+            var hasCar = $("input[id='hasCar']").is(':checked') == true ? 1 : 0;
+            var hasSocial = $("input[id='hasSocial']").is(':checked') == true ? 1 : 0;
+            var hasWarranty = $("input[id='hasWarranty']").is(':checked') == true ? 1 : 0;
+            var hasCreditCard = $("input[id='hasCreditCard']").is(':checked') == true ? 1 : 0;
+            var hasAccumulation = $("input[id='hasAccumulation']").is(':checked') == true ? 1 : 0;
+            var hasWeilidai = $("input[id='hasWeilidai']").is(':checked') == true ? 1 : 0;
+            var isOverdue = $("input[id='isOverdue']").is(':checked') == true ? 1 : 0;
+            data.push({"name": "hasHouse", "value": hasHouse});
+            data.push({"name": "hasCar", "value": hasCar});
+            data.push({"name": "hasSocial", "value": hasSocial});
+            data.push({"name": "hasWarranty", "value": hasWarranty});
+            data.push({"name": "hasCreditCard", "value": hasCreditCard});
+            data.push({"name": "hasAccumulation", "value": hasAccumulation});
+            data.push({"name": "hasWeilidai", "value": hasWeilidai});
+            data.push({"name": "isOverdue", "value": isOverdue});
+            $.operate.saveTab(prefix + "/edit", data);
+            // $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize());
         }
     }
-
-    $("input[name='customerBirth']").datetimepicker({
-        format: "yyyy-mm-dd",
-        minView: "month",
-        autoclose: true
-    });
-
-    $("input[name='applyTime']").datetimepicker({
-        format: "yyyy-mm-dd",
-        minView: "month",
-        autoclose: true
-    });
-
-    $("input[name='remarkTime']").datetimepicker({
-        format: "yyyy-mm-dd",
-        minView: "month",
-        autoclose: true
-    });
-
-    $("input[name='distributeTime']").datetimepicker({
-        format: "yyyy-mm-dd",
-        minView: "month",
-        autoclose: true
-    });
 </script>
 </body>
 </html>

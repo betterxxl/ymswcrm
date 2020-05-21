@@ -8,6 +8,8 @@ import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
 
+import com.ymsw.customer.domain.YmswRemark;
+import com.ymsw.customer.mapper.YmswRemarkMapper;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
@@ -31,6 +33,8 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     private YmswCustomerMapper ymswCustomerMapper;
     @Autowired
     private SysDictDataMapper sysDictDataMapper;
+    @Autowired
+    private YmswRemarkMapper ymswRemarkMapper;
 
     /**
      * 查询客户信息表
@@ -99,6 +103,18 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      */
     @Override
     public int updateYmswCustomer(YmswCustomer ymswCustomer) {
+        //如果备注内容不为空，就添加一条备注记录，同时修改最后备注时间
+        String remark = ymswCustomer.getRemark();
+        if (StringUtils.isNotEmpty(remark)){
+            YmswRemark ymswRemark = new YmswRemark();
+            ymswRemark.setCustomerId(ymswCustomer.getCustomerId());//设置客户id
+            ymswRemark.setIsCharge("0");//设置是否主管 0否 1是
+            ymswRemark.setRemarkContent(remark);//设置备注内容
+            ymswRemark.setRemarkTime(DateUtils.getNowDate());//设置备注时间
+            ymswRemark.setUserId(ShiroUtils.getUserId());//设置操作人
+            ymswRemarkMapper.insertYmswRemark(ymswRemark);
+            ymswCustomer.setRemarkTime(DateUtils.getNowDate());//设置最后备注时间
+        }
         return ymswCustomerMapper.updateYmswCustomer(ymswCustomer);
     }
 

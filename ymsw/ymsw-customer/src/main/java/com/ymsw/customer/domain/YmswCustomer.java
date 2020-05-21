@@ -118,6 +118,19 @@ public class YmswCustomer extends BaseEntity
     /** 归属顾问名字 */
     private String userName;
 
+    /** 备注（修改客户信息页面的备注） */
+    private String remark;
+
+    @Override
+    public String getRemark() {
+        return remark;
+    }
+
+    @Override
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public String getUserName() {
         return userName;
     }
