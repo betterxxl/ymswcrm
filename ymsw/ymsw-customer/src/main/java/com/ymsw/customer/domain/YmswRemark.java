@@ -1,5 +1,6 @@
 package com.ymsw.customer.domain;
 
+import com.sun.jna.platform.win32.Winspool;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ymsw.common.annotation.Excel;
@@ -39,7 +40,17 @@ public class YmswRemark extends BaseEntity
     @Excel(name = "是否主管0否1是")
     private String isCharge;
 
-    public void setRemarkId(Long remarkId) 
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setRemarkId(Long remarkId)
     {
         this.remarkId = remarkId;
     }

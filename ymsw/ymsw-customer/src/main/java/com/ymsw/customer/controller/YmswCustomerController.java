@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.ymsw.customer.domain.YmswRemark;
+import com.ymsw.customer.service.IYmswRemarkService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,8 @@ public class YmswCustomerController extends BaseController
 
     @Autowired
     private IYmswCustomerService ymswCustomerService;
+    @Autowired
+    private IYmswRemarkService ymswRemarkService;
 
     @RequiresPermissions("customer:main:view")
     @GetMapping()
@@ -98,12 +102,23 @@ public class YmswCustomerController extends BaseController
     @GetMapping("/edit/{customerId}")
     public String edit(@PathVariable("customerId") Long customerId, ModelMap mmap)
     {
+        //通过customerId查询客户信息
         YmswCustomer ymswCustomer = ymswCustomerService.selectYmswCustomerById(customerId);
         //计算年龄
         String customerBirth = ymswCustomer.getCustomerBirth();
         Calendar date = Calendar.getInstance();
         int age = Integer.valueOf(date.get(Calendar.YEAR))-Integer.valueOf(customerBirth);
         ymswCustomer.setCustomerBirth(String.valueOf(age));//赋值age为年龄
+        //通过customerId查询该客户的业务经理添加的备注
+        YmswRemark ymswRemark = new YmswRemark();
+        ymswRemark.setCustomerId(customerId);
+        ymswRemark.setIsCharge("0");//是否主管 0否 1是
+        List<YmswRemark> ymswRemarks = ymswRemarkService.selectYmswRemarkList(ymswRemark);
+        //查询该客户的主管添加的点评
+        ymswRemark.setIsCharge("1");//是否主管 0否 1是
+        List<YmswRemark> remarkList = ymswRemarkService.selectYmswRemarkList(ymswRemark);
+        mmap.put("ymswRemarks",ymswRemarks);
+        mmap.put("remarkList",remarkList);
         mmap.put("ymswCustomer", ymswCustomer);
         return prefix + "/edit";
     }

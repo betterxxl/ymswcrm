@@ -106,14 +106,15 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         //如果备注内容不为空，就添加一条备注记录，同时修改最后备注时间
         String remark = ymswCustomer.getRemark();
         if (StringUtils.isNotEmpty(remark)){
+            Date nowDate = DateUtils.getNowDate();
             YmswRemark ymswRemark = new YmswRemark();
             ymswRemark.setCustomerId(ymswCustomer.getCustomerId());//设置客户id
             ymswRemark.setIsCharge("0");//设置是否主管 0否 1是
             ymswRemark.setRemarkContent(remark);//设置备注内容
-            ymswRemark.setRemarkTime(DateUtils.getNowDate());//设置备注时间
+            ymswRemark.setRemarkTime(nowDate);//设置备注时间
             ymswRemark.setUserId(ShiroUtils.getUserId());//设置操作人
             ymswRemarkMapper.insertYmswRemark(ymswRemark);
-            ymswCustomer.setRemarkTime(DateUtils.getNowDate());//设置最后备注时间
+            ymswCustomer.setRemarkTime(nowDate);//设置最后备注时间
         }
         return ymswCustomerMapper.updateYmswCustomer(ymswCustomer);
     }

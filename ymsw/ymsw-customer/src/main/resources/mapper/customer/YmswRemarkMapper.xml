@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remarkTime"    column="remark_time"    />
         <result property="customerId"    column="customer_id"    />
         <result property="isCharge"    column="is_charge"    />
+        <result property="userName"    column="user_name"    />
     </resultMap>
 
     <sql id="selectYmswRemarkVo">
@@ -18,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectYmswRemarkList" parameterType="YmswRemark" resultMap="YmswRemarkResult">
-        <include refid="selectYmswRemarkVo"/>
+        select remark_id, remark_content, yr.user_id, remark_time, customer_id, is_charge,u.user_name from ymsw_remark yr
+        left join sys_user u on u.user_id = yr.user_id
         <where>  
             <if test="remarkContent != null  and remarkContent != ''"> and remark_content = #{remarkContent}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
@@ -26,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null "> and customer_id = #{customerId}</if>
             <if test="isCharge != null  and isCharge != ''"> and is_charge = #{isCharge}</if>
         </where>
+        order by remark_time desc
     </select>
     
     <select id="selectYmswRemarkById" parameterType="Long" resultMap="YmswRemarkResult">

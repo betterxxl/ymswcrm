@@ -5,7 +5,7 @@
 	<th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
 	<style>
-		#bootstrap-table>thead>tr {background-color: #dd4b39;color: white}
+		#bootstrap-table>thead>tr {background-color: #f94a35;color: white}
 	</style>
 </head>
 <body class="gray-bg">
@@ -68,16 +68,16 @@
 		        	<a class="btn btn-danger" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">
 		                <i class="fa fa-plus"></i> 新增
 		            </a>
-		            <!-- <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="mapper.system:user:edit">
+		            <!-- <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">
 			            <i class="fa fa-edit"></i> 修改
 			        </a> -->
-		            <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="mapper.system:user:remove">
+		            <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">
 		                <i class="fa fa-remove"></i> 删除
 		            </a> -->
-		             <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="mapper.system:user:import">
+		             <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
 			            <i class="fa fa-upload"></i> 导入
 			        </a>
-		             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="mapper.system:user:export">
+		             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">
 			            <i class="fa fa-download"></i> 导出
 			        </a>-->
 		        </div>

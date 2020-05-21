@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remarkTime"    column="remark_time"    />
         <result property="distributeTime"    column="distribute_time"    />
         <result property="userName"    column="user_name"    />
+        <result property="remark" column="remark_content"    />
     </resultMap>
 
     <sql id="selectYmswCustomerVo">
@@ -38,7 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectYmswCustomerList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
-        select u.user_name, customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer yc left join sys_user u on yc.user_id = u.user_id
+        select u.user_name, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
+        from ymsw_customer yc
+        left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
+        left join sys_user u on yc.user_id = u.user_id
         left join sys_dept d on u.dept_id = d.dept_id
         where 1=1
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>

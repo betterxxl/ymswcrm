@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:include="include :: header('客户详情')"/>
     <th:block th:include="include :: datetimepicker-css"/>
 </head>
 <body class="white-bg">
 <input id="userId" name="userId" type="hidden" th:value="${ymswCustomer.customerId}"/>
-<!--<section class="section-content">-->
-    <div class="ibox-content">
-        <div class="form-inline">
+    <div class="ibox-content"  style="background-color: #efefef">
+        <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
             <div class="form-group">
                 <label for="exampleInputName2">姓名：</label>
                 <input type="text" class="form-control" id="exampleInputName2" readonly th:value="${ymswCustomer.customerName}">
@@ -29,41 +28,40 @@
                 <label for="exampleInputEmail2">额度（万）：</label>
                 <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswCustomer.customerQuota}">
             </div>
-        </div><hr>
-        <div>
+        </div>
+        <div class="search-collapse" style="padding:10px 10px;">
             <form class="form-inline" id="form-main-edit" th:object="${ymswCustomer}">
                 <input name="customerId" th:field="*{customerId}" type="hidden">
-                    <div class="input-group col-xs-2">
-                        <div class="input-group-addon" style="background-color: #efefef;">星级</div>
-                        <select name="customerStar" class="form-control" th:with="type=${@dict.getType('customer_star')}">
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStar}"></option>
-                        </select>
-                    </div>
-
-                    <div class="input-group col-xs-2" style="margin-left: 20px">
-                        <div class="input-group-addon" style="background-color: #efefef;">状态：</div>
-                        <select name="customerStatus" class="form-control"
-                                th:with="type=${@dict.getType('customer_status')}">
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStatus}"></option>
-                        </select>
-                    </div>
+                <div class="input-group col-xs-2">
+                    <div class="input-group-addon" style="background-color: #efefef;">星级</div>
+                    <select name="customerStar" class="form-control" th:with="type=${@dict.getType('customer_star')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStar}"></option>
+                    </select>
+                </div>
 
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">职业：</div>
+                    <div class="input-group-addon" style="background-color: #efefef;">状态</div>
+                    <select name="customerStatus" class="form-control"
+                            th:with="type=${@dict.getType('customer_status')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStatus}"></option>
+                    </select>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">职业</div>
                     <select name="customerOccupation" class="form-control"
                             th:with="type=${@dict.getType('customer_occupation')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerOccupation}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">渠道：</div>
+                    <div class="input-group-addon" style="background-color: #efefef;">渠道</div>
                     <select name="channel" class="form-control"
                             th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">薪资：</div>
+                    <div class="input-group-addon" style="background-color: #efefef;">薪资</div>
                     <select name="customerSalary" class="form-control"
                             th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
@@ -91,12 +89,36 @@
                         <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
                     </div>
                 </div>
-
             </form>
         </div>
-        <hr>
+        <div class="search-collapse">
+            <div th:each="ymswRemark:${ymswRemarks}" style="margin: 10px">
+                <span class="glyphicon glyphicon-edit" style="color: red" aria-hidden="true"></span>&nbsp;
+                <span th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;提交于&nbsp;&nbsp;
+                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span th:text="${ymswRemark.remarkContent}"></span>
+            </div>
+        </div>
+        <!--<div class="search-collapse" shiro:hasRole="business">
+            <div style="margin: 10px;">
+                <label for="exampleInputName2">主管点评：</label>
+                <textarea class="form-control" rows="2" id="chargeRemark"></textarea>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="submitRemark()"><i class="fa fa-check"></i>点 评</button>&nbsp;
+                </div>
+            </div>
+        </div>-->
+        <div class="search-collapse">
+            <div th:each="ymswRemark:${remarkList}" style="margin: 10px">
+                <span class="glyphicon glyphicon-edit" style="color: green" aria-hidden="true"></span>&nbsp;
+                <span th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;点评于&nbsp;&nbsp;
+                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span th:text="${ymswRemark.remarkContent}"></span>
+            </div>
+        </div>
     </div>
-<!--</section>-->
 
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: datetimepicker-js"/>
@@ -129,6 +151,18 @@
             // $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize());
         }
     }
+
+  /*  function submitRemark() {
+        var content = $("#chargeRemark").val();
+        if ($.common.isNotEmpty(content)) {
+            var data={"remark":content};
+            $.operate.post(prefix + "/edit", data,function () {
+                $.modal.msgSuccess("操作成功！");
+            });
+        }else {
+            $.modal.msgWarning("请填写点评！");
+        }
+    }*/
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="include :: header('客户信息表列表')" />
     <style>
-        #bootstrap-table>thead>tr {background-color: #dd4b39;color: white;}
+        #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
     </style>
 </head>
 <body class="gray-bg">
@@ -87,87 +87,14 @@
                     </div>
                 </form>
             </div>
-            <!--<div class="col-sm-12 search-collapse">
-                <form id="formId" class="form-horizontal">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <input type="text" name="customerName" placeholder="姓名" class="input-lg"/>
-                            </li>
-                            <li>
-                                <input type="text" name="customerPhone" placeholder="手机号" style="margin-left: 100px"  class="input-lg"/>
-                            </li>
-                            <li>
-                                <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}" style="margin-left: 100px">
-                                    <option value="">客户状态</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" style="margin-left: 100px">
-                                    <option value="">星级</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}" style="margin-left: 100px">
-                                    <option value="">未跟进天数</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <select name="customerType" th:with="type=${@dict.getType('customer_type')}">
-                                    <option value="">所有客户</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li class="select-time">
-                                <input type="text" class="time-input" id="startTime" placeholder="最后备注开始" name="params[beginRemarkTime]"  style="margin-left: 100px"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="最后备注结束" name="params[endRemarkTime]"/>
-                            </li>
-                            <li>
-                                <div>
-                                    <div class="checkbox check-box" style="margin-left: 100px">
-                                        <input type="checkbox" name="hasCar" value="1"> <i></i>房
-                                    </div>
-                                    <div class="checkbox check-box" style="margin-left: 30px">
-                                        <input type="checkbox" name="hasHouse" value="1"> <i></i>车
-                                    </div>
-                                    <div class="checkbox check-box"style="margin-left: 30px">
-                                        <input type="checkbox" name="hasWarranty" value="1"> <i></i>保单
-                                    </div>
-                                    <div class="checkbox check-box"style="margin-left: 70px">
-                                        <input type="checkbox" name="hasSocial" value="1"> <i></i>社保
-                                    </div>
-                                    <div class="checkbox check-box"style="margin-left: 30px">
-                                        <input type="checkbox" name="hasWeilidai" value="1"> <i></i>微粒贷
-                                    </div>
-                                    <div class="checkbox check-box"style="margin-left: 140px">
-                                        <input type="checkbox" name="hasAccumulation" value="1"> <i></i>公积金
-                                    </div>
-                                    <div class="checkbox check-box"style="margin-left: 30px">
-                                        <input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="margin-left: 100px">
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-&lt;!&ndash;                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>&ndash;&gt;
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>-->
-
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-danger" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
+                <a class="btn btn-info" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
                     <i class="fa fa-plus"></i> 新增客户
                 </a>
-                <a class="btn btn-danger" onclick="">
+                <a class="btn btn-success" onclick="">
                     <i class="fa fa-plus"></i> 放入公共池
                 </a>
-                <a class="btn btn-danger" onclick="">
+                <a class="btn btn-warning" onclick="">
                     <i class="fa fa-plus"></i> 加入收藏夹
                 </a>
                 <!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="customer:main:edit">
@@ -205,7 +132,7 @@
                 sortName: "distributeTime",
                 sortOrder: "desc",
                 showToggle: false,
-                modalName: "客户信息表",
+                modalName: "客户详情",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
                     if (field == 'customerName' || field == 'customerSex' || field == 'customerBirth' || field == 'customerQuota' || field == 'customerStatus') {
                         $.operate.editTab(row.customerId);
@@ -284,7 +211,7 @@
                     width: 80,
                 },
                 {
-                    field : '',
+                    field : 'remark',
                     title : '备注',
                     halign: 'center',
                     align: 'left'
