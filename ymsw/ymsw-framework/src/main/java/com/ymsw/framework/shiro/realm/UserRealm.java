@@ -3,7 +3,9 @@ package com.ymsw.framework.shiro.realm;
 import com.ymsw.framework.config.AccessPhoneConfig;
 import com.ymsw.framework.shiro.service.SysLoginService;
 import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.service.ISysDictDataService;
 import com.ymsw.system.service.ISysMenuService;
 import com.ymsw.system.service.ISysRoleService;
 import com.ymsw.system.service.ISysUserService;
@@ -18,7 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,6 +49,8 @@ public class UserRealm extends AuthorizingRealm
 
     @Autowired
     private AccessPhoneConfig accessPhoneConfig;
+    @Autowired
+    private ISysDictDataService iSysDictDataService;
 
     /**
      * 授权
@@ -148,9 +155,16 @@ public class UserRealm extends AuthorizingRealm
         //接收输入的密码或验证码
         String checkCode = new String(ch);
         SysUser user = userService.selectUserByPhoneNumber(phone) ;
+        SysDictData sysDictData = new SysDictData();
+        sysDictData.setDictLabel("required_code");
+        sysDictData.setDictType("ymsw_config");
+        //字典表里开启了不需要验证码登录
+        List<SysDictData> sysDictDataList = iSysDictDataService.selectDictDataList(sysDictData);
+        @NotBlank(message = "字典键值不能为空") @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
+        String dictValue = sysDictDataList.get(0).getDictValue();
         if (user != null) {
             //验证手机号是否无需验证码，可直接登录，配置在application.yml里
-            if (accessPhoneConfig.getAccessphones().contains(phone)){
+            if (accessPhoneConfig.getAccessphones().contains(phone)||("0".equals(dictValue))){
                 return new SimpleAuthenticationInfo(user, checkCode,null,getName());
             }
             //需要验证码登录
