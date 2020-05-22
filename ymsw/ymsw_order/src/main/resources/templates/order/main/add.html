@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增订单信息表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-main-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">客户id：</label>
+                <div class="col-sm-8">
+                    <input name="customerId" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">合同id：</label>
+                <div class="col-sm-8">
+                    <input name="contractId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">合同图片路径：</label>
+                <div class="col-sm-8">
+                    <input name="contractPath" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">添加签约日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="addTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单状态1 已签约2 已进件3 已批款4 已收款5 已拒绝：</label>
+                <div class="col-sm-8">
+                    <select name="orderStatus" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">批款额度(万元)：</label>
+                <div class="col-sm-8">
+                    <input name="allowAmount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">创收(元)：</label>
+                <div class="col-sm-8">
+                    <input name="incomeGeneration" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">费率(%)：</label>
+                <div class="col-sm-8">
+                    <input name="orderRate" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">诚意金(元)：</label>
+                <div class="col-sm-8">
+                    <input name="sincerityMoney" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">诚意金收款方式1 微信    2 支付宝  3 转账  4 现金：</label>
+                <div class="col-sm-8">
+                    <select name="sincerityPayMethod" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">进件渠道：</label>
+                <div class="col-sm-8">
+                    <input name="incomingChannel" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">渠道费(元)：</label>
+                <div class="col-sm-8">
+                    <input name="channelFee" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">进件类型1信用贷2房抵押3车抵押4合作单：</label>
+                <div class="col-sm-8">
+                    <select name="incomingType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">进件助理1 邓娟2 黄文莎3 陈梦颖4 李紫馨5 其他：</label>
+                <div class="col-sm-8">
+                    <select name="incomingAssistant" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">银行经理：</label>
+                <div class="col-sm-8">
+                    <input name="bankManager" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单备注：</label>
+                <div class="col-sm-8">
+                    <input name="orderRemark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "order/main"
+        $("#form-main-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-main-add').serialize());
+            }
+        }
+
+        $("input[name='addTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>
