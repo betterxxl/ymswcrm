@@ -1,27 +1,24 @@
 package com.ymsw.customer.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.core.text.Convert;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
+import com.ymsw.customer.domain.YmswCollectionPool;
+import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
+import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
-import com.ymsw.customer.domain.YmswCollectionPool;
-import com.ymsw.customer.service.IYmswCollectionPoolService;
-import com.ymsw.common.core.text.Convert;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 收藏夹-公共池Service业务层处理
@@ -109,8 +106,6 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     public AjaxResult addToCollectionPool(String ids, String type) {
         List<String> customerIds = Arrays.asList(ids.split(","));
         Long userId = ShiroUtils.getUserId();//当前userId
-        ArrayList<YmswCollectionPool> list = new ArrayList<>();
-        Date addTime = DateUtils.getNowDate();//当前时间
         if ("1".equals(type)) {  //批量添加到收藏夹
             SysDictData sysDictData = new SysDictData();
             sysDictData.setDictType("ymsw_config");
@@ -123,35 +118,30 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                     return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
                 } else if (count + customerIds.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
                     return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
-                } else {
-                    for (String customerId : customerIds) {
-                        YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
-                        ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
-                        ymswCollectionPool.setAddTime(addTime);//设置添加时间
-                        ymswCollectionPool.setCpType("1");//设置类型为收藏夹
-                        ymswCollectionPool.setUserId(userId);//设置收藏人
-                        ymswCollectionPool.setOperUserId(userId);//设置操作人
-                        list.add(ymswCollectionPool);
-                    }
-                    ymswCollectionPoolMapper.batchInsertYmswCollectionPool(list);    //批量添加到收藏夹
-                    return AjaxResult.success();
                 }
             }
         } else if ("2".equals(type)) {    //批量添加到公共池
-            int i = ymswCustomerMapper.updateUseridToNull(customerIds);//批量修改客户的归属顾问为空
-            if (i == customerIds.size()) {
-                for (String customerId : customerIds) {
-                    YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
-                    ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
-                    ymswCollectionPool.setAddTime(addTime);//设置添加时间
-                    ymswCollectionPool.setCpType("2");//设置类型为公共池
-                    ymswCollectionPool.setOperUserId(userId);//设置操作人
-                    list.add(ymswCollectionPool);
-                }
-                ymswCollectionPoolMapper.batchInsertYmswCollectionPool(list);    //批量添加到公共池
-                return AjaxResult.success();
-            }
+            ymswCustomerMapper.updateUseridToNull(customerIds);//批量修改客户的归属顾问为空
         }
-        return AjaxResult.error();
+        ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(customerIds,type,userId));    //批量添加到收藏夹公共池表
+        return AjaxResult.success();
+    }
+
+//    返回需要批量添加到收藏夹公共池的数据集合
+    private ArrayList<YmswCollectionPool> getAddList(List<String> customerIds, String type, Long userId) {
+        ArrayList<YmswCollectionPool> list = new ArrayList<>();
+        Date addTime = DateUtils.getNowDate();//当前时间
+        for (String customerId : customerIds) {
+            YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
+            ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
+            ymswCollectionPool.setAddTime(addTime);//设置添加时间
+            ymswCollectionPool.setCpType(type);//设置类型为收藏夹
+            ymswCollectionPool.setOperUserId(userId);//设置操作人
+            if ("1".equals(type)) {
+                ymswCollectionPool.setUserId(userId);//如果添加到收藏夹就设置收藏人
+            }
+            list.add(ymswCollectionPool);
+        }
+        return list;
     }
 }
