@@ -70,5 +70,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{cpId}
         </foreach>
     </delete>
+
+<!--    批量添加到收藏夹公共池-->
+    <insert id="batchInsertYmswCollectionPool" parameterType="List">
+        insert into ymsw_collection_pool (customer_id, user_id, add_time, cp_type, oper_user_id) values
+        <foreach collection ="list" item="ymswCollectionPool" index= "index" separator =",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{ymswCollectionPool.customerId},#{ymswCollectionPool.userId},#{ymswCollectionPool.addTime},#{ymswCollectionPool.cpType},#{ymswCollectionPool.operUserId}
+            </trim>
+        </foreach >
+    </insert>
+
+    <select id="selectCountByUserId" parameterType="Long" resultType="int">
+        select count(1) from ymsw_collection_pool where user_id = #{userId}
+    </select>
     
 </mapper>

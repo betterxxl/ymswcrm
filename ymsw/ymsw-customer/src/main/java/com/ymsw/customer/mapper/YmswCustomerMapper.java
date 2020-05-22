@@ -66,4 +66,6 @@ public interface YmswCustomerMapper
      * @return 结果
      */
     public YmswCustomer selectLastYmswCustomerByPhone(String customerPhone);
+
+    public int updateUseridToNull(List<String> customerIds);
 }

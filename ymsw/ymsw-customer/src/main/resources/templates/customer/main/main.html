@@ -91,10 +91,10 @@
                 <a class="btn btn-info" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
                     <i class="fa fa-plus"></i> 新增客户
                 </a>
-                <a class="btn btn-success" onclick="">
+                <a class="btn btn-success" onclick="addTOPool()" shiro:hasPermission="customer:pool:addToCollectionPool">
                     <i class="fa fa-plus"></i> 放入公共池
                 </a>
-                <a class="btn btn-warning" onclick="">
+                <a class="btn btn-warning" onclick="addTOCollection()" shiro:hasPermission="customer:pool:addToCollectionPool">
                     <i class="fa fa-plus"></i> 加入收藏夹
                 </a>
                 <!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="customer:main:edit">
@@ -126,10 +126,10 @@
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
+                removeUrl: prefix + "/removeaa",
                 exportUrl: prefix + "/export",
                 striped: true,//隔行换色
-                sortName: "distributeTime",
+                sortName: "remarkTime",
                 sortOrder: "desc",
                 showToggle: false,
                 modalName: "客户详情",
@@ -253,6 +253,34 @@
             };
             $.table.init(options);
         });
+
+        // 批量加入公共池
+        function addTOPool() {
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.confirm("确定要将选中的" + rows.length + "条数据加入公共池吗?", function() {
+                var url = ctx + "customer/pool/addToCollectionPoll";
+                var data = { "ids": rows.join(), "type":2 };
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
+
+        // 批量加入收藏夹
+        function addTOCollection() {
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.confirm("确定要将选中的" + rows.length + "条数据加入收藏夹吗?", function() {
+                var url = ctx + "customer/pool/addToCollectionPoll";
+                var data = { "ids": rows.join(), "type":1 };
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
     </script>
 </body>
 </html>

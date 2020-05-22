@@ -122,4 +122,16 @@ public class YmswCollectionPoolController extends BaseController
     {
         return toAjax(ymswCollectionPoolService.deleteYmswCollectionPoolByIds(ids));
     }
+
+    /**
+     * 批量加入收藏夹-公共池
+     */
+    @RequiresPermissions("customer:pool:addToCollectionPool")
+    @Log(title = "收藏夹-公共池", businessType = BusinessType.INSERT)
+    @PostMapping( "/addToCollectionPoll")
+    @ResponseBody
+    public AjaxResult addToCollectionPool(String ids, String type)
+    {
+        return ymswCollectionPoolService.addToCollectionPool(ids,type);
+    }
 }

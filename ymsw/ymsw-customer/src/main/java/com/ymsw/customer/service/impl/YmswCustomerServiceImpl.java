@@ -73,10 +73,12 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(ymswCustomer.getCustomerPhone());
         //如果存在，就查询字典表里允许天数
         if (StringUtils.isNotNull(dbCustomer)) {
-            List<SysDictData> allow_days = sysDictDataMapper.selectDictDataByType("allow_days");
+            SysDictData sysDictData = new SysDictData();
+            sysDictData.setDictType("ymsw_config");
+            sysDictData.setDictLabel("allow_days");
+            List<SysDictData> allow_days = sysDictDataMapper.selectDictDataList(sysDictData);
             if (StringUtils.isNotEmpty(allow_days)) {
-                SysDictData sysDictData = allow_days.get(0);
-                String daysValue = sysDictData.getDictValue();//获取允许的天数
+                String daysValue = allow_days.get(0).getDictValue();//获取允许的天数
                 long days1 = DateUtils.getDays(dbCustomer.getApplyTime(), DateUtils.getNowDate());//计算当前的时间和最后一次申请时间的间隔天数
                 if (Long.valueOf(daysValue) > days1) {
                     return AjaxResult.error("该客户在"+daysValue+"天内已添加过，不可频繁添加！");
@@ -84,9 +86,11 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
             }
         }
         ymswCustomer.setCustomerStar(0);        //设置星级为0级
-        ymswCustomer.setApplyTime(new Date());  //设置申请时间为当前时间
+        ymswCustomer.setApplyTime(DateUtils.getNowDate());  //设置申请时间为当前时间
         ymswCustomer.setCustomerType("1");      //设置客户类型为“新客户”  1新客户  2再分配
         ymswCustomer.setCustomerStatus("0");    //设置客户状态为“新申请”
+        ymswCustomer.setUserId(ShiroUtils.getUserId());//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
+        ymswCustomer.setDistributeTime(DateUtils.getNowDate()); //设置分配时间
         int i = ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
         if (i > 0){
             return AjaxResult.success();

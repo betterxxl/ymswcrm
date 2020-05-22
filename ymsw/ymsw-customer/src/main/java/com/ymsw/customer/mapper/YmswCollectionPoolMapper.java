@@ -58,4 +58,20 @@ public interface YmswCollectionPoolMapper
      * @return 结果
      */
     public int deleteYmswCollectionPoolByIds(String[] cpIds);
+
+    /**
+     * 批量添加收藏夹-公共池
+     *
+     * @param list 需要添加的集合
+     * @return 结果
+     */
+    public int batchInsertYmswCollectionPool (List<YmswCollectionPool> list);
+
+    /**
+     * 查询某个user的收藏数量
+     *
+     * @param userId 收藏人id
+     * @return 结果
+     */
+    public int selectCountByUserId (Long userId);
 }

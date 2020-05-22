@@ -38,13 +38,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_social, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, dept_id, user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer
     </sql>
 
+<!--    我的客户列表查询，不包括收藏夹里的客户（通过ycp.customer_id is null来过滤）-->
     <select id="selectYmswCustomerList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
         select u.user_name, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_customer yc
+        left join  ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
         left join sys_user u on yc.user_id = u.user_id
         left join sys_dept d on u.dept_id = d.dept_id
-        where 1=1
+        where ycp.customer_id is null
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <!--<if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>-->
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
@@ -69,12 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <!--<if test="channel != null  and channel != ''"> and channel = #{channel}</if>-->
             <!--<if test="distributeTime != null "> and distribute_time = #{distributeTime}</if>-->
             <!-- 未跟进天数，当前时间减去最后备注时间得到天数 -->
-            <if test="params.noDays != null and params.noDays != ''"> and datediff(NOW(),remark_time)>= #{params.noDays}</if>
+            <if test="params.noDays != null and params.noDays != ''"> and datediff(NOW(),yc.remark_time)>= #{params.noDays}</if>
             <if test="params.beginRemarkTime != null and params.beginRemarkTime != ''"><!-- 备注开始时间检索 -->
-                AND date_format(remark_time,'%y%m%d') &gt;= date_format(#{params.beginRemarkTime},'%y%m%d')
+                AND date_format(yc.remark_time,'%y%m%d') &gt;= date_format(#{params.beginRemarkTime},'%y%m%d')
             </if>
             <if test="params.endRemarkTime != null and params.endRemarkTime != ''"><!-- 备注结束时间检索 -->
-                AND date_format(remark_time,'%y%m%d') &lt;= date_format(#{params.endRemarkTime},'%y%m%d')
+                AND date_format(yc.remark_time,'%y%m%d') &lt;= date_format(#{params.endRemarkTime},'%y%m%d')
             </if>
             <!-- 数据范围过滤 -->
             <!--${params.dataScope}-->
@@ -186,4 +188,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select customer_id, customer_name, customer_phone, apply_time from ymsw_customer
     where customer_phone = #{customerPhone} order by apply_time desc limit 1
 </select>
+
+<update id="updateUseridToNull" parameterType="String">
+    update ymsw_customer set user_id = null where customer_id in
+    <foreach item="customerId" collection="list" open="(" separator="," close=")">
+        #{customerId}
+    </foreach>
+</update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.ymsw.customer.service;
 
+import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.customer.domain.YmswCollectionPool;
 import java.util.List;
 
@@ -58,4 +59,9 @@ public interface IYmswCollectionPoolService
      * @return 结果
      */
     public int deleteYmswCollectionPoolById(Long cpId);
+
+    /**
+     * 批量加入收藏夹-公共池
+     */
+    AjaxResult addToCollectionPool (String ids, String type);
 }

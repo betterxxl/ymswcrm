@@ -35,7 +35,19 @@ public class YmswCollectionPool extends BaseEntity
     @Excel(name = "类型 1收藏夹 2 公共池")
     private String cpType;
 
-    public void setCpId(Long cpId) 
+    /** 操作员id（加入公共池的user） */
+    @Excel(name = "操作员id（加入公共池的user）")
+    private Long operUserId;
+
+    public Long getOperUserId() {
+        return operUserId;
+    }
+
+    public void setOperUserId(Long operUserId) {
+        this.operUserId = operUserId;
+    }
+
+    public void setCpId(Long cpId)
     {
         this.cpId = cpId;
     }

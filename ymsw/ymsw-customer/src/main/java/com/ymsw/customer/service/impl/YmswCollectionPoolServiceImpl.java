@@ -1,94 +1,157 @@
 package com.ymsw.customer.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
+import com.ymsw.customer.mapper.YmswCustomerMapper;
+import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.system.domain.SysDictData;
+import com.ymsw.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.domain.YmswCollectionPool;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 收藏夹-公共池Service业务层处理
- * 
+ *
  * @author ymsw
  * @date 2020-05-18
  */
 @Service
-public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService 
-{
+public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService {
     @Autowired
     private YmswCollectionPoolMapper ymswCollectionPoolMapper;
+    @Autowired
+    private YmswCustomerMapper ymswCustomerMapper;
+    @Autowired
+    private SysDictDataMapper sysDictDataMapper;
 
     /**
      * 查询收藏夹-公共池
-     * 
+     *
      * @param cpId 收藏夹-公共池ID
      * @return 收藏夹-公共池
      */
     @Override
-    public YmswCollectionPool selectYmswCollectionPoolById(Long cpId)
-    {
+    public YmswCollectionPool selectYmswCollectionPoolById(Long cpId) {
         return ymswCollectionPoolMapper.selectYmswCollectionPoolById(cpId);
     }
 
     /**
      * 查询收藏夹-公共池列表
-     * 
+     *
      * @param ymswCollectionPool 收藏夹-公共池
      * @return 收藏夹-公共池
      */
     @Override
-    public List<YmswCollectionPool> selectYmswCollectionPoolList(YmswCollectionPool ymswCollectionPool)
-    {
+    public List<YmswCollectionPool> selectYmswCollectionPoolList(YmswCollectionPool ymswCollectionPool) {
         return ymswCollectionPoolMapper.selectYmswCollectionPoolList(ymswCollectionPool);
     }
 
     /**
      * 新增收藏夹-公共池
-     * 
+     *
      * @param ymswCollectionPool 收藏夹-公共池
      * @return 结果
      */
     @Override
-    public int insertYmswCollectionPool(YmswCollectionPool ymswCollectionPool)
-    {
+    public int insertYmswCollectionPool(YmswCollectionPool ymswCollectionPool) {
         return ymswCollectionPoolMapper.insertYmswCollectionPool(ymswCollectionPool);
     }
 
     /**
      * 修改收藏夹-公共池
-     * 
+     *
      * @param ymswCollectionPool 收藏夹-公共池
      * @return 结果
      */
     @Override
-    public int updateYmswCollectionPool(YmswCollectionPool ymswCollectionPool)
-    {
+    public int updateYmswCollectionPool(YmswCollectionPool ymswCollectionPool) {
         return ymswCollectionPoolMapper.updateYmswCollectionPool(ymswCollectionPool);
     }
 
     /**
      * 删除收藏夹-公共池对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
     @Override
-    public int deleteYmswCollectionPoolByIds(String ids)
-    {
+    public int deleteYmswCollectionPoolByIds(String ids) {
         return ymswCollectionPoolMapper.deleteYmswCollectionPoolByIds(Convert.toStrArray(ids));
     }
 
     /**
      * 删除收藏夹-公共池信息
-     * 
+     *
      * @param cpId 收藏夹-公共池ID
      * @return 结果
      */
     @Override
-    public int deleteYmswCollectionPoolById(Long cpId)
-    {
+    public int deleteYmswCollectionPoolById(Long cpId) {
         return ymswCollectionPoolMapper.deleteYmswCollectionPoolById(cpId);
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult addToCollectionPool(String ids, String type) {
+        List<String> customerIds = Arrays.asList(ids.split(","));
+        Long userId = ShiroUtils.getUserId();//当前userId
+        ArrayList<YmswCollectionPool> list = new ArrayList<>();
+        Date addTime = DateUtils.getNowDate();//当前时间
+        if ("1".equals(type)) {  //批量添加到收藏夹
+            SysDictData sysDictData = new SysDictData();
+            sysDictData.setDictType("ymsw_config");
+            sysDictData.setDictLabel("collection_count");
+            List<SysDictData> sysDictDataList = sysDictDataMapper.selectDictDataList(sysDictData);//查询设置的允许收藏的条数
+            if (StringUtils.isNotEmpty(sysDictDataList)) {
+                String collectionCount = sysDictDataList.get(0).getDictValue(); //设置的允许收藏的条数
+                int count = ymswCollectionPoolMapper.selectCountByUserId(userId);//查询该用户已经收藏的条数
+                if (Integer.valueOf(collectionCount) <= count) { //如果已经收藏的条数大于等于允许收藏的条数，就不能收藏。
+                    return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
+                } else if (count + customerIds.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
+                    return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
+                } else {
+                    for (String customerId : customerIds) {
+                        YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
+                        ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
+                        ymswCollectionPool.setAddTime(addTime);//设置添加时间
+                        ymswCollectionPool.setCpType("1");//设置类型为收藏夹
+                        ymswCollectionPool.setUserId(userId);//设置收藏人
+                        ymswCollectionPool.setOperUserId(userId);//设置操作人
+                        list.add(ymswCollectionPool);
+                    }
+                    ymswCollectionPoolMapper.batchInsertYmswCollectionPool(list);    //批量添加到收藏夹
+                    return AjaxResult.success();
+                }
+            }
+        } else if ("2".equals(type)) {    //批量添加到公共池
+            int i = ymswCustomerMapper.updateUseridToNull(customerIds);//批量修改客户的归属顾问为空
+            if (i == customerIds.size()) {
+                for (String customerId : customerIds) {
+                    YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
+                    ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
+                    ymswCollectionPool.setAddTime(addTime);//设置添加时间
+                    ymswCollectionPool.setCpType("2");//设置类型为公共池
+                    ymswCollectionPool.setOperUserId(userId);//设置操作人
+                    list.add(ymswCollectionPool);
+                }
+                ymswCollectionPoolMapper.batchInsertYmswCollectionPool(list);    //批量添加到公共池
+                return AjaxResult.success();
+            }
+        }
+        return AjaxResult.error();
     }
 }
