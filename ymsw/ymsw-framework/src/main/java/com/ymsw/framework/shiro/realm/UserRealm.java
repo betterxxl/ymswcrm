@@ -160,7 +160,6 @@ public class UserRealm extends AuthorizingRealm
         sysDictData.setDictType("ymsw_config");
         //字典表里开启了不需要验证码登录
         List<SysDictData> sysDictDataList = iSysDictDataService.selectDictDataList(sysDictData);
-        @NotBlank(message = "字典键值不能为空") @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
         String dictValue = sysDictDataList.get(0).getDictValue();
         if (user != null) {
             //验证手机号是否无需验证码，可直接登录，配置在application.yml里
