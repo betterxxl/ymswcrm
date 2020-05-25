@@ -65,7 +65,7 @@ public class YmswCustomerController extends BaseController
     /**
      * 导出客户信息表列表
      */
-//    @RequiresPermissions("customer:main:export")
+    @RequiresPermissions("customer:main:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
@@ -150,7 +150,7 @@ public class YmswCustomerController extends BaseController
     /**
      * 下载模板
      */
-//    @RequiresPermissions("customer:main:view")
+    @RequiresPermissions("customer:main:view")
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate()
@@ -163,7 +163,7 @@ public class YmswCustomerController extends BaseController
      * 导入客户数据
      */
     @Log(title = "客户信息表", businessType = BusinessType.IMPORT)
-//    @RequiresPermissions("customer:main:import")
+    @RequiresPermissions("customer:main:import")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file) throws Exception

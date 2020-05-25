@@ -103,11 +103,10 @@
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:main:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>-->
-<!--                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="customer:main:export">-->
-                <a class="btn btn-warning" onclick="$.table.exportExcel()">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="customer:main:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
-                <a class="btn btn-info" onclick="$.table.importExcel()">
+                <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="customer:main:import">
 			            <i class="fa fa-upload"></i> 导入
 			        </a>
             </div>
