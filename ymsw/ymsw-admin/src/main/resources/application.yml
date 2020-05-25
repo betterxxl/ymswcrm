@@ -132,7 +132,7 @@ xss:
 
 # 阿里短信服务相关配置
 aliconfig:
-  accessKeyId: LTAI4GKXypUGuc4HfBQDawFv
+  accessKeyId: XXXXX
   accessKeySecret: XXXXX
   templateCode: SMS_189555643
   signName: 英茂商务
@@ -140,7 +140,6 @@ aliconfig:
 # 无需验证码，可直接登录的手机号
 myconfig:
   accessphones:
-  - 18627058936
   - 15827433325 #超级管理员
   - 18520339949 #总经理 王文浩
   - 13682466560 #门店负责人 万佩
