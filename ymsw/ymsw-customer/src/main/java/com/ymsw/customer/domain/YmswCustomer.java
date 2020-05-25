@@ -17,6 +17,7 @@ public class YmswCustomer extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** id编号 */
+    @Excel(name = "编号", type = Excel.Type.EXPORT)
     private Long customerId;
 
     /** 姓名 */
@@ -24,20 +25,24 @@ public class YmswCustomer extends BaseEntity
     private String customerName;
 
     /** 性别 0男 1女 2未知 */
-    @Excel(name = "性别 0男 1女 2未知")
+    @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知")
     private String customerSex;
 
     /** 手机号 */
     @Excel(name = "手机号")
     private String customerPhone;
 
+    /** 出生日期 */
+    @Excel(name = "出生年份")
+    private String customerBirth;
+
     /** 客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单 */
-    @Excel(name = "客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单")
+    @Excel(name = "客户状态", readConverterExp = "0=新申请,1=待跟进,2=已邀约,3=已签约,4=已放款,5=已拒绝,6=资质不符,7=捣乱申请,8=外地申请,9=黑名单")
     private String customerStatus;
 
-    /** 出生日期 */
-    @Excel(name = "出生日期", width = 30)
-    private String customerBirth;
+    /** 归属顾问名字 */
+    @Excel(name = "归属顾问", type = Excel.Type.EXPORT)
+    private String userName;
 
     /** 额度(万) */
     @Excel(name = "额度(万)")
@@ -48,75 +53,72 @@ public class YmswCustomer extends BaseEntity
     private Integer customerStar;
 
     /** 申请时间 */
-    @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
     private Date applyTime;
 
     /** 有无房0无1有2 未知 */
-    @Excel(name = "有无房0无1有2 未知")
+    @Excel(name = "房", readConverterExp = "0=无,1=有,2=未知")
     private String hasHouse;
 
     /** 有无车0无1有2 未知 */
-    @Excel(name = "有无车0无1有2 未知")
+    @Excel(name = "车", readConverterExp = "0=无,1=有,2=未知")
     private String hasCar;
 
     /** 有无保单0无1有2 未知 */
-    @Excel(name = "有无保单0无1有2 未知")
+    @Excel(name = "保单", readConverterExp = "0=无,1=有,2=未知")
     private String hasWarranty;
 
     /** 微粒贷0无1有2未知 */
-    @Excel(name = "微粒贷0无1有2未知")
+    @Excel(name = "微粒贷", readConverterExp = "0=无,1=有,2=未知")
     private String hasWeilidai;
 
     /** 信用卡0无1有2未知 */
-    @Excel(name = "信用卡0无1有2未知")
+    @Excel(name = "信用卡", readConverterExp = "0=无,1=有,2=未知")
     private String hasCreditCard;
 
     /** 公积金0无1有2未知 */
-    @Excel(name = "公积金0无1有2未知")
+    @Excel(name = "公积金", readConverterExp = "0=无,1=有,2=未知")
     private String hasAccumulation;
 
     /** 有无社保0无1有2未知 */
-    @Excel(name = "有无社保0无1有2未知")
+    @Excel(name = "社保", readConverterExp = "0=无,1=有,2=未知")
     private String hasSocial;
 
     /** 逾期0无1有2未知 */
-    @Excel(name = "逾期0无1有2未知")
+    @Excel(name = "逾期", readConverterExp = "0=无,1=有,2=未知")
     private String isOverdue;
 
     /** 客户类型1 新客户2 再分配客户 */
-    @Excel(name = "客户类型1 新客户2 再分配客户")
+    @Excel(name = "客户类型", readConverterExp = "1=新客户,2=再分配")
     private String customerType;
 
     /** 部门id */
-    @Excel(name = "部门id")
+//    @Excel(name = "部门id")
     private Long deptId;
 
     /** 用户id */
-    @Excel(name = "用户id")
+    @Excel(name = "归属顾问id", type = Excel.Type.IMPORT)
     private Long userId;
 
     /** 职业1上班2 做生意3 未知 */
-    @Excel(name = "职业1上班2 做生意3 未知")
+    @Excel(name = "职业", readConverterExp = "1=上班,2=做生意,3=未知")
     private String customerOccupation;
 
     /** 薪资方式1代发2转账3现金4未知 */
-    @Excel(name = "薪资方式1代发2转账3现金4未知")
+    @Excel(name = "薪资方式", readConverterExp = "1=代发,2=转账,3=现金,4=未知")
     private String customerSalary;
 
-    /** null */
-    @Excel(name = "null")
+    /** 渠道 */
+    @Excel(name = "渠道")
     private String channel;
 
-    /** null */
-    @Excel(name = "null", width = 30, dateFormat = "yyyy-MM-dd")
+    /** 最后备注时间 */
+    @Excel(name = "最后备注时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
     private Date remarkTime;
 
-    /** null */
-    @Excel(name = "null", width = 30, dateFormat = "yyyy-MM-dd")
+    /** 分配时间 */
+    @Excel(name = "分配时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
     private Date distributeTime;
-
-    /** 归属顾问名字 */
-    private String userName;
 
     /** 备注（修改客户信息页面的备注） */
     private String remark;

@@ -59,4 +59,12 @@ public interface IYmswCustomerService
      * @return 结果
      */
     public int deleteYmswCustomerById(Long customerId);
+
+    /**
+     * 导入客户数据
+     *
+     * @param ymswCustomerList 客户数据列表
+     * @return 结果
+     */
+    String importYmswCustomer(List<YmswCustomer> ymswCustomerList);
 }

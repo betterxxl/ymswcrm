@@ -23,6 +23,7 @@ import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 客户信息表Controller
@@ -64,7 +65,7 @@ public class YmswCustomerController extends BaseController
     /**
      * 导出客户信息表列表
      */
-    @RequiresPermissions("customer:main:export")
+//    @RequiresPermissions("customer:main:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
@@ -92,7 +93,6 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult addSave(YmswCustomer ymswCustomer)
     {
-
         return ymswCustomerService.insertYmswCustomer(ymswCustomer);
     }
 
@@ -145,5 +145,32 @@ public class YmswCustomerController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(ymswCustomerService.deleteYmswCustomerByIds(ids));
+    }
+
+    /**
+     * 下载模板
+     */
+//    @RequiresPermissions("customer:main:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<YmswCustomer> util = new ExcelUtil<YmswCustomer>(YmswCustomer.class);
+        return util.importTemplateExcel("客户数据");
+    }
+
+    /**
+     * 导入客户数据
+     */
+    @Log(title = "客户信息表", businessType = BusinessType.IMPORT)
+//    @RequiresPermissions("customer:main:import")
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file) throws Exception
+    {
+        ExcelUtil<YmswCustomer> util = new ExcelUtil<>(YmswCustomer.class);
+        List<YmswCustomer> ymswCustomerList = util.importExcel(file.getInputStream());
+        String message = ymswCustomerService.importYmswCustomer(ymswCustomerList);
+        return AjaxResult.success(message);
     }
 }
