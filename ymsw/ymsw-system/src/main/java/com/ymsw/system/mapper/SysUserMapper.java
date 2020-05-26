@@ -124,4 +124,8 @@ public interface SysUserMapper
 
     //修改用户状态为在职时清除离职时间
     public int updateUserTwo(SysUser user);
+
+    //查询为引流客户分配的客户经理名单
+    public List<SysUser> selectUsersForIncomingData(List<Integer> userIds);
+
 }

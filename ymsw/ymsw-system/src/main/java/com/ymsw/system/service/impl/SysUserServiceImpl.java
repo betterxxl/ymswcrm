@@ -486,4 +486,9 @@ public class SysUserServiceImpl implements ISysUserService
         }
         return userMapper.updateUserTwo(user);
     }
+
+    @Override
+    public List<SysUser> selectUsersForIncomingData(List<Integer> userIds) {
+        return userMapper.selectUsersForIncomingData(userIds);
+    }
 }

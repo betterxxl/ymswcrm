@@ -34,7 +34,7 @@ public interface IYmswCustomerService
      * @param ymswCustomer 客户信息表
      * @return 结果
      */
-    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer);
+    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer,String type);
 
     /**
      * 修改客户信息表

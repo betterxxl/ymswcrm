@@ -7,7 +7,8 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-main-add">
-            <div class="form-group">    
+            <div class="form-group">
+                <input type="hidden" name="type"/>
                 <label class="col-sm-3 control-label"><span style="color: red; ">*</span>客户姓名：</label>
                 <div class="col-sm-8">
                     <input name="customerName" class="form-control" type="text" required>
@@ -81,8 +82,9 @@
         });
 
         function submitHandler() {
+            var formData = $.param({'type': "platform"}) + '&'+$('#form-main-add').serialize();
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-main-add').serialize());
+                $.operate.save(prefix + "/add",formData);
             }
         }
 

@@ -73,7 +73,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      * @return 结果
      */
     @Override
-    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer) {
+    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer,String type) {
         //通过手机号查询该手机号的最后一次申请时间
         YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(ymswCustomer.getCustomerPhone());
         //如果存在，就查询字典表里允许天数
@@ -97,7 +97,10 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         ymswCustomer.setApplyTime(DateUtils.getNowDate());  //设置申请时间为当前时间
         ymswCustomer.setCustomerType("1");      //设置客户类型为“新客户”  1新客户  2再分配
         ymswCustomer.setCustomerStatus("0");    //设置客户状态为“新申请”
-        ymswCustomer.setUserId(ShiroUtils.getUserId());//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
+        //1 引流数据新增客户   随机分配客户    2   系统新增客户分配当前添加人
+        if("platform".equals(type)){
+            ymswCustomer.setUserId(ShiroUtils.getUserId());//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
+        }
         ymswCustomer.setDistributeTime(DateUtils.getNowDate()); //设置分配时间
         int i = ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
         if (i > 0) {

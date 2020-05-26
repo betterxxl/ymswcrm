@@ -91,9 +91,9 @@ public class YmswCustomerController extends BaseController
     @Log(title = "客户信息表", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(YmswCustomer ymswCustomer)
+    public AjaxResult addSave(YmswCustomer ymswCustomer,String type)
     {
-        return ymswCustomerService.insertYmswCustomer(ymswCustomer);
+        return ymswCustomerService.insertYmswCustomer(ymswCustomer,type);
     }
 
     /**

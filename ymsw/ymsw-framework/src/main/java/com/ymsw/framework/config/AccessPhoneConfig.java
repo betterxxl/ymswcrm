@@ -9,7 +9,9 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "myconfig")
 /*
-配置类，读取application.yml里配置的无需验证码，可直接登录的手机号
+配置类，
+1 accessphones 读取application.yml里配置的无需验证码，可直接登录的手机号
+2  userIds 读取无需分配客户的员工
  */
 public class AccessPhoneConfig {
 
@@ -21,5 +23,15 @@ public class AccessPhoneConfig {
 
     public void setAccessphones(List<String> accessphones) {
         this.accessphones = accessphones;
+    }
+
+    private  List<Integer> userIds = new ArrayList<>();
+
+    public List<Integer> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<Integer> userIds) {
+        this.userIds = userIds;
     }
 }
