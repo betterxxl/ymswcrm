@@ -87,6 +87,42 @@ public class YmswOrder extends BaseEntity
     @Excel(name = "客户经理id")
     private Long userId;
 
+    /** 客户经理名字 */
+    @Excel(name = "客户经理名字")
+    private String userName;
+
+    /** 部门名字 */
+    @Excel(name = "部门名字")
+    private String deptName;
+
+    /** 客户名字 */
+    @Excel(name = "客户名字")
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public Long getUserId() {
         return userId;
     }

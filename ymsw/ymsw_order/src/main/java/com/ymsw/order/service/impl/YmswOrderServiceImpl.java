@@ -54,6 +54,8 @@ public class YmswOrderServiceImpl implements IYmswOrderService
     @Override
     public int insertYmswOrder(YmswOrder ymswOrder)
     {
+        ymswOrder.setOrderStatus("1");//设置订单状态为已签约  （1 已签约  2 已进件   3 已批款   4 已收款   5 已拒绝）
+        ymswOrder.setAddTime(DateUtils.getNowDate());//设置添加签约日期为当前时间
         return ymswOrderMapper.insertYmswOrder(ymswOrder);
     }
 

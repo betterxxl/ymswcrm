@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">客户姓名</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>客户姓名</label>
                     <div class="col-sm-6">
                         <input id="customerName" class="form-control" type="text" readonly>
                     </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">客户手机号</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>客户手机号</label>
                     <div class="col-sm-6">
                         <input id="phone" class="form-control" type="text" readonly>
                     </div>
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">客户经理</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>客户经理</label>
                     <div class="col-sm-6">
                         <input id="userName" class="form-control" type="text" readonly>
                         <input name="userId" type="text" hidden>
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">合同号</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>合同号</label>
                     <div class="col-sm-6">
                         <input name="contractId" class="form-control" type="text">
                     </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">点数</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>点数</label>
                     <div class="col-sm-6">
                         <div class="input-group">
                             <input name="orderRate" type="text" class="form-control">
@@ -81,7 +81,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">诚意金</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>诚意金</label>
                     <div class="col-sm-6">
                         <div class="input-group">
                             <input name="sincerityMoney" class="form-control" type="text">
@@ -92,7 +92,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">诚意金收款方式</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>诚意金收款方式</label>
                     <div class="col-sm-6">
                         <select name="sincerityPayMethod" class="form-control m-b"
                                 th:with="type=${@dict.getType('sincerity_pay_method')}">
@@ -138,15 +138,40 @@
     $("#form-main-add").validate({
         onkeyup: false,
         rules: {
-            customerPhone: {
-                isPhone: true
+            contractId: {
+                required:true
+            },
+            orderRate: {
+                required:true
+            },
+            sincerityMoney: {
+                required:true
+            },
+            sincerityPayMethod: {
+                required:true
+            }
+        },
+        messages: {
+            "contractId": {
+                required: "请填写合同编号"
+            },
+            "orderRate":{
+                required: "请填写点数"
+            },
+            "sincerityMoney":{
+                required: "请填写诚意金"
+            },
+            "sincerityPayMethod":{
+                required: "请选择收款方式"
             }
         },
         focusCleanup: true
     });
 
+    //保存签约进件
     function submitHandler() {
-        if ($.validate.form()) {
+        var customerId = $("input[name='customerId']").val();
+        if ($.validate.form() && customerId != '') {
             $.operate.saveTab(prefix + "/add", $('#form-main-add').serialize());
         }
     }
@@ -162,6 +187,8 @@
             $("#phone").val("");
             $("#userName").val("");
             $("#deptName").val("");
+            $("input[name='customerId']").val("");
+            $("input[name='userId']").val("");
         } else {
             $.ajax({
                 type: "GET",
@@ -222,9 +249,8 @@
             }
         }
         $("#uploadfile").fileinput({
-            language: 'zh', //设置语言
             uploadUrl: ctx + "common/uploadFiles", //上传的地址，改成自己的
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            allowedFileExtensions: ['jpg', 'gpeg', 'png'],//接收的文件后缀
             initialPreviewAsData:true,
             initialPreview:preList,//预览图片
             uploadAsync: true, //默认异步上传
@@ -232,14 +258,12 @@
             showRemove : false, //显示移除按钮
             showPreview : true, //是否显示预览
             showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
+            browseClass: "btn btn-warning", //按钮样式
             dropZoneEnabled: false,//是否显示拖拽区域
-            maxFileCount: 4, //表示允许同时上传的最大文件个数
+            maxFileCount: 10, //表示允许同时上传的最大文件个数
             maxFileSize:10 *1024 *1024,
-            messages: {maxFileSize:'文件上传的最大大小为 10MB',acceptFileTypes:'此文件是不支持的图片格式'    },
             enctype: 'multipart/form-data',
             validateInitialCount:true,
-            msgFilesTooMany:5,
             autoReplace:false,
             initialPreviewConfig:initialPreviewConfig,
             uploadExtraData: function (previewId, index) {   //传参
