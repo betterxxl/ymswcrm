@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">客户搜索</label>
+                    <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>客户搜索</label>
                     <div class="col-sm-6">
                         <input id="customerPhone" onblur="getCustomerInfo()" class="form-control"
                                type="text"
@@ -173,6 +173,8 @@
         var customerId = $("input[name='customerId']").val();
         if ($.validate.form() && customerId != '') {
             $.operate.saveTab(prefix + "/add", $('#form-main-add').serialize());
+        }else {
+            $.modal.msgError("请输入正确的手机号");
         }
     }
 
