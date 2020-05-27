@@ -83,7 +83,19 @@ public class YmswOrder extends BaseEntity
     @Excel(name = "订单备注")
     private String orderRemark;
 
-    public void setOrderId(Long orderId) 
+    /** 客户经理id */
+    @Excel(name = "客户经理id")
+    private Long userId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setOrderId(Long orderId)
     {
         this.orderId = orderId;
     }

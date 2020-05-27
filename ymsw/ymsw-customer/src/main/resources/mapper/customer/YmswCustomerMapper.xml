@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="distributeTime"    column="distribute_time"    />
         <result property="userName"    column="user_name"    />
         <result property="remark" column="remark_content"    />
+        <result property="deptName" column="dept_name"    />
     </resultMap>
 
     <sql id="selectYmswCustomerVo">
@@ -195,4 +196,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{customerId}
     </foreach>
 </update>
+
+<select id="getCustomerInfo" parameterType="String" resultMap="YmswCustomerResult">
+    select customer_id,customer_name,customer_phone,u.user_name,d.dept_name,yc.user_id from ymsw_customer yc
+    left join sys_user u on u.user_id = yc.user_id
+    left join sys_dept d on d.dept_id = u.dept_id
+    where customer_phone = #{customerPhone} order by apply_time desc limit 1
+</select>
 </mapper>

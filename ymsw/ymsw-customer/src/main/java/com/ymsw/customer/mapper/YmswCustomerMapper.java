@@ -67,5 +67,11 @@ public interface YmswCustomerMapper
      */
     public YmswCustomer selectLastYmswCustomerByPhone(String customerPhone);
 
+    //批量修改客户的归属顾问为空
     public int updateUseridToNull(List<String> customerIds);
+
+    /**
+     * 根据客户电话号码查询客户信息（客户表里可能存在多条相同的电话号码，取最后一次添加的客户信息【即申请时间是最大的】）
+     */
+    public YmswCustomer getCustomerInfo(String customerPhone);
 }

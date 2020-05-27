@@ -123,6 +123,17 @@ public class YmswCustomer extends BaseEntity
     /** 备注（修改客户信息页面的备注） */
     private String remark;
 
+    /** 部门名字 */
+    private String deptName;
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     @Override
     public String getRemark() {
         return remark;

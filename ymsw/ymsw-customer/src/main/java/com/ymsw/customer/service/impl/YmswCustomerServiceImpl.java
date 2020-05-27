@@ -217,4 +217,16 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         }
         return successMsg.toString();
     }
+
+    /**
+     * 根据客户电话号码查询客户信息（客户表里可能存在多条相同的电话号码，取最后一次添加的客户信息【即申请时间是最大的】）
+     */
+    @Override
+    public YmswCustomer getCustomerInfo(String customerPhone) {
+        YmswCustomer ymswCustomer = ymswCustomerMapper.getCustomerInfo(customerPhone);
+        if (StringUtils.isNull(ymswCustomer)){
+            throw new BusinessException("客户不存在！");
+        }
+        return ymswCustomer;
+    }
 }

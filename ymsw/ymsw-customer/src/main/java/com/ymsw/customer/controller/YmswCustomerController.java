@@ -173,4 +173,16 @@ public class YmswCustomerController extends BaseController
         String message = ymswCustomerService.importYmswCustomer(ymswCustomerList);
         return AjaxResult.success(message);
     }
+
+    /**
+     * 根据客户电话号码查询客户信息（客户表里可能存在多条相同的电话号码，取最后一次添加的客户信息【即申请时间是最大的】）
+     */
+//    @RequiresPermissions("customer:main:getCustomerInfo")
+    @GetMapping("/getCustomerInfo/{customerPhone}")
+    @ResponseBody
+    public AjaxResult getCustomerInfo(@PathVariable("customerPhone") String customerPhone)
+    {
+        YmswCustomer ymswCustomer = ymswCustomerService.getCustomerInfo(customerPhone);
+        return AjaxResult.success(ymswCustomer);
+    }
 }

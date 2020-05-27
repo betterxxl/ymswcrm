@@ -2,114 +2,100 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('订单信息表列表')" />
+    <style>
+        #bootstrap-table>thead>tr {background-color: #f94a35;color: white}
+    </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <p>客户id：</p>
-                                <input type="text" name="customerId"/>
-                            </li>
-                            <li>
-                                <p>合同id：</p>
-                                <input type="text" name="contractId"/>
-                            </li>
-                            <li>
-                                <p>合同图片路径：</p>
-                                <input type="text" name="contractPath"/>
-                            </li>
-                            <li class="select-time">
-                                <p>添加签约日期：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginAddTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endAddTime]"/>
-                            </li>
-                            <li>
-                                <p>订单状态1 已签约2 已进件3 已批款4 已收款5 已拒绝：</p>
-                                <select name="orderStatus" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>批款额度(万元)：</p>
-                                <input type="text" name="allowAmount"/>
-                            </li>
-                            <li>
-                                <p>创收(元)：</p>
-                                <input type="text" name="incomeGeneration"/>
-                            </li>
-                            <li>
-                                <p>费率(%)：</p>
-                                <input type="text" name="orderRate"/>
-                            </li>
-                            <li>
-                                <p>诚意金(元)：</p>
-                                <input type="text" name="sincerityMoney"/>
-                            </li>
-                            <li>
-                                <p>诚意金收款方式1 微信    2 支付宝  3 转账  4 现金：</p>
-                                <select name="sincerityPayMethod" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>进件渠道：</p>
-                                <input type="text" name="incomingChannel"/>
-                            </li>
-                            <li>
-                                <p>渠道费(元)：</p>
-                                <input type="text" name="channelFee"/>
-                            </li>
-                            <li>
-                                <p>进件类型1信用贷2房抵押3车抵押4合作单：</p>
-                                <select name="incomingType" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>进件助理1 邓娟2 黄文莎3 陈梦颖4 李紫馨5 其他：</p>
-                                <select name="incomingAssistant" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>银行经理：</p>
-                                <input type="text" name="bankManager"/>
-                            </li>
-                            <li>
-                                <p>订单备注：</p>
-                                <input type="text" name="orderRemark"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
+                <form id="formId" class="form-inline">
+                    <div class="row">
+                        <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件渠道</div>
+                            <select name="customerStar" th:with="type=${@dict.getType('incoming_channel')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件助理</div>
+                            <select name="customerType" th:with="type=${@dict.getType('incoming_assistant')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件类型</div>
+                            <select name="customerStatus" th:with="type=${@dict.getType('incoming_type')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">订单状态</div>
+                            <select name="params[noDays]" th:with="type=${@dict.getType('order_status')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
+                            <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户经理</div>
+                            <select name="customerType" th:with="type=${@dict.getType('customer_type')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">进件开始时间</div>
+                            <input type="text" class="time-input form-control" id="startTime" name="params[beginRemarkTime]" />
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">进件结束时间</div>
+                            <input type="text" class="time-input form-control" id="endTime" name="params[endRemarkTime]"/>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="input-group col-xs-2" style="margin-left: 5px">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">客户姓名</div>
+                            <input type="text" class="form-control" name="customerName">
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                            <input type="text" class="form-control" name="customerPhone">
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        </div>
+
                     </div>
                 </form>
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="order:main:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-info" onclick="$.operate.addTab()" shiro:hasPermission="order:main:add">
+                    <i class="fa fa-plus"></i> 添加签约
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="order:main:edit">
+                <!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="order:main:edit">
                     <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="order:main:remove">
+                </a>-->
+                <!--<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="order:main:remove">
                     <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="order:main:export">
+                </a>-->
+                <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="order:main:export">
                     <i class="fa fa-download"></i> 导出
-                 </a>
+                </a>-->
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -129,80 +115,67 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "订单信息表",
-                columns: [{
-                    checkbox: true
-                },
+                sortName: "addTime",
+                sortOrder: "desc",
+                striped: true,
+                showToggle: false,
+                modalName: "签约进件",
+                columns: [
                 {
                     field : 'orderId', 
-                    title : '订单号',
-                    visible: false
+                    title : '编号'
                 },
                 {
-                    field : 'customerId', 
-                    title : '客户id'
+                    field : 'deptName',
+                    title : '部门'
                 },
                 {
-                    field : 'contractId', 
-                    title : '合同id'
+                    field : 'userName',
+                    title : '业务经理'
                 },
                 {
-                    field : 'contractPath', 
-                    title : '合同图片路径'
+                    field : 'customerName',
+                    title : '客户姓名'
                 },
                 {
-                    field : 'addTime', 
-                    title : '添加签约日期'
-                },
-                {
-                    field : 'orderStatus', 
-                    title : '订单状态1 已签约2 已进件3 已批款4 已收款5 已拒绝'
-                },
-                {
-                    field : 'allowAmount', 
-                    title : '批款额度(万元)'
-                },
-                {
-                    field : 'incomeGeneration', 
-                    title : '创收(元)'
-                },
-                {
-                    field : 'orderRate', 
-                    title : '费率(%)'
-                },
-                {
-                    field : 'sincerityMoney', 
-                    title : '诚意金(元)'
-                },
-                {
-                    field : 'sincerityPayMethod', 
-                    title : '诚意金收款方式1 微信    2 支付宝  3 转账  4 现金'
-                },
-                {
-                    field : 'incomingChannel', 
+                    field : 'incomingChannel',
                     title : '进件渠道'
                 },
                 {
-                    field : 'channelFee', 
-                    title : '渠道费(元)'
+                    field : 'orderStatus',
+                    title : '订单状态'
                 },
                 {
-                    field : 'incomingType', 
-                    title : '进件类型1信用贷2房抵押3车抵押4合作单'
+                    field : 'allowAmount',
+                    title : '批款额度(万元)'
                 },
                 {
-                    field : 'incomingAssistant', 
-                    title : '进件助理1 邓娟2 黄文莎3 陈梦颖4 李紫馨5 其他'
+                    field : 'incomeGeneration',
+                    title : '创收(元)'
                 },
                 {
-                    field : 'bankManager', 
-                    title : '银行经理'
+                    field : 'sincerityMoney',
+                    title : '诚意金(元)'
                 },
                 {
-                    field : 'orderRemark', 
-                    title : '订单备注'
+                    field : 'orderRate',
+                    title : '点数(%)'
                 },
                 {
+                    field : 'contractId', 
+                    title : '合同编号'
+                },
+                {
+                    field : 'addTime',
+                    title : '签约时间',
+                    sortable: true
+                },
+                {
+                    field : 'incomingTime',
+                    title : '进件时间',
+                    sortable: true
+                }
+                /*{
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
@@ -211,7 +184,7 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                }*/]
             };
             $.table.init(options);
         });

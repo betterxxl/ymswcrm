@@ -76,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="incomingAssistant != null  and incomingAssistant != ''">incoming_assistant,</if>
             <if test="bankManager != null  and bankManager != ''">bank_manager,</if>
             <if test="orderRemark != null  and orderRemark != ''">order_remark,</if>
+            <if test="userId != null ">user_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="customerId != null ">#{customerId},</if>
@@ -95,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="incomingAssistant != null  and incomingAssistant != ''">#{incomingAssistant},</if>
             <if test="bankManager != null  and bankManager != ''">#{bankManager},</if>
             <if test="orderRemark != null  and orderRemark != ''">#{orderRemark},</if>
+            <if test="userId != null ">#{userId},</if>
          </trim>
     </insert>
 
