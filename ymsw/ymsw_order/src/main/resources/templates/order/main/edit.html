@@ -1,145 +1,154 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('修改订单信息表')" />
-    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: header('修改订单信息表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-main-edit" th:object="${ymswOrder}">
-            <input name="orderId" th:field="*{orderId}" type="hidden">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">客户id：</label>
-                <div class="col-sm-8">
-                    <input name="customerId" th:field="*{customerId}" class="form-control" type="text" required>
-                </div>
+<div class="ibox-content" style="background-color: #efefef">
+    <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
+        <div class="form-group">
+            <label for="exampleInputName2">合同编号：</label>
+            <input type="text" class="form-control" id="exampleInputName2" readonly th:value="${ymswOrder.orderId}">
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+            <label for="exampleInputEmail2">客户姓名：</label>
+            <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswOrder.customerName}">
+        </div>
+
+        <div class="form-group" style="margin-left: 20px">
+            <label for="exampleInputEmail2">进件日期：</label>
+            <input type="text" class="form-control" id="exampleInputEmail2" readonly
+                   th:value="${#dates.format(ymswOrder.incomingTime, 'yyyy-MM-dd HH:mm')}">
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+            <label for="exampleInputEmail2">诚意金：</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswOrder.sincerityMoney}">
+                <div class="input-group-addon">元</div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">合同id：</label>
-                <div class="col-sm-8">
-                    <input name="contractId" th:field="*{contractId}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">合同图片路径：</label>
-                <div class="col-sm-8">
-                    <input name="contractPath" th:field="*{contractPath}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">添加签约日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input name="addTime" th:value="${#dates.format(ymswOrder.addTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">订单状态1 已签约2 已进件3 已批款4 已收款5 已拒绝：</label>
-                <div class="col-sm-8">
-                    <select name="orderStatus" class="form-control m-b">
-                        <option value="">所有</option>
+        </div>
+    </div>
+    <div class="search-collapse" style="padding:10px 10px;">
+        <form class="form-inline" id="form-main-edit" th:object="${ymswOrder}">
+            <input name="customerId" th:field="*{orderId}" type="hidden">
+            <div>
+                <div class="input-group col-xs-2">
+                    <div class="input-group-addon" style="background-color: #efefef;">进件助理</div>
+                    <select name="incomingAssistant" class="form-control"
+                            th:with="type=${@dict.getType('incoming_assistant')}">
+                        <option value="">-请选择-</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
+                                th:field="*{incomingAssistant}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">批款额度(万元)：</label>
-                <div class="col-sm-8">
-                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">创收(元)：</label>
-                <div class="col-sm-8">
-                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">费率(%)：</label>
-                <div class="col-sm-8">
-                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">诚意金(元)：</label>
-                <div class="col-sm-8">
-                    <input name="sincerityMoney" th:field="*{sincerityMoney}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">诚意金收款方式1 微信    2 支付宝  3 转账  4 现金：</label>
-                <div class="col-sm-8">
-                    <select name="sincerityPayMethod" class="form-control m-b">
-                        <option value="">所有</option>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">进件渠道</div>
+                    <select name="incomingChannel" class="form-control"
+                            th:with="type=${@dict.getType('incoming_channel')}">
+                        <option value="">-请选择-</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
+                                th:field="*{incomingChannel}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">进件渠道：</label>
-                <div class="col-sm-8">
-                    <input name="incomingChannel" th:field="*{incomingChannel}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">渠道费(元)：</label>
-                <div class="col-sm-8">
-                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">进件类型1信用贷2房抵押3车抵押4合作单：</label>
-                <div class="col-sm-8">
-                    <select name="incomingType" class="form-control m-b">
-                        <option value="">所有</option>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">进件类型</div>
+                    <select name="incomingType" class="form-control"
+                            th:with="type=${@dict.getType('incoming_type')}">
+                        <option value="">-请选择-</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
+                                th:field="*{incomingType}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">进件助理1 邓娟2 黄文莎3 陈梦颖4 李紫馨5 其他：</label>
-                <div class="col-sm-8">
-                    <select name="incomingAssistant" class="form-control m-b">
-                        <option value="">所有</option>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">订单状态</div>
+                    <select name="orderStatus" class="form-control"
+                            th:with="type=${@dict.getType('order_status')}">
+                        <option value="">-请选择-</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
+                                th:field="*{orderStatus}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">客户经理</div>
+                    <select name="userId" class="form-control" >
+                        <option value="">-请选择-</option>
+                        <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}" th:selected="*{userId} eq ${user.userId}"></option>
+                    </select>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">银行经理：</label>
-                <div class="col-sm-8">
+
+            <div style="margin-top: 20px">
+                <div class="input-group col-xs-2">
+                    <div class="input-group-addon" style="background-color: #efefef;">银行经理</div>
                     <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text">
                 </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">点数</div>
+                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="text">
+                    <div class="input-group-addon">%</div>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">批款额度</div>
+                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="text">
+                    <div class="input-group-addon">万</div>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">创收</div>
+                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="text">
+                    <div class="input-group-addon">元</div>
+                </div>
+                <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;">渠道费</div>
+                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="text">
+                    <div class="input-group-addon">元</div>
+                </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">订单备注：</label>
-                <div class="col-sm-8">
-                    <input name="orderRemark" th:field="*{orderRemark}" class="form-control" type="text">
+            <div class="input-group" style="margin-top: 10px;width: 100%">
+                <label for="exampleInputName2">备注：</label>
+                <textarea class="form-control" rows="2" name="orderRemark" th:text="*{orderRemark}"></textarea>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                            class="fa fa-check"></i>保 存
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                            class="fa fa-reply-all"></i>关 闭
+                    </button>
                 </div>
             </div>
         </form>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script type="text/javascript">
-        var prefix = ctx + "order/main";
-        $("#form-main-edit").validate({
-            focusCleanup: true
-        });
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: datetimepicker-js"/>
+<script type="text/javascript">
+    var prefix = ctx + "order/main";
+    $("#form-main-edit").validate({
+        focusCleanup: true,
+        onkeyup: false,
+        rules: {
+            orderRate: {min:0},
+            bankManager: {isName:true},
+            allowAmount: {min:0},
+            incomeGeneration: {min:0},
+            channelFee: {min:0}
+        },
+        messages: {
+            orderRate:{min:"不能小于0"},
+            bankManager:{isName:"请填写名字"},
+            allowAmount:{min:"不能小于0"},
+            incomeGeneration:{min:"不能小于0"},
+            channelFee:{min:"不能小于0"}
+        },
+    });
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-main-edit').serialize());
-            }
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize());
         }
-
-        $("input[name='addTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-    </script>
+    }
+</script>
 </body>
 </html>

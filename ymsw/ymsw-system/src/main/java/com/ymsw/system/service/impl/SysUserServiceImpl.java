@@ -491,4 +491,15 @@ public class SysUserServiceImpl implements ISysUserService
     public List<SysUser> selectUsersForIncomingData(List<Integer> userIds) {
         return userMapper.selectUsersForIncomingData(userIds);
     }
+
+    /**
+     * 根据数据范围查询所有在职员工列表，除了超级管理员
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectUsers(SysUser sysUser)
+    {
+        return userMapper.selectUsers(sysUser);
+    }
 }

@@ -268,4 +268,17 @@ public class SysDeptServiceImpl implements ISysDeptService
         }
         return UserConstants.DEPT_NAME_UNIQUE;
     }
+
+    /**
+     * 根据数据范围查询部门列表
+     *
+     * @param dept 部门信息
+     * @return 结果
+     */
+    @Override
+    @DataScope(deptAlias = "d")
+    public List<SysDept> selectDepts(SysDept dept)
+    {
+        return deptMapper.selectDepts(dept);
+    }
 }

@@ -45,16 +45,16 @@
                     <div class="row">
                         <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
-                            <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" class="form-control">
+                            <select name="customerStar" class="form-control">
                                 <option value="">-不限-</option>
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户经理</div>
-                            <select name="customerType" th:with="type=${@dict.getType('customer_type')}" class="form-control">
+                            <select name="customerType" class="form-control">
                                 <option value="">-不限-</option>
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
@@ -107,6 +107,7 @@
         var editFlag = [[${@permission.hasPermi('order:main:edit')}]];
         var removeFlag = [[${@permission.hasPermi('order:main:remove')}]];
         var orderStatus = [[${@dict.getType('order_status')}]];
+        var incomingChannel = [[${@dict.getType('incoming_channel')}]];
         var prefix = ctx + "order/main";
 
         $(function() {
@@ -121,6 +122,11 @@
                 striped: true,
                 showToggle: false,
                 modalName: "签约进件",
+                onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
+                    if (field == 'customerName') {
+                        $.operate.editTab(row.orderId);
+                    }
+                },
                 columns: [
                 {
                     field : 'orderId', 
@@ -130,19 +136,33 @@
                 },
                 {
                     field : 'deptName',
-                    title : '部门'
+                    title : '部门',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'userName',
-                    title : '业务经理'
+                    title : '业务经理',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'customerName',
-                    title : '客户姓名'
+                    title : '客户姓名',
+                    halign: 'center',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return "<span style='color: #b60000;'>"+value+"</span>";
+                    }
                 },
                 {
                     field : 'incomingChannel',
-                    title : '进件渠道'
+                    title : '进件渠道',
+                    halign: 'center',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(incomingChannel, value);
+                    }
                 },
                 {
                     field : 'orderStatus',
@@ -153,33 +173,57 @@
                 },
                 {
                     field : 'allowAmount',
-                    title : '批款额度(万元)'
+                    title : '批款额度(万元)',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'incomeGeneration',
-                    title : '创收(元)'
+                    title : '创收(元)',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'sincerityMoney',
-                    title : '诚意金(元)'
+                    title : '诚意金(元)',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'orderRate',
-                    title : '点数(%)'
+                    title : '点数(%)',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'contractId', 
-                    title : '合同编号'
+                    title : '合同编号',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'addTime',
                     title : '签约时间',
-                    sortable: true
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if(value != null){
+                            return value.substring(0,16);
+                        }
+                    }
                 },
                 {
                     field : 'incomingTime',
                     title : '进件时间',
-                    sortable: true
+                    sortable: true,
+                    halign: 'center',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        if(value != null){
+                            return value.substring(0,16);
+                        }
+                    }
                 }
                 /*{
                     title: '操作',

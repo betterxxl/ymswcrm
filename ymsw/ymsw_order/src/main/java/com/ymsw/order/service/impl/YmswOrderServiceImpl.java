@@ -1,7 +1,10 @@
 package com.ymsw.order.service.impl;
 
 import java.util.List;
+
+import com.ymsw.common.annotation.DataScope;
 import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ymsw.order.mapper.YmswOrderMapper;
@@ -40,6 +43,7 @@ public class YmswOrderServiceImpl implements IYmswOrderService
      * @return 订单信息表
      */
     @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
     public List<YmswOrder> selectYmswOrderList(YmswOrder ymswOrder)
     {
         return ymswOrderMapper.selectYmswOrderList(ymswOrder);
@@ -68,6 +72,15 @@ public class YmswOrderServiceImpl implements IYmswOrderService
     @Override
     public int updateYmswOrder(YmswOrder ymswOrder)
     {
+        String orderStatus = ymswOrder.getOrderStatus();
+        //如果订单状态是“已进件”，就设置进件时间为当前时间，否则修改更新时间为当前时间。
+        if (StringUtils.isNotNull(orderStatus)){
+            if ("2".equals(orderStatus)){   //订单状态 1 已签约 2 已进件 3 已批款 4 已收款 5 已拒绝
+                ymswOrder.setIncomingTime(DateUtils.getNowDate());
+            }else {
+                ymswOrder.setUpdateTime(DateUtils.getNowDate());
+            }
+        }
         return ymswOrderMapper.updateYmswOrder(ymswOrder);
     }
 

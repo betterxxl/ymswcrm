@@ -40,7 +40,6 @@
         <dependency>
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-common</artifactId>
-
         </dependency>
 
     </dependencies>

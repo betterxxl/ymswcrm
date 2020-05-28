@@ -187,4 +187,10 @@ public interface ISysUserService
      * @return
      */
     public List<SysUser> selectUsersForIncomingData(List<Integer> userIds);
+
+    /**
+     * 根据数据范围查询所有在职员工列表，除了超级管理员
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectUsers(SysUser sysUser);
 }

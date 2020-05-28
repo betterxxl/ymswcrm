@@ -99,6 +99,18 @@ public class YmswOrder extends BaseEntity
     @Excel(name = "客户名字")
     private String customerName;
 
+    /** 进件日期 */
+    @Excel(name = "进件日期")
+    private Date incomingTime;
+
+    public Date getIncomingTime() {
+        return incomingTime;
+    }
+
+    public void setIncomingTime(Date incomingTime) {
+        this.incomingTime = incomingTime;
+    }
+
     public String getCustomerName() {
         return customerName;
     }

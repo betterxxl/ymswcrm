@@ -92,4 +92,12 @@ public interface ISysDeptService
      * @return 结果
      */
     public String checkDeptNameUnique(SysDept dept);
+
+    /**
+     * 根据数据范围查询部门列表
+     *
+     * @param dept 部门信息
+     * @return 结果
+     */
+    public List<SysDept> selectDepts(SysDept dept);
 }

@@ -1,6 +1,13 @@
 package com.ymsw.order.controller;
 
 import java.util.List;
+
+import com.ymsw.framework.config.AccessPhoneConfig;
+import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.system.domain.SysDept;
+import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.service.ISysDeptService;
+import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +40,23 @@ public class YmswOrderController extends BaseController
 
     @Autowired
     private IYmswOrderService ymswOrderService;
+    @Autowired
+    private ISysUserService sysUserService;
+    @Autowired
+    private ISysDeptService sysDeptService;
+    @Autowired
+    AccessPhoneConfig accessPhoneConfig;
 
     @RequiresPermissions("order:main:view")
     @GetMapping()
-    public String main()
+    public String main(ModelMap mmap)
     {
+        SysUser sysUser = ShiroUtils.getSysUser();
+        List<SysUser> sysUsers = sysUserService.selectUsers(sysUser);//根据数据范围查询所有在职员工列表，除了超级管理员
+        SysDept dept = sysUser.getDept();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(dept);//根据数据范围查询部门列表
+        mmap.put("sysUsers", sysUsers);
+        mmap.put("sysDepts", sysDepts);
         return prefix + "/main";
     }
 
@@ -94,8 +113,10 @@ public class YmswOrderController extends BaseController
     @GetMapping("/edit/{orderId}")
     public String edit(@PathVariable("orderId") Long orderId, ModelMap mmap)
     {
-        YmswOrder ymswOrder = ymswOrderService.selectYmswOrderById(orderId);
+        YmswOrder ymswOrder = ymswOrderService.selectYmswOrderById(orderId);//通过订单id查询该订单的详情
+        List<SysUser> sysUsers = sysUserService.selectUsersForIncomingData(accessPhoneConfig.getUserIds());//查询可分配客户的业务经理列表
         mmap.put("ymswOrder", ymswOrder);
+        mmap.put("sysUsers", sysUsers);
         return prefix + "/edit";
     }
 
