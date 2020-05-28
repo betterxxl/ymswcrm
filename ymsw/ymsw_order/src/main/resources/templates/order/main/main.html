@@ -14,14 +14,14 @@
                     <div class="row">
                         <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件渠道</div>
-                            <select name="customerStar" th:with="type=${@dict.getType('incoming_channel')}" class="form-control">
+                            <select name="incomingChannel" th:with="type=${@dict.getType('incoming_channel')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件助理</div>
-                            <select name="customerType" th:with="type=${@dict.getType('incoming_assistant')}" class="form-control">
+                            <select name="incomingAssistant" th:with="type=${@dict.getType('incoming_assistant')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
@@ -29,14 +29,14 @@
 
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">进件类型</div>
-                            <select name="customerStatus" th:with="type=${@dict.getType('incoming_type')}" class="form-control">
+                            <select name="incomingType" th:with="type=${@dict.getType('incoming_type')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">订单状态</div>
-                            <select name="params[noDays]" th:with="type=${@dict.getType('order_status')}" class="form-control">
+                            <select name="orderStatus" th:with="type=${@dict.getType('order_status')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
@@ -45,35 +45,35 @@
                     <div class="row">
                         <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
-                            <select name="customerStar" class="form-control">
+                            <select name="params[deptId]" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户经理</div>
-                            <select name="customerType" class="form-control">
+                            <select name="userId" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">进件开始时间</div>
-                            <input type="text" class="time-input form-control" id="startTime" name="params[beginRemarkTime]" />
+                            <input type="text" class="time-input form-control" id="startTime" name="params[beginincomingTime]" />
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">进件结束时间</div>
-                            <input type="text" class="time-input form-control" id="endTime" name="params[endRemarkTime]"/>
+                            <input type="text" class="time-input form-control" id="endTime" name="params[endincomingTime]"/>
                         </div>
                     </div><br>
                     <div class="row">
                         <div class="input-group col-xs-2" style="margin-left: 5px">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">客户姓名</div>
-                            <input type="text" class="form-control" name="customerName">
+                            <input type="text" class="form-control" name="params[customerName]">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
-                            <input type="text" class="form-control" name="customerPhone">
+                            <input type="text" class="form-control" name="params[customerPhone]">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

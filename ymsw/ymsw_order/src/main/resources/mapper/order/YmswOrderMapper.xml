@@ -43,26 +43,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     <select id="selectYmswOrderList" parameterType="YmswOrder" resultMap="YmswOrderResult">
         <include refid="queryYmswOrderVo"/>
-<!--        <where>  -->
         where 1=1
-            <if test="customerId != null "> and customer_id = #{customerId}</if>
-            <if test="contractId != null "> and contract_id = #{contractId}</if>
-            <if test="contractPath != null  and contractPath != ''"> and contract_path = #{contractPath}</if>
-            <if test="addTime != null "> and add_time = #{addTime}</if>
-            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
-            <if test="allowAmount != null "> and allow_amount = #{allowAmount}</if>
-            <if test="incomeGeneration != null "> and income_generation = #{incomeGeneration}</if>
-            <if test="orderRate != null "> and order_rate = #{orderRate}</if>
-            <if test="sincerityMoney != null "> and sincerity_money = #{sincerityMoney}</if>
-            <if test="sincerityPayMethod != null  and sincerityPayMethod != ''"> and sincerity_pay_method = #{sincerityPayMethod}</if>
-            <if test="incomingChannel != null  and incomingChannel != ''"> and incoming_channel = #{incomingChannel}</if>
-            <if test="channelFee != null "> and channel_fee = #{channelFee}</if>
-            <if test="incomingType != null  and incomingType != ''"> and incoming_type = #{incomingType}</if>
-            <if test="incomingAssistant != null  and incomingAssistant != ''"> and incoming_assistant = #{incomingAssistant}</if>
-            <if test="bankManager != null  and bankManager != ''"> and bank_manager = #{bankManager}</if>
-            <if test="orderRemark != null  and orderRemark != ''"> and order_remark = #{orderRemark}</if>
-            <if test="userId != null  and userId != ''"> and yo.user_id = #{userId}</if>
-<!--        </where>-->
+        <if test="customerId != null "> and customer_id = #{customerId}</if>
+        <if test="contractId != null "> and contract_id = #{contractId}</if>
+        <if test="contractPath != null  and contractPath != ''"> and contract_path = #{contractPath}</if>
+        <if test="addTime != null "> and add_time = #{addTime}</if>
+        <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+        <if test="allowAmount != null "> and allow_amount = #{allowAmount}</if>
+        <if test="incomeGeneration != null "> and income_generation = #{incomeGeneration}</if>
+        <if test="orderRate != null "> and order_rate = #{orderRate}</if>
+        <if test="sincerityMoney != null "> and sincerity_money = #{sincerityMoney}</if>
+        <if test="sincerityPayMethod != null  and sincerityPayMethod != ''"> and sincerity_pay_method = #{sincerityPayMethod}</if>
+        <if test="incomingChannel != null  and incomingChannel != ''"> and incoming_channel = #{incomingChannel}</if>
+        <if test="channelFee != null "> and channel_fee = #{channelFee}</if>
+        <if test="incomingType != null  and incomingType != ''"> and incoming_type = #{incomingType}</if>
+        <if test="incomingAssistant != null  and incomingAssistant != ''"> and incoming_assistant = #{incomingAssistant}</if>
+        <if test="bankManager != null  and bankManager != ''"> and bank_manager = #{bankManager}</if>
+        <if test="orderRemark != null  and orderRemark != ''"> and order_remark = #{orderRemark}</if>
+        <if test="userId != null  and userId != ''"> and yo.user_id = #{userId}</if>
+        <if test="params.beginincomingTime != null and params.beginincomingTime != ''"><!-- 进件开始时间检索 -->
+            and date_format(yo.incoming_time,'%y%m%d') &gt;= date_format(#{params.beginincomingTime},'%y%m%d')
+        </if>
+        <if test="params.endincomingTime != null and params.endincomingTime != ''"><!-- 进件结束时间检索 -->
+            and date_format(yo.incoming_time,'%y%m%d') &lt;= date_format(#{params.endincomingTime},'%y%m%d')
+        </if>
+        <!-- 当传入的为部门id时，查询改部门及以下的所有数据 -->
+        <!-- select dept_id from sys_dept where find_in_set(#{params.deptId}, ancestors) 是查询该部门的子部门id -->
+        <if test="params.deptId != null  and params.deptId != ''"> and (d.dept_id in (select dept_id from sys_dept where find_in_set(#{params.deptId}, ancestors)) or d.dept_id = #{params.deptId})</if>
+        <if test="params.customerName != null  and params.customerName != ''"> and yc.customer_name like concat('%', #{params.customerName}, '%') </if>
+        <if test="params.customerPhone != null  and params.customerPhone != ''"> and yc.customer_phone like concat('%', #{params.customerPhone}, '%') </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
     </select>
