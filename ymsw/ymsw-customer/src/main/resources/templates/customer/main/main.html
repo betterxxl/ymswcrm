@@ -139,7 +139,8 @@
                 showToggle: false,
                 modalName: "客户详情",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
-                    if (field == 'customerName' || field == 'customerSex' || field == 'customerBirth' || field == 'customerQuota' || field == 'customerStatus') {
+                    // if (field == 'customerName' || field == 'customerSex' || field == 'customerBirth' || field == 'customerQuota' || field == 'customerStatus') {
+                    if (field == 'customerName') {
                         $.operate.editTab(row.customerId);
                     }
                 },
@@ -158,7 +159,10 @@
                     title : '姓名',
                     halign: 'center',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    formatter: function(value, row, index) {
+                        return "<span style='color: #b60000;'>"+value+"</span>";
+                    }
                 },
                 {
                     field : 'customerSex',
