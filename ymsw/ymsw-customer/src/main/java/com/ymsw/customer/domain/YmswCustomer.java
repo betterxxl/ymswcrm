@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ymsw.common.annotation.Excel;
 import com.ymsw.common.core.domain.BaseEntity;
+
+import javax.validation.constraints.*;
 import java.util.Date;
 
 /**
@@ -166,6 +168,8 @@ public class YmswCustomer extends BaseEntity
         this.customerName = customerName;
     }
 
+    @NotBlank(message = "客户名字不能为空")
+    @Size(min = 0, max = 10, message = "客户名字长度不能超过10个字符")
     public String getCustomerName() 
     {
         return customerName;
@@ -175,6 +179,7 @@ public class YmswCustomer extends BaseEntity
         this.customerSex = customerSex;
     }
 
+    @Pattern(regexp = "[0-2]{1}", message = "性别错误")
     public String getCustomerSex() 
     {
         return customerSex;
@@ -192,6 +197,7 @@ public class YmswCustomer extends BaseEntity
         this.customerStar = customerStar;
     }
 
+    @Pattern(regexp = "^[1][3,4,5,7,8,9][0-9]{9}$", message = "手机号码不正确")
     public String getCustomerPhone()
     {
         return customerPhone;
@@ -219,6 +225,7 @@ public class YmswCustomer extends BaseEntity
         this.customerQuota = customerQuota;
     }
 
+    @Digits(integer=5,fraction=0,message = "贷款额度错误")
     public Integer getCustomerQuota() 
     {
         return customerQuota;

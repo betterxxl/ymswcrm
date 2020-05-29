@@ -123,7 +123,7 @@
                 showToggle: false,
                 modalName: "签约进件",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
-                    if (field == 'customerName') {
+                    if (field == 'customerName' && editFlag != "hidden") {
                         $.operate.editTab(row.orderId);
                     }
                 },
