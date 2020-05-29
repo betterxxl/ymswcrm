@@ -23,31 +23,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/incomingData/main")
 public class SysIncomingDataController extends BaseController {
-   @Autowired
+    @Autowired
     IYmswCustomerService iYmswCustomerService;
-   @Autowired
+    @Autowired
     AccessPhoneConfig accessPhoneConfig;
-   @Autowired
+    @Autowired
     ISysUserService iSysUserService;
-   @RequestMapping("addData")
-   public AjaxResult incomingFromOther(HttpServletRequest request){
-       String customerName = request.getParameter("customerName");
-       String customerSex = request.getParameter("customerSex");
-       String customerPhone = request.getParameter("customerPhone");
-       String customerQuota = request.getParameter("customerQuota");
-       YmswCustomer ymswCustomer =new YmswCustomer();
-       //获取能分配的用户列表
-       List<SysUser> sysUserList = iSysUserService.selectUsersForIncomingData(accessPhoneConfig.getUserIds());
-      //随机进行分配
-       int i = (int)(Math.random()*42)+1;
-       System.out.println("i = " + i);
-       SysUser sysUser = sysUserList.get(i-1);
-       ymswCustomer.setUserId(sysUser.getUserId());
-       ymswCustomer.setCustomerName(customerName);
-       ymswCustomer.setCustomerSex(customerSex);
-       ymswCustomer.setCustomerPhone(customerPhone);
-       ymswCustomer.setCustomerQuota(Integer.valueOf(customerQuota));
+    @RequestMapping("addData")
+    public AjaxResult incomingFromOther(HttpServletRequest request){
+        String customerName = request.getParameter("customerName");
+        String customerSex = request.getParameter("customerSex");
+        String customerPhone = request.getParameter("customerPhone");
+        String customerQuota = request.getParameter("customerQuota");
+        YmswCustomer ymswCustomer =new YmswCustomer();
+        //获取能分配的用户列表
+        List<SysUser> sysUserList = iSysUserService.selectUsersForIncomingData(accessPhoneConfig.getUserIds());
+        //随机进行分配
+        int i = (int)(Math.random()*42)+1;
+        System.out.println("i = " + i);
+        SysUser sysUser = sysUserList.get(i-1);
+        ymswCustomer.setUserId(sysUser.getUserId());
+        ymswCustomer.setCustomerName(customerName);
+        ymswCustomer.setCustomerSex(customerSex);
+        ymswCustomer.setCustomerPhone(customerPhone);
+        ymswCustomer.setCustomerQuota(Integer.valueOf(customerQuota));
         iYmswCustomerService.insertYmswCustomer(ymswCustomer, "incoming data");
-       return  AjaxResult.success();
-   }
+        return  AjaxResult.success();
+    }
 }

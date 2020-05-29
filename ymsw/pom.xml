@@ -209,6 +209,11 @@
                 <artifactId>ymsw-customer</artifactId>
                 <version>${ymsw.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ymsw</groupId>
+                <artifactId>ymsw-order</artifactId>
+                <version>${ymsw.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -221,6 +226,7 @@
         <module>ymsw-system</module>
         <module>ymsw-quartz</module>
         <module>ymsw-customer</module>
+        <module>ymsw-order</module>
     </modules>
     <build>
     <plugins>

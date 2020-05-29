@@ -75,7 +75,7 @@
         <!--订单模块-->
         <dependency>
             <groupId>com.ymsw</groupId>
-            <artifactId>ymsw_order</artifactId>
+            <artifactId>ymsw-order</artifactId>
         </dependency>
     </dependencies>
     <build>
