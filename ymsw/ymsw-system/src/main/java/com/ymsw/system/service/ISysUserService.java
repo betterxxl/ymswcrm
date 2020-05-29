@@ -1,5 +1,6 @@
 package com.ymsw.system.service;
 
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.system.domain.SysUser;
 
 import java.util.List;
@@ -190,7 +191,8 @@ public interface ISysUserService
 
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
+     * @param BaseEntity 超级父类
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUsers(SysUser sysUser);
+    public List<SysUser> selectUsers(BaseEntity baseEntity);
 }

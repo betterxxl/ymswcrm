@@ -2,6 +2,8 @@ package com.ymsw.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.ymsw.common.core.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -272,13 +274,13 @@ public class SysDeptServiceImpl implements ISysDeptService
     /**
      * 根据数据范围查询部门列表
      *
-     * @param dept 部门信息
+     * @param BaseEntity 超级父类
      * @return 结果
      */
     @Override
     @DataScope(deptAlias = "d")
-    public List<SysDept> selectDepts(SysDept dept)
+    public List<SysDept> selectDepts(BaseEntity baseEntity)
     {
-        return deptMapper.selectDepts(dept);
+        return deptMapper.selectDepts(baseEntity);
     }
 }

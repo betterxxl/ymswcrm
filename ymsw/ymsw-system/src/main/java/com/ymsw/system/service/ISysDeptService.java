@@ -1,5 +1,6 @@
 package com.ymsw.system.service;
 
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.common.core.domain.Ztree;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysRole;
@@ -96,8 +97,8 @@ public interface ISysDeptService
     /**
      * 根据数据范围查询部门列表
      *
-     * @param dept 部门信息
+     * @param BaseEntity 超级父类
      * @return 结果
      */
-    public List<SysDept> selectDepts(SysDept dept);
+    public List<SysDept> selectDepts(BaseEntity baseEntity);
 }

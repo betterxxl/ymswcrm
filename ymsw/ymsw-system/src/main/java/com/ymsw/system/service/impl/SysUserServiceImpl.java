@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.ymsw.common.core.domain.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -494,12 +496,13 @@ public class SysUserServiceImpl implements ISysUserService
 
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
+     * @param BaseEntity 超级父类
      * @return 用户信息集合信息
      */
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
-    public List<SysUser> selectUsers(SysUser sysUser)
+    public List<SysUser> selectUsers(BaseEntity baseEntity)
     {
-        return userMapper.selectUsers(sysUser);
+        return userMapper.selectUsers(baseEntity);
     }
 }

@@ -2,8 +2,10 @@ package com.ymsw.order.controller;
 
 import java.util.List;
 
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.framework.config.AccessPhoneConfig;
 import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.framework.web.domain.server.Sys;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
 import com.ymsw.system.service.ISysDeptService;
@@ -51,10 +53,9 @@ public class YmswOrderController extends BaseController
     @GetMapping()
     public String main(ModelMap mmap)
     {
-        SysUser sysUser = ShiroUtils.getSysUser();
-        List<SysUser> sysUsers = sysUserService.selectUsers(sysUser);//根据数据范围查询所有在职员工列表，除了超级管理员
-        SysDept dept = sysUser.getDept();
-        List<SysDept> sysDepts = sysDeptService.selectDepts(dept);//根据数据范围查询部门列表
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysUser> sysUsers = sysUserService.selectUsers(baseEntity);//根据数据范围查询所有在职员工列表，除了超级管理员
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
         mmap.put("sysUsers", sysUsers);
         mmap.put("sysDepts", sysDepts);
         return prefix + "/main";

@@ -152,7 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<!--根据数据范围查询部门列表-->
-	<select id="selectDepts" parameterType="SysDept" resultMap="SysDeptResult">
+	<select id="selectDepts" parameterType="BaseEntity" resultMap="SysDeptResult">
 		<include refid="selectDeptVo"/>
 		where d.del_flag = '0'
 		<!-- 数据范围过滤 -->

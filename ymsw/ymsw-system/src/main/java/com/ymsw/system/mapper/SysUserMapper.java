@@ -1,6 +1,8 @@
 package com.ymsw.system.mapper;
 
 import java.util.List;
+
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.system.domain.SysUser;
 
 /**
@@ -130,8 +132,9 @@ public interface SysUserMapper
 
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
+     * @param BaseEntity 超级父类
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUsers(SysUser sysUser);
+    public List<SysUser> selectUsers(BaseEntity baseEntity);
 
 }

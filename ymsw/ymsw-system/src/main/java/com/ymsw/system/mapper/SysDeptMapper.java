@@ -1,6 +1,8 @@
 package com.ymsw.system.mapper;
 
 import java.util.List;
+
+import com.ymsw.common.core.domain.BaseEntity;
 import org.apache.ibatis.annotations.Param;
 import com.ymsw.system.domain.SysDept;
 
@@ -109,8 +111,8 @@ public interface SysDeptMapper
     /**
      * 根据数据范围查询部门列表
      *
-     * @param dept 部门信息
+     * @param BaseEntity 超级父类
      * @return 结果
      */
-    public List<SysDept> selectDepts(SysDept dept);
+    public List<SysDept> selectDepts(BaseEntity baseEntity);
 }
