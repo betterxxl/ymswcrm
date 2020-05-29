@@ -32,6 +32,7 @@
         <div class="search-collapse" style="padding:10px 10px;">
             <form class="form-inline" id="form-main-edit" th:object="${ymswCustomer}">
                 <input name="customerId" th:field="*{customerId}" type="hidden">
+                <input type="text" hidden th:value="*{customerName}" name="customerName">
                 <div class="input-group col-xs-2">
                     <div class="input-group-addon" style="background-color: #efefef;">星级</div>
                     <select name="customerStar" class="form-control" th:with="type=${@dict.getType('customer_star')}">

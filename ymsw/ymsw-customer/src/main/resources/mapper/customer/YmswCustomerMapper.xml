@@ -151,6 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerSex != null  and customerSex != ''">customer_sex = #{customerSex},</if>
         <if test="customerPhone != null  and customerPhone != ''">customer_phone = #{customerPhone},</if>
         <if test="customerStatus != null  and customerStatus != ''">customer_status = #{customerStatus},</if>
+        <if test="customerStar != null  and customerStar != ''">customer_star = #{customerStar},</if>
         <if test="customerBirth != null ">customer_birth = #{customerBirth},</if>
         <if test="customerQuota != null ">customer_quota = #{customerQuota},</if>
         <if test="applyTime != null ">apply_time = #{applyTime},</if>

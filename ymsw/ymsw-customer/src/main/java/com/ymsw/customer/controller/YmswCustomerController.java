@@ -131,7 +131,7 @@ public class YmswCustomerController extends BaseController
     @Log(title = "客户信息表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(YmswCustomer ymswCustomer)
+    public AjaxResult editSave(@Validated YmswCustomer ymswCustomer)
     {
         return toAjax(ymswCustomerService.updateYmswCustomer(ymswCustomer));
     }

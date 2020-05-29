@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ymsw.common.annotation.Excel;
 import com.ymsw.common.core.domain.BaseEntity;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -188,7 +189,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerPhone = customerPhone;
     }
-
+    @Range(min=0, max=4, message = "星级信息错误")
     public Integer getCustomerStar() {
         return customerStar;
     }
@@ -206,7 +207,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerStatus = customerStatus;
     }
-
+    @Pattern(regexp = "[0-9]{1}", message = "客户状态信息错误")
     public String getCustomerStatus() 
     {
         return customerStatus;
@@ -216,6 +217,7 @@ public class YmswCustomer extends BaseEntity
         this.customerBirth = customerBirth;
     }
 
+    @Pattern(regexp = "^(19|20)\\d{2}$", message = "出生年份错误")
     public String getCustomerBirth()
     {
         return customerBirth;
@@ -243,7 +245,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasHouse = hasHouse;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "房信息错误")
     public String getHasHouse() 
     {
         return hasHouse;
@@ -252,7 +254,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasCar = hasCar;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "车信息错误")
     public String getHasCar() 
     {
         return hasCar;
@@ -261,7 +263,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasWarranty = hasWarranty;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "保单信息错误")
     public String getHasWarranty() 
     {
         return hasWarranty;
@@ -270,7 +272,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasWeilidai = hasWeilidai;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "微粒贷信息错误")
     public String getHasWeilidai() 
     {
         return hasWeilidai;
@@ -279,7 +281,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasCreditCard = hasCreditCard;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "信用卡信息错误")
     public String getHasCreditCard() 
     {
         return hasCreditCard;
@@ -288,7 +290,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.hasAccumulation = hasAccumulation;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "公积金信息错误")
     public String getHasAccumulation() 
     {
         return hasAccumulation;
@@ -297,15 +299,14 @@ public class YmswCustomer extends BaseEntity
     {
         this.isOverdue = isOverdue;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "社保信息错误")
     public String getHasSocial() {
         return hasSocial;
     }
-
     public void setHasSocial(String hasSocial) {
         this.hasSocial = hasSocial;
     }
-
+    @Pattern(regexp = "[0-2]{1}", message = "逾期信息错误")
     public String getIsOverdue()
     {
         return isOverdue;
@@ -314,7 +315,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerType = customerType;
     }
-
+    @Pattern(regexp = "[1-2]{1}", message = "客户类型错误")
     public String getCustomerType() 
     {
         return customerType;
@@ -323,7 +324,6 @@ public class YmswCustomer extends BaseEntity
     {
         this.deptId = deptId;
     }
-
     public Long getDeptId() 
     {
         return deptId;
@@ -332,7 +332,6 @@ public class YmswCustomer extends BaseEntity
     {
         this.userId = userId;
     }
-
     public Long getUserId() 
     {
         return userId;
@@ -341,7 +340,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerOccupation = customerOccupation;
     }
-
+    @Pattern(regexp = "[1-3]{1}", message = "职业错误")
     public String getCustomerOccupation() 
     {
         return customerOccupation;
@@ -350,7 +349,7 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerSalary = customerSalary;
     }
-
+    @Pattern(regexp = "[1-4]{1}", message = "薪资方式错误")
     public String getCustomerSalary() 
     {
         return customerSalary;
