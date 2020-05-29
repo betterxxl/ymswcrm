@@ -227,7 +227,7 @@ public class YmswCustomer extends BaseEntity
         this.customerQuota = customerQuota;
     }
 
-    @Digits(integer=5,fraction=0,message = "贷款额度错误")
+    @Range(min=0,max=9999,message = "贷款额度错误")
     public Integer getCustomerQuota() 
     {
         return customerQuota;

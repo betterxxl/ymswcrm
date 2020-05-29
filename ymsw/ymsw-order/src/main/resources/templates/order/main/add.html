@@ -62,7 +62,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>合同号</label>
                     <div class="col-sm-6">
-                        <input name="contractId" class="form-control" type="text">
+                        <input name="contractId" class="form-control" type="text" required>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>点数</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input name="orderRate" type="text" class="form-control">
+                            <input name="orderRate" type="number" class="form-control" required>
                             <div class="input-group-addon">%</div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>诚意金</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input name="sincerityMoney" class="form-control" type="text">
+                            <input name="sincerityMoney" class="form-control" type="number" required>
                             <div class="input-group-addon">元</div>
                         </div>
                     </div>
@@ -95,7 +95,8 @@
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>诚意金收款方式</label>
                     <div class="col-sm-6">
                         <select name="sincerityPayMethod" class="form-control m-b"
-                                th:with="type=${@dict.getType('sincerity_pay_method')}">
+                                th:with="type=${@dict.getType('sincerity_pay_method')}" required>
+                            <option value="">-请选择-</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
                         </select>
@@ -138,36 +139,12 @@
     $("#form-main-add").validate({
         onkeyup: false,
         rules: {
-            contractId: {
-                required:true
-            },
-            orderRate: {
-                required:true,
-                min:0
-            },
-            sincerityMoney: {
-                required:true,
-                min:0
-            },
-            sincerityPayMethod: {
-                required:true
-            }
+            orderRate: {min:0,max:999},
+            sincerityMoney: {min:0,max:500000,digits:true}
         },
         messages: {
-            contractId: {
-                required: "请填写合同编号"
-            },
-            orderRate:{
-                required: "请填写点数",
-                min:"不能小于0"
-            },
-            sincerityMoney:{
-                required: "请填写诚意金",
-                min:"不能小于0"
-            },
-            sincerityPayMethod:{
-                required: "请选择收款方式"
-            }
+            orderRate:{min:"不能小于0",max:"不能大于999"},
+            sincerityMoney:{min:"不能小于0",max:"不能大于500000",digits:"请输入整数"}
         },
         focusCleanup: true
     });
@@ -192,12 +169,7 @@
         var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
         if (!myreg.test(phone)) {
             $.modal.msgError("请输入正确的手机号码！");
-            $("#customerName").val("");
-            $("#phone").val("");
-            $("#userName").val("");
-            $("#deptName").val("");
-            $("input[name='customerId']").val("");
-            $("input[name='userId']").val("");
+            clearData();
         } else {
             $.ajax({
                 type: "GET",
@@ -213,13 +185,25 @@
                         $("#deptName").val(result.data.deptName);
                     } else {
                         $.modal.msgError(result.msg);
+                        clearData();
                     }
                 },
                 error: function (result) {
                     $.modal.msgError(result.msg);
+                    clearData();
                 }
             });
         }
+    }
+
+    //清除input里的数据
+    function clearData(){
+        $("#customerName").val("");
+        $("#phone").val("");
+        $("#userName").val("");
+        $("#deptName").val("");
+        $("input[name='customerId']").val("");
+        $("input[name='userId']").val("");
     }
 
     //导入文件上传完成之后的事件

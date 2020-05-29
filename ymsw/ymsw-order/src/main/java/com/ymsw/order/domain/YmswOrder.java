@@ -4,6 +4,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ymsw.common.annotation.Excel;
 import com.ymsw.common.core.domain.BaseEntity;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -192,7 +199,7 @@ public class YmswOrder extends BaseEntity
     {
         this.orderStatus = orderStatus;
     }
-
+    @Pattern(regexp = "[1-5]{1}", message = "订单状态错误")
     public String getOrderStatus() 
     {
         return orderStatus;
@@ -201,7 +208,7 @@ public class YmswOrder extends BaseEntity
     {
         this.allowAmount = allowAmount;
     }
-
+    @Range(min=0,max=9999,message = "批款额度错误")
     public Integer getAllowAmount() 
     {
         return allowAmount;
@@ -210,7 +217,7 @@ public class YmswOrder extends BaseEntity
     {
         this.incomeGeneration = incomeGeneration;
     }
-
+    @Range(min=0,max=500000,message = "创收错误")
     public Double getIncomeGeneration() 
     {
         return incomeGeneration;
@@ -219,7 +226,7 @@ public class YmswOrder extends BaseEntity
     {
         this.orderRate = orderRate;
     }
-
+    @Digits(integer=3,fraction=3,message = "点数错误")
     public Double getOrderRate() 
     {
         return orderRate;
@@ -228,7 +235,7 @@ public class YmswOrder extends BaseEntity
     {
         this.sincerityMoney = sincerityMoney;
     }
-
+    @Range(min=0,max=500000,message = "诚意金错误")
     public Integer getSincerityMoney() 
     {
         return sincerityMoney;
@@ -237,7 +244,7 @@ public class YmswOrder extends BaseEntity
     {
         this.sincerityPayMethod = sincerityPayMethod;
     }
-
+    @Pattern(regexp = "[1-4]{1}", message = "诚意金付款方式错误")
     public String getSincerityPayMethod() 
     {
         return sincerityPayMethod;
@@ -255,7 +262,7 @@ public class YmswOrder extends BaseEntity
     {
         this.channelFee = channelFee;
     }
-
+    @Range(min=0,max=500000,message = "渠道费错误")
     public Double getChannelFee() 
     {
         return channelFee;
@@ -264,7 +271,7 @@ public class YmswOrder extends BaseEntity
     {
         this.incomingType = incomingType;
     }
-
+    @Pattern(regexp = "[1-4]{1}", message = "进件类型错误")
     public String getIncomingType() 
     {
         return incomingType;
@@ -273,7 +280,7 @@ public class YmswOrder extends BaseEntity
     {
         this.incomingAssistant = incomingAssistant;
     }
-
+    @Pattern(regexp = "[1-5]{1}", message = "进件助理错误")
     public String getIncomingAssistant() 
     {
         return incomingAssistant;
@@ -282,7 +289,7 @@ public class YmswOrder extends BaseEntity
     {
         this.bankManager = bankManager;
     }
-
+    @Size(min = 0, max = 10, message = "银行经理名字长度不能超过10个字符")
     public String getBankManager() 
     {
         return bankManager;

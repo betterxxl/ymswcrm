@@ -81,26 +81,26 @@
             <div style="margin-top: 20px">
                 <div class="input-group col-xs-2">
                     <div class="input-group-addon" style="background-color: #efefef;">银行经理</div>
-                    <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text">
+                    <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text" maxlength="10">
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;">点数</div>
-                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="text">
+                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="number">
                     <div class="input-group-addon">%</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;">批款额度</div>
-                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="text">
+                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="number">
                     <div class="input-group-addon">万</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;">创收</div>
-                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="text">
+                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="number">
                     <div class="input-group-addon">元</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;">渠道费</div>
-                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="text">
+                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="number">
                     <div class="input-group-addon">元</div>
                 </div>
             </div>
@@ -129,18 +129,18 @@
         focusCleanup: true,
         onkeyup: false,
         rules: {
-            orderRate: {min:0},
+            orderRate: {min:0,max:999},
             bankManager: {isName:true},
-            allowAmount: {min:0},
-            incomeGeneration: {min:0},
-            channelFee: {min:0}
+            allowAmount: {min:0,max:9999,digits:true},
+            incomeGeneration: {min:0,max:500000},
+            channelFee: {min:0,max:500000}
         },
         messages: {
-            orderRate:{min:"不能小于0"},
+            orderRate:{min:"不能小于0",max:"不能大于999"},
             bankManager:{isName:"请填写名字"},
-            allowAmount:{min:"不能小于0"},
-            incomeGeneration:{min:"不能小于0"},
-            channelFee:{min:"不能小于0"}
+            allowAmount:{min:"不能小于0",max:"不能大于9999",digits:"请输入整数"},
+            incomeGeneration:{min:"不能小于0",max:"不能大于500000"},
+            channelFee:{min:"不能小于0",max:"不能大于500000"}
         },
     });
 
