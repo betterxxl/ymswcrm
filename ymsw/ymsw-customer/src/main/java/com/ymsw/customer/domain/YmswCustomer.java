@@ -20,64 +20,52 @@ public class YmswCustomer extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** id编号 */
-    @Excel(name = "编号", type = Excel.Type.EXPORT)
+//    @Excel(name = "编号", type = Excel.Type.EXPORT)
     private Long customerId;
+
+    /** 申请时间 */
+    @Excel(name = "导入时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date applyTime;
 
     /** 姓名 */
     @Excel(name = "姓名")
     private String customerName;
 
+    /** 手机号 */
+    @Excel(name = "电话")
+    private String customerPhone;
+
     /** 性别 0男 1女 2未知 */
     @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知")
     private String customerSex;
-
-    /** 手机号 */
-    @Excel(name = "手机号")
-    private String customerPhone;
 
     /** 出生日期 */
     @Excel(name = "出生年份")
     private String customerBirth;
 
-    /** 客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单 */
-    @Excel(name = "客户状态", readConverterExp = "0=新申请,1=待跟进,2=已邀约,3=已签约,4=已放款,5=已拒绝,6=资质不符,7=捣乱申请,8=外地申请,9=黑名单")
-    private String customerStatus;
-
-    /** 归属顾问名字 */
-    @Excel(name = "归属顾问", type = Excel.Type.EXPORT)
-    private String userName;
-
     /** 额度(万) */
-    @Excel(name = "额度(万)")
+    @Excel(name = "贷款额度")
     private Integer customerQuota;
-
-    /** 星级 */
-    @Excel(name = "星级")
-    private Integer customerStar;
-
-    /** 申请时间 */
-    @Excel(name = "申请时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
-    private Date applyTime;
-
-    /** 有无房0无1有2 未知 */
-    @Excel(name = "房", readConverterExp = "0=无,1=有,2=未知")
-    private String hasHouse;
-
-    /** 有无车0无1有2 未知 */
-    @Excel(name = "车", readConverterExp = "0=无,1=有,2=未知")
-    private String hasCar;
-
-    /** 有无保单0无1有2 未知 */
-    @Excel(name = "保单", readConverterExp = "0=无,1=有,2=未知")
-    private String hasWarranty;
-
-    /** 微粒贷0无1有2未知 */
-    @Excel(name = "微粒贷", readConverterExp = "0=无,1=有,2=未知")
-    private String hasWeilidai;
 
     /** 信用卡0无1有2未知 */
     @Excel(name = "信用卡", readConverterExp = "0=无,1=有,2=未知")
     private String hasCreditCard;
+
+    /** 有无房0无1有2 未知 */
+    @Excel(name = "是否有房", readConverterExp = "0=无,1=有,2=未知")
+    private String hasHouse;
+
+    /** 有无车0无1有2 未知 */
+    @Excel(name = "是否有车", readConverterExp = "0=无,1=有,2=未知")
+    private String hasCar;
+
+    /** 职业1上班2 做生意3 未知 */
+    @Excel(name = "职业", readConverterExp = "1=上班,2=做生意,3=未知")
+    private String customerOccupation;
+
+    /** 薪资方式1代发2转账3现金4未知 */
+    @Excel(name = "发薪方式", readConverterExp = "1=代发,2=转账,3=现金,4=未知")
+    private String customerSalary;
 
     /** 公积金0无1有2未知 */
     @Excel(name = "公积金", readConverterExp = "0=无,1=有,2=未知")
@@ -87,33 +75,45 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "社保", readConverterExp = "0=无,1=有,2=未知")
     private String hasSocial;
 
-    /** 逾期0无1有2未知 */
-    @Excel(name = "逾期", readConverterExp = "0=无,1=有,2=未知")
-    private String isOverdue;
+    /** 星级 */
+    @Excel(name = "星级")
+    private Integer customerStar;
 
-    /** 客户类型1 新客户2 再分配客户 */
-    @Excel(name = "客户类型", readConverterExp = "1=新客户,2=再分配")
-    private String customerType;
-
-    /** 部门id */
-//    @Excel(name = "部门id")
-    private Long deptId;
-
-    /** 用户id */
-    @Excel(name = "归属顾问id", type = Excel.Type.IMPORT)
-    private Long userId;
-
-    /** 职业1上班2 做生意3 未知 */
-    @Excel(name = "职业", readConverterExp = "1=上班,2=做生意,3=未知")
-    private String customerOccupation;
-
-    /** 薪资方式1代发2转账3现金4未知 */
-    @Excel(name = "薪资方式", readConverterExp = "1=代发,2=转账,3=现金,4=未知")
-    private String customerSalary;
+    /** 客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单 */
+    @Excel(name = "状态", readConverterExp = "0=新申请,1=待跟进,2=已邀约,3=已签约,4=已放款,5=已拒绝,6=资质不符,7=捣乱申请,8=外地申请,9=黑名单")
+    private String customerStatus;
 
     /** 渠道 */
     @Excel(name = "渠道")
     private String channel;
+
+    /** 归属顾问名字 */
+    @Excel(name = "归属人")
+    private String userName;
+
+    /** 备注（修改客户信息页面的备注） */
+    @Excel(name = "备注")
+    private String remark;
+
+    /** 用户id */
+//    @Excel(name = "归属人", type = Excel.Type.IMPORT)
+    private Long userId;
+
+    /** 有无保单0无1有2 未知 */
+    @Excel(name = "保单", readConverterExp = "0=无,1=有,2=未知", type = Excel.Type.EXPORT)
+    private String hasWarranty;
+
+    /** 微粒贷0无1有2未知 */
+    @Excel(name = "微粒贷", readConverterExp = "0=无,1=有,2=未知", type = Excel.Type.EXPORT)
+    private String hasWeilidai;
+
+    /** 逾期0无1有2未知 */
+    @Excel(name = "逾期", readConverterExp = "0=无,1=有,2=未知", type = Excel.Type.EXPORT)
+    private String isOverdue;
+
+    /** 客户类型1 新客户2 再分配客户 */
+    @Excel(name = "客户类型", readConverterExp = "1=新客户,2=再分配", type = Excel.Type.EXPORT)
+    private String customerType;
 
     /** 最后备注时间 */
     @Excel(name = "最后备注时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
@@ -123,8 +123,9 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "分配时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
     private Date distributeTime;
 
-    /** 备注（修改客户信息页面的备注） */
-    private String remark;
+    /** 部门id */
+//    @Excel(name = "部门id")
+    private Long deptId;
 
     /** 部门名字 */
     private String deptName;

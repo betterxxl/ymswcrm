@@ -247,5 +247,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
 	</select>
+
+	<!--通过员工名字查询userid，导入客户信息时用到-->
+	<select id="selectUserByUserName" resultType="Long" parameterType="java.lang.String">
+		select user_id FROM sys_user where user_name = #{userName} limit 1;
+	</select>
 	
 </mapper> 

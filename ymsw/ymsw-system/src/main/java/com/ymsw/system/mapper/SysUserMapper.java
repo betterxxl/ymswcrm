@@ -137,4 +137,10 @@ public interface SysUserMapper
      */
     public List<SysUser> selectUsers(BaseEntity baseEntity);
 
+    /**
+     * 通过员工名字查询userid，导入客户信息时用到
+     * @param userName 员工名字
+     * @return 员工id
+     */
+    public Long selectUserByUserName(String userName);
 }
