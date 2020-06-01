@@ -1,6 +1,8 @@
 package com.ymsw.customer.controller;
 
 import java.util.List;
+
+import com.ymsw.customer.domain.YmswCustomer;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,17 +49,17 @@ public class YmswCollectionPoolController extends BaseController
     @RequiresPermissions("customer:pool:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(YmswCollectionPool ymswCollectionPool)
+    public TableDataInfo list(YmswCustomer ymswCustomer)
     {
         startPage();
-        List<YmswCollectionPool> list = ymswCollectionPoolService.selectYmswCollectionPoolList(ymswCollectionPool);
+        List<YmswCustomer> list = ymswCollectionPoolService.selectYmswCollectionPoolList(ymswCustomer);
         return getDataTable(list);
     }
 
     /**
      * 导出收藏夹-公共池列表
      */
-    @RequiresPermissions("customer:pool:export")
+    /*@RequiresPermissions("customer:pool:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(YmswCollectionPool ymswCollectionPool)
@@ -65,7 +67,7 @@ public class YmswCollectionPoolController extends BaseController
         List<YmswCollectionPool> list = ymswCollectionPoolService.selectYmswCollectionPoolList(ymswCollectionPool);
         ExcelUtil<YmswCollectionPool> util = new ExcelUtil<YmswCollectionPool>(YmswCollectionPool.class);
         return util.exportExcel(list, "pool");
-    }
+    }*/
 
     /**
      * 新增收藏夹-公共池

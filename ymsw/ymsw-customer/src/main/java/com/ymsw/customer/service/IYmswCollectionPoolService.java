@@ -2,6 +2,8 @@ package com.ymsw.customer.service;
 
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.customer.domain.YmswCollectionPool;
+import com.ymsw.customer.domain.YmswCustomer;
+
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ public interface IYmswCollectionPoolService
     /**
      * 查询收藏夹-公共池列表
      * 
-     * @param ymswCollectionPool 收藏夹-公共池
+     * @param YmswCustomer 查询条件
      * @return 收藏夹-公共池集合
      */
-    public List<YmswCollectionPool> selectYmswCollectionPoolList(YmswCollectionPool ymswCollectionPool);
+    public List<YmswCustomer> selectYmswCollectionPoolList(YmswCustomer ymswCustomer);
 
     /**
      * 新增收藏夹-公共池

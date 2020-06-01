@@ -129,6 +129,17 @@ public class YmswCustomer extends BaseEntity
     /** 部门名字 */
     private String deptName;
 
+    /** 收藏夹公共池id */
+    private Long cpId;
+
+    public Long getCpId() {
+        return cpId;
+    }
+
+    public void setCpId(Long cpId) {
+        this.cpId = cpId;
+    }
+
     public String getDeptName() {
         return deptName;
     }

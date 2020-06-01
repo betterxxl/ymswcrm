@@ -1,10 +1,12 @@
 package com.ymsw.customer.service.impl;
 
+import com.ymsw.common.annotation.DataScope;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.core.text.Convert;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswCollectionPool;
+import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
@@ -49,12 +51,13 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     /**
      * 查询收藏夹-公共池列表
      *
-     * @param ymswCollectionPool 收藏夹-公共池
+     * @param YmswCustomer 查询条件
      * @return 收藏夹-公共池
      */
     @Override
-    public List<YmswCollectionPool> selectYmswCollectionPoolList(YmswCollectionPool ymswCollectionPool) {
-        return ymswCollectionPoolMapper.selectYmswCollectionPoolList(ymswCollectionPool);
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<YmswCustomer> selectYmswCollectionPoolList(YmswCustomer ymswCustomer) {
+        return ymswCollectionPoolMapper.selectYmswCollectionPoolList(ymswCustomer);
     }
 
     /**
