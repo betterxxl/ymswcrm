@@ -36,8 +36,21 @@ public class YmswCollectionPoolController extends BaseController
     @Autowired
     private IYmswCollectionPoolService ymswCollectionPoolService;
 
+    /**
+     * 跳转到收藏夹列表
+     */
     @RequiresPermissions("customer:pool:view")
-    @GetMapping()
+    @GetMapping("/collection")
+    public String collection()
+    {
+        return prefix + "/collection";
+    }
+
+    /**
+     * 跳转到公共池列表
+     */
+    @RequiresPermissions("customer:pool:view")
+    @GetMapping("/pool")
     public String pool()
     {
         return prefix + "/pool";
