@@ -14,7 +14,6 @@ import com.ymsw.customer.mapper.YmswRemarkMapper;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
-import com.ymsw.system.mapper.SysUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ import com.ymsw.customer.mapper.YmswCustomerMapper;
 import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.common.core.text.Convert;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.constraints.Pattern;
 
 
 /**
@@ -44,8 +40,6 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     private SysDictDataMapper sysDictDataMapper;
     @Autowired
     private YmswRemarkMapper ymswRemarkMapper;
-    @Autowired
-    private SysUserMapper sysUserMapper;
 
     /**
      * 查询客户信息表
@@ -169,7 +163,6 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      * @return 结果
      */
     @Override
-    @Transactional
     public String importYmswCustomer(List<YmswCustomer> ymswCustomerList) {
         if (StringUtils.isNull(ymswCustomerList) || ymswCustomerList.size() == 0) {
             throw new BusinessException("导入客户数据不能为空！");
@@ -180,21 +173,12 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         StringBuilder failureMsg = new StringBuilder();
         for (YmswCustomer ymswCustomer : ymswCustomerList) {
             try {
-                if (StringUtils.isNull(ymswCustomer.getApplyTime())){
-                    ymswCustomer.setApplyTime(DateUtils.getNowDate());//设置申请时间为当前时间
-                }
-                String customerPhone = StringUtils.trim(ymswCustomer.getCustomerPhone());
-                String userName = StringUtils.trim(ymswCustomer.getUserName());
-                Long userId = sysUserMapper.selectUserByUserName(userName);
-                ymswCustomer.setCustomerPhone(customerPhone);//去除电话号码前后空格，避免导入时报错
-                ymswCustomer.setUserId(userId);//通过员工名字查询员工id并设置归属顾问id
-                ymswCustomer.setCustomerType("1");//设置客户类型为新客户   1 新客户  2 再分配客户
-                //通过手机号查询该手机号最后一次申请时间的信息
-                YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(customerPhone);
+                ymswCustomer.setApplyTime(DateUtils.getNowDate());//设置申请时间为当前时间
+                //通过手机号查询该手机号的最后一次申请时间
+                YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(ymswCustomer.getCustomerPhone());
                 //如果存在，就查询字典表里允许天数
                 if (StringUtils.isNull(dbCustomer)) {
                     ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
-                    addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId());//添加备注
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入成功");
                 } else {
@@ -210,7 +194,6 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                             failureMsg.append("<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + "在" + daysValue + "天内已添加过，不可频繁添加！");
                         } else {
                             ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
-                            addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId());//添加备注
                             successNum++;
                             successMsg.append("<br/>" + successNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入成功");
                         }
@@ -236,21 +219,6 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     }
 
     /**
-     * 导入客户信息后，导入备注
-     */
-    private void addRemark(String content, Long userId, Long customerId){
-        if (StringUtils.isNotEmpty(content)){
-            YmswRemark ymswRemark = new YmswRemark();
-            ymswRemark.setIsCharge("0");//设置是否主管 0否  1是
-            ymswRemark.setRemarkTime(DateUtils.getNowDate());//设置当前时间为备注时间
-            ymswRemark.setRemarkContent(content);
-            ymswRemark.setUserId(userId);
-            ymswRemark.setCustomerId(customerId);
-            ymswRemarkMapper.insertYmswRemark(ymswRemark);
-        }
-    }
-
-    /**
      * 根据客户电话号码查询客户信息（客户表里可能存在多条相同的电话号码，取最后一次添加的客户信息【即申请时间是最大的】）
      */
     @Override
@@ -261,5 +229,4 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         }
         return ymswCustomer;
     }
-
 }
