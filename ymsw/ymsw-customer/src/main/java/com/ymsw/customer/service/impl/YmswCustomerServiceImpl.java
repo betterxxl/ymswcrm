@@ -190,7 +190,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                 ymswCustomer.setCustomerType("1");//设置客户类型为新客户   1 新客户  2 再分配客户
                 //通过手机号查询该手机号最后一次申请时间的信息
                 YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(customerPhone);
-                //如果存在，就查询字典表里允许天数
+                //判断用户是否存在，1 存在  就查询字典表里允许天数  2  不存在直接添加
                 if (StringUtils.isNull(dbCustomer)) {
                     ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
                     addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId());//添加备注
@@ -217,7 +217,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                         failureNum++;
                         failureMsg.append("<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + "导入失败，系统未配置允许天数！");
                     }
-                }
+               }
             } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入失败：";
