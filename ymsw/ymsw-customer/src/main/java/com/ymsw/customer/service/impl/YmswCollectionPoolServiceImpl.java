@@ -150,9 +150,9 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
         }
         if (StringUtils.isNotEmpty(msg.toString())){
             if ("1".equals(type)){
-                msg.append("不可收藏！");
+                msg.append("不可加入收藏夹！");
             }else if ("2".equals(type)){
-                msg.append("不可添加！");
+                msg.append("不可放入公共池！");
             }
         }
         msg.append(addids.size()+"条操作成功！");
