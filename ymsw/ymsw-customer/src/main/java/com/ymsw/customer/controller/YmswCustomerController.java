@@ -106,6 +106,7 @@ public class YmswCustomerController extends BaseController
         List<YmswCustomer> list;
         startPage();
         Object cpType = ymswCustomer.getParams().get("cpType");
+        //勾选是否公共池复选框后传入cpType=2，就查询公共池里的客户列表，否则就查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
         if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
             list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
         }else {
@@ -124,6 +125,7 @@ public class YmswCustomerController extends BaseController
     {
         List<YmswCustomer> list;
         Object cpType = ymswCustomer.getParams().get("cpType");
+        //勾选是否公共池复选框后传入cpType=2，就查询公共池里的客户列表，否则就查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
         if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
             list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
         }else {
