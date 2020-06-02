@@ -1,11 +1,12 @@
 package com.ymsw.customer.controller;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswRemark;
+import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.customer.service.IYmswRemarkService;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
@@ -51,6 +52,8 @@ public class YmswCustomerController extends BaseController
     private ISysUserService sysUserService;
     @Autowired
     private ISysDeptService sysDeptService;
+    @Autowired
+    private IYmswCollectionPoolService ymswCollectionPoolService;
 
     /**
      * 跳转到 所有客户 -→ 我的客户页面
@@ -100,8 +103,14 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public TableDataInfo managelist(YmswCustomer ymswCustomer)
     {
+        List<YmswCustomer> list;
         startPage();
-        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
+        Object cpType = ymswCustomer.getParams().get("cpType");
+        if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
+            list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
+        }else {
+            list = ymswCustomerService.selectManageList(ymswCustomer);
+        }
         return getDataTable(list);
     }
 
