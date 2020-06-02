@@ -90,9 +90,9 @@
             </form>
         </div>
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:pool:remove">
+            <!--<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:pool:remove">
                 <i class="fa fa-remove"></i> 删除
-            </a>
+            </a>-->
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table"></table>
@@ -110,7 +110,7 @@
 
     $(function() {
         var options = {
-            url: prefix + "/list",
+            url: prefix + "/poolList",
             updateUrl: ctx + "customer/main/edit/{id}",
             removeUrl: prefix + "/remove",
             striped: true,//隔行换色

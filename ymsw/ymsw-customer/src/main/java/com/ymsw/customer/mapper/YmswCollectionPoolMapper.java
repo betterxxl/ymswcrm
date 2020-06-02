@@ -76,4 +76,11 @@ public interface YmswCollectionPoolMapper
      * @return 结果
      */
     public int selectCountByUserId (Long userId);
+
+    /**
+     * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
+     * @param ymswCustomer 查询条件
+     * @return 结果
+     */
+    List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
 }

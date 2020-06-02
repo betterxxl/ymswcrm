@@ -130,7 +130,7 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
         return AjaxResult.success();
     }
 
-//    返回需要批量添加到收藏夹公共池的数据集合
+    //    返回需要批量添加到收藏夹公共池的数据集合
     private ArrayList<YmswCollectionPool> getAddList(List<String> customerIds, String type, Long userId) {
         ArrayList<YmswCollectionPool> list = new ArrayList<>();
         Date addTime = DateUtils.getNowDate();//当前时间
@@ -146,5 +146,15 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
             list.add(ymswCollectionPool);
         }
         return list;
+    }
+
+    /**
+     * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
+     * @param ymswCustomer 查询条件
+     * @return 结果
+     */
+    @Override
+    public List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer) {
+        return ymswCollectionPoolMapper.selectYmswPoolList(ymswCustomer);
     }
 }
