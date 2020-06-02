@@ -185,4 +185,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
         </where>
     </select>
+
+    <select id="selectIsInCollectionPool"  resultType="int">
+        select count(1) from ymsw_collection_pool where customer_id = #{customerId} and cp_type = #{cpType}
+    </select>
 </mapper>

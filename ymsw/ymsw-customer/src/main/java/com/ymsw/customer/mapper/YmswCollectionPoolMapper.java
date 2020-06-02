@@ -2,6 +2,7 @@ package com.ymsw.customer.mapper;
 
 import com.ymsw.customer.domain.YmswCollectionPool;
 import com.ymsw.customer.domain.YmswCustomer;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -83,4 +84,6 @@ public interface YmswCollectionPoolMapper
      * @return 结果
      */
     List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
+
+    int selectIsInCollectionPool(@Param("customerId") Long customerId, @Param("cpType")String cpType);
 }

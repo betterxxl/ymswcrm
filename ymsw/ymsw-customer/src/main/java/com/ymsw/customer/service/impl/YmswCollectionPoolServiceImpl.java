@@ -109,6 +109,19 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     public AjaxResult addToCollectionPool(String ids, String type) {
         List<String> customerIds = Arrays.asList(ids.split(","));
         Long userId = ShiroUtils.getUserId();//当前userId
+        List<String> addids = new ArrayList<>();    //需要到公共池收藏夹表的ids
+        StringBuffer msg = new StringBuffer();  //返回的消息
+        int errCollectCount = 0;
+        int errPoolCount = 0;
+        for (String customerId : customerIds) {
+            if (isInCollectionPool(Long.valueOf(customerId),"1")){//是否在收藏夹，如果在，就errCollectCount++
+                errCollectCount ++;
+            }else if (isInCollectionPool(Long.valueOf(customerId),"2")){//是否在公共池，如果在就errPoolCount++
+                errPoolCount ++;
+            }else {
+                addids.add(customerId); //如果既不在收藏夹，也不在公共池，就add到addids，准备添加到公共池收藏夹表
+            }
+        }
         if ("1".equals(type)) {  //批量添加到收藏夹
             SysDictData sysDictData = new SysDictData();
             sysDictData.setDictType("ymsw_config");
@@ -119,15 +132,29 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                 int count = ymswCollectionPoolMapper.selectCountByUserId(userId);//查询该用户已经收藏的条数
                 if (Integer.valueOf(collectionCount) <= count) { //如果已经收藏的条数大于等于允许收藏的条数，就不能收藏。
                     return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
-                } else if (count + customerIds.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
+                } else if (count + addids.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
                     return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
                 }
             }
         } else if ("2".equals(type)) {    //批量添加到公共池
-            ymswCustomerMapper.updateUseridToNull(customerIds);//批量修改客户的归属顾问为空
+            ymswCustomerMapper.updateUseridToNull(addids);//批量修改客户的归属顾问为空
         }
-        ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(customerIds,type,userId));    //批量添加到收藏夹公共池表
-        return AjaxResult.success();
+        ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(addids,type,userId));    //批量添加到收藏夹公共池表
+        if (errCollectCount > 0){
+            msg.append(errCollectCount+"条已在收藏夹，");
+        }
+        if (errPoolCount > 0){
+            msg.append(errPoolCount+"条已在公共池，");
+        }
+        if (StringUtils.isNotEmpty(msg.toString())){
+            if ("1".equals(type)){
+                msg.append("不可收藏！");
+            }else if ("2".equals(type)){
+                msg.append("不可添加！");
+            }
+        }
+        msg.append(addids.size()+"条操作成功！");
+        return AjaxResult.success(msg.toString());
     }
 
     //    返回需要批量添加到收藏夹公共池的数据集合
@@ -146,6 +173,12 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
             list.add(ymswCollectionPool);
         }
         return list;
+    }
+
+    //  通过customerId和类型，查询是否已经在收藏夹公共池表
+    private boolean isInCollectionPool(Long customerId,String cpType){
+        int i = ymswCollectionPoolMapper.selectIsInCollectionPool(customerId, cpType);
+        return i > 0 ? true : false;
     }
 
     /**
