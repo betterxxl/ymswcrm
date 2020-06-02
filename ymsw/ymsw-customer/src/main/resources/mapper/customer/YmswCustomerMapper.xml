@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
         left join sys_user u on yc.user_id = u.user_id
         left join sys_dept d on u.dept_id = d.dept_id
-        where ycp.customer_id is null
+        where 1=1
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <!--<if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>-->
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>

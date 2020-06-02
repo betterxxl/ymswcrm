@@ -122,24 +122,26 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                 addids.add(customerId); //如果既不在收藏夹，也不在公共池，就add到addids，准备添加到公共池收藏夹表
             }
         }
-        if ("1".equals(type)) {  //批量添加到收藏夹
-            SysDictData sysDictData = new SysDictData();
-            sysDictData.setDictType("ymsw_config");
-            sysDictData.setDictLabel("collection_count");
-            List<SysDictData> sysDictDataList = sysDictDataMapper.selectDictDataList(sysDictData);//查询设置的允许收藏的条数
-            if (StringUtils.isNotEmpty(sysDictDataList)) {
-                String collectionCount = sysDictDataList.get(0).getDictValue(); //设置的允许收藏的条数
-                int count = ymswCollectionPoolMapper.selectCountByUserId(userId);//查询该用户已经收藏的条数
-                if (Integer.valueOf(collectionCount) <= count) { //如果已经收藏的条数大于等于允许收藏的条数，就不能收藏。
-                    return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
-                } else if (count + addids.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
-                    return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
+        if (StringUtils.isNotEmpty(addids)){
+            if ("1".equals(type)) {  //批量添加到收藏夹
+                SysDictData sysDictData = new SysDictData();
+                sysDictData.setDictType("ymsw_config");
+                sysDictData.setDictLabel("collection_count");
+                List<SysDictData> sysDictDataList = sysDictDataMapper.selectDictDataList(sysDictData);//查询设置的允许收藏的条数
+                if (StringUtils.isNotEmpty(sysDictDataList)) {
+                    String collectionCount = sysDictDataList.get(0).getDictValue(); //设置的允许收藏的条数
+                    int count = ymswCollectionPoolMapper.selectCountByUserId(userId);//查询该用户已经收藏的条数
+                    if (Integer.valueOf(collectionCount) <= count) { //如果已经收藏的条数大于等于允许收藏的条数，就不能收藏。
+                        return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
+                    } else if (count + addids.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
+                        return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
+                    }
                 }
+            } else if ("2".equals(type)) {    //批量添加到公共池
+                ymswCustomerMapper.updateUseridToNull(addids);//批量修改客户的归属顾问为空
             }
-        } else if ("2".equals(type)) {    //批量添加到公共池
-            ymswCustomerMapper.updateUseridToNull(addids);//批量修改客户的归属顾问为空
+            ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(addids,type,userId));    //批量添加到收藏夹公共池表
         }
-        ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(addids,type,userId));    //批量添加到收藏夹公共池表
         if (errCollectCount > 0){
             msg.append(errCollectCount+"条已在收藏夹，");
         }
