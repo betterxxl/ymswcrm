@@ -49,10 +49,10 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     }
 
     /**
-     * 查询收藏夹-公共池列表
+     * 查询收藏夹列表(根据数据范围查询)
      *
-     * @param YmswCustomer 查询条件
-     * @return 收藏夹-公共池
+     * @param ymswCustomer 查询条件
+     * @return 收藏夹集合
      */
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")

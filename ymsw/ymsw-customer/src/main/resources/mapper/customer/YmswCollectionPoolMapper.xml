@@ -57,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dept d on u.dept_id = d.dept_id
     </sql>
 
+    <!--查询收藏夹列表(根据数据范围查询)-->
     <select id="selectYmswCollectionPoolList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
         <include refid="selectYmswCollectionPoolList"/>
         <where>
