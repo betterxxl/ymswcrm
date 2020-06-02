@@ -20,12 +20,19 @@ public interface YmswCustomerMapper
     public YmswCustomer selectYmswCustomerById(Long customerId);
 
     /**
-     * 查询客户信息表列表
+     * 我的客户查询客户列表（通过userId查询）
      * 
      * @param ymswCustomer 客户信息表
      * @return 客户信息表集合
      */
     public List<YmswCustomer> selectYmswCustomerList(YmswCustomer ymswCustomer);
+
+    /**
+     * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
+     * @param ymswCustomer 客户信息表
+     * @return 客户信息表集合
+     */
+    public List<YmswCustomer> selectManameList(YmswCustomer ymswCustomer);
 
     /**
      * 新增客户信息表

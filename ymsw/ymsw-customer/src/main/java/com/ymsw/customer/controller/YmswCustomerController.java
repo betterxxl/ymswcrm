@@ -43,6 +43,9 @@ public class YmswCustomerController extends BaseController
     @Autowired
     private IYmswRemarkService ymswRemarkService;
 
+    /**
+     * 跳转到 所有客户 -→ 我的客户页面
+     */
     @RequiresPermissions("customer:main:view")
     @GetMapping()
     public String main()
@@ -51,7 +54,7 @@ public class YmswCustomerController extends BaseController
     }
 
     /**
-     * 查询客户信息表列表
+     * 我的客户查询客户列表（通过userId查询）
      */
     @RequiresPermissions("customer:main:list")
     @PostMapping("/list")
@@ -64,6 +67,29 @@ public class YmswCustomerController extends BaseController
     }
 
     /**
+     * 跳转到 客户管理 -→ 客户列表页面
+     */
+    @RequiresPermissions("customer:manage:view")
+    @GetMapping("/manage")
+    public String manage()
+    {
+        return prefix + "/manage";
+    }
+
+    /**
+     * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
+     */
+    @RequiresPermissions("customer:manage:list")
+    @PostMapping("/manamelist")
+    @ResponseBody
+    public TableDataInfo manamelist(YmswCustomer ymswCustomer)
+    {
+        startPage();
+        List<YmswCustomer> list = ymswCustomerService.selectManameList(ymswCustomer);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出客户信息表列表
      */
     @RequiresPermissions("customer:main:export")
@@ -71,7 +97,7 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
     {
-        List<YmswCustomer> list = ymswCustomerService.selectYmswCustomerList(ymswCustomer);
+        List<YmswCustomer> list = ymswCustomerService.selectManameList(ymswCustomer);
         ExcelUtil<YmswCustomer> util = new ExcelUtil<YmswCustomer>(YmswCustomer.class);
         return util.exportExcel(list, "main");
     }

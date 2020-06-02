@@ -59,17 +59,26 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     }
 
     /**
-     * 查询客户信息表列表
+     * 我的客户查询客户列表（通过userId查询）
      *
      * @param ymswCustomer 客户信息表
      * @return 客户信息表
      */
     @Override
-//    @DataScope(deptAlias = "d", userAlias = "u")
+
     public List<YmswCustomer> selectYmswCustomerList(YmswCustomer ymswCustomer) {
         Long userId = ShiroUtils.getUserId();
         ymswCustomer.setUserId(userId);
         return ymswCustomerMapper.selectYmswCustomerList(ymswCustomer);
+    }
+
+    /**
+     * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<YmswCustomer> selectManameList(YmswCustomer ymswCustomer){
+        return ymswCustomerMapper.selectManameList(ymswCustomer);
     }
 
     /**
