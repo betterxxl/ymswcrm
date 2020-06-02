@@ -4,8 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.service.IYmswRemarkService;
+import com.ymsw.system.domain.SysDept;
+import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.service.ISysDeptService;
+import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +47,10 @@ public class YmswCustomerController extends BaseController
     private IYmswCustomerService ymswCustomerService;
     @Autowired
     private IYmswRemarkService ymswRemarkService;
+    @Autowired
+    private ISysUserService sysUserService;
+    @Autowired
+    private ISysDeptService sysDeptService;
 
     /**
      * 跳转到 所有客户 -→ 我的客户页面
@@ -55,6 +64,7 @@ public class YmswCustomerController extends BaseController
 
     /**
      * 我的客户查询客户列表（通过userId查询）
+     * 数据范围：仅查询个人的客户
      */
     @RequiresPermissions("customer:main:list")
     @PostMapping("/list")
@@ -71,21 +81,27 @@ public class YmswCustomerController extends BaseController
      */
     @RequiresPermissions("customer:manage:view")
     @GetMapping("/manage")
-    public String manage()
+    public String manage(ModelMap mmap)
     {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysUser> sysUsers = sysUserService.selectUsers(baseEntity);//根据数据范围查询所有在职员工列表，除了超级管理员
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysUsers", sysUsers);
+        mmap.put("sysDepts", sysDepts);
         return prefix + "/manage";
     }
 
     /**
      * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
+     * 数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
      */
     @RequiresPermissions("customer:manage:list")
     @PostMapping("/manamelist")
     @ResponseBody
-    public TableDataInfo manamelist(YmswCustomer ymswCustomer)
+    public TableDataInfo managelist(YmswCustomer ymswCustomer)
     {
         startPage();
-        List<YmswCustomer> list = ymswCustomerService.selectManameList(ymswCustomer);
+        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
         return getDataTable(list);
     }
 
@@ -97,7 +113,7 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
     {
-        List<YmswCustomer> list = ymswCustomerService.selectManameList(ymswCustomer);
+        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
         ExcelUtil<YmswCustomer> util = new ExcelUtil<YmswCustomer>(YmswCustomer.class);
         return util.exportExcel(list, "main");
     }

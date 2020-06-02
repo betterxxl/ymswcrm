@@ -21,7 +21,7 @@ public interface YmswCustomerMapper
 
     /**
      * 我的客户查询客户列表（通过userId查询）
-     * 
+     * 数据范围：仅查询个人的客户
      * @param ymswCustomer 客户信息表
      * @return 客户信息表集合
      */
@@ -29,10 +29,11 @@ public interface YmswCustomerMapper
 
     /**
      * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
+     * 数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
      * @param ymswCustomer 客户信息表
      * @return 客户信息表集合
      */
-    public List<YmswCustomer> selectManameList(YmswCustomer ymswCustomer);
+    public List<YmswCustomer> selectManageList(YmswCustomer ymswCustomer);
 
     /**
      * 新增客户信息表
