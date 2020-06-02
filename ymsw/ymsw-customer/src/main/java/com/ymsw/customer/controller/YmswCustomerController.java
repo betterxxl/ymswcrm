@@ -122,7 +122,13 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
     {
-        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
+        List<YmswCustomer> list;
+        Object cpType = ymswCustomer.getParams().get("cpType");
+        if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
+            list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
+        }else {
+            list = ymswCustomerService.selectManageList(ymswCustomer);
+        }
         ExcelUtil<YmswCustomer> util = new ExcelUtil<YmswCustomer>(YmswCustomer.class);
         return util.exportExcel(list, "main");
     }
