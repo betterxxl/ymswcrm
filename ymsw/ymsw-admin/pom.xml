@@ -77,6 +77,11 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-order</artifactId>
         </dependency>
+        <!--配额管理模块-->
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-quota</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

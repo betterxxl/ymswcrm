@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymsw.quota.mapper.QuotaManagerMapper">
+    
+    <resultMap type="QuotaManager" id="QuotaManagerResult">
+        <result property="quotaId"    column="quota_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="allowTotalCount"    column="allow_total_count"    />
+        <result property="nowTotalCount"    column="now_total_count"    />
+        <result property="allowTodayCount"    column="allow_today_count"    />
+        <result property="nowTodayCount"    column="now_today_count"    />
+        <result property="quotaStatus"    column="quota_status"    />
+    </resultMap>
+
+    <sql id="selectQuotaManagerVo">
+        select quota_id, user_id, allow_total_count, now_total_count, allow_today_count, now_today_count, quota_status from quota_manager
+    </sql>
+
+    <select id="selectQuotaManagerList" parameterType="QuotaManager" resultMap="QuotaManagerResult">
+        <include refid="selectQuotaManagerVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="allowTotalCount != null "> and allow_total_count = #{allowTotalCount}</if>
+            <if test="nowTotalCount != null "> and now_total_count = #{nowTotalCount}</if>
+            <if test="allowTodayCount != null "> and allow_today_count = #{allowTodayCount}</if>
+            <if test="nowTodayCount != null "> and now_today_count = #{nowTodayCount}</if>
+            <if test="quotaStatus != null  and quotaStatus != ''"> and quota_status = #{quotaStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectQuotaManagerById" parameterType="Long" resultMap="QuotaManagerResult">
+        <include refid="selectQuotaManagerVo"/>
+        where quota_id = #{quotaId}
+    </select>
+        
+    <insert id="insertQuotaManager" parameterType="QuotaManager">
+        insert into quota_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="quotaId != null ">quota_id,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="allowTotalCount != null ">allow_total_count,</if>
+            <if test="nowTotalCount != null ">now_total_count,</if>
+            <if test="allowTodayCount != null ">allow_today_count,</if>
+            <if test="nowTodayCount != null ">now_today_count,</if>
+            <if test="quotaStatus != null  and quotaStatus != ''">quota_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="quotaId != null ">#{quotaId},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="allowTotalCount != null ">#{allowTotalCount},</if>
+            <if test="nowTotalCount != null ">#{nowTotalCount},</if>
+            <if test="allowTodayCount != null ">#{allowTodayCount},</if>
+            <if test="nowTodayCount != null ">#{nowTodayCount},</if>
+            <if test="quotaStatus != null  and quotaStatus != ''">#{quotaStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQuotaManager" parameterType="QuotaManager">
+        update quota_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="allowTotalCount != null ">allow_total_count = #{allowTotalCount},</if>
+            <if test="nowTotalCount != null ">now_total_count = #{nowTotalCount},</if>
+            <if test="allowTodayCount != null ">allow_today_count = #{allowTodayCount},</if>
+            <if test="nowTodayCount != null ">now_today_count = #{nowTodayCount},</if>
+            <if test="quotaStatus != null  and quotaStatus != ''">quota_status = #{quotaStatus},</if>
+        </trim>
+        where quota_id = #{quotaId}
+    </update>
+
+    <delete id="deleteQuotaManagerById" parameterType="Long">
+        delete from quota_manager where quota_id = #{quotaId}
+    </delete>
+
+    <delete id="deleteQuotaManagerByIds" parameterType="String">
+        delete from quota_manager where quota_id in 
+        <foreach item="quotaId" collection="array" open="(" separator="," close=")">
+            #{quotaId}
+        </foreach>
+    </delete>
+    
+</mapper>

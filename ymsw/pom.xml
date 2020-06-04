@@ -209,9 +209,18 @@
                 <artifactId>ymsw-customer</artifactId>
                 <version>${ymsw.version}</version>
             </dependency>
+
+            <!--订单模块-->
             <dependency>
                 <groupId>com.ymsw</groupId>
                 <artifactId>ymsw-order</artifactId>
+                <version>${ymsw.version}</version>
+            </dependency>
+
+            <!-- 配额管理模块-->
+            <dependency>
+                <groupId>com.ymsw</groupId>
+                <artifactId>ymsw-quota</artifactId>
                 <version>${ymsw.version}</version>
             </dependency>
 
@@ -227,6 +236,7 @@
         <module>ymsw-quartz</module>
         <module>ymsw-customer</module>
         <module>ymsw-order</module>
+        <module>ymsw-quota</module>
     </modules>
     <build>
     <plugins>
