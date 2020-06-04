@@ -115,7 +115,7 @@
                 modalName: "配额管理",
                 striped: true,//隔行换色
                 showToggle: false,
-                onEditableSave: onEditableSave,
+                onEditableSave: editAllowTodayCount,
                 rememberSelected: true,
                 uniqueId: "quotaId",
                 columns: [{
@@ -146,15 +146,13 @@
                     halign: 'center',
                     align: 'center',
                     editable : {
-                        type : 'text',
+                        type : 'number',
                         title : '配额',
+                        min: 0,
                         emptytext : "【配额】为空",
                         validate : function(value) {
-                            if (value.length > 30) {
-                                return '名称不能超过30个字符';
-                            }
                             if (value.length == 0) {
-                                return '名称不能为空';
+                                return '配额不能为空';
                             }
                         }
                     }
@@ -238,9 +236,19 @@
                 $.operate.submit(url, "post", "json", data);
             });
         }
-
-        function onEditableSave (field, row, oldValue, $el) {
-            alert("字段名：" + field + "，当前值：" + row[field]  + "，旧值：" + oldValue);
+        //修改配额
+        function editAllowTodayCount (field, row, oldValue, $el) {
+            var allowTodayCount = row[field];
+            var quotaId = row.quotaId;
+            $.ajax({
+                type: "POST",
+                url: prefix + "/edit",
+                data: {"allowTodayCount":allowTodayCount,"quotaId":quotaId},
+                dataType:"json",
+                success: function(data){
+                    $.modal.msgSuccess(data.msg);
+                }
+            });
         }
     </script>
 </body>
