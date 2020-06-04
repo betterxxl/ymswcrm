@@ -115,7 +115,7 @@
                 modalName: "配额管理",
                 striped: true,//隔行换色
                 showToggle: false,
-                onEditableSave: editAllowTodayCount,
+                onEditableSave: onEditableSave,
                 rememberSelected: true,
                 uniqueId: "quotaId",
                 columns: [{
@@ -141,30 +141,32 @@
                     align: 'center'
                 },
                 {
-                    field : 'allowTodayCount', 
+                    field : 'allowTodayCount',
                     title : '配额',
                     halign: 'center',
                     align: 'center',
                     editable : {
-                        type : 'number',
+                        type : 'text',
                         title : '配额',
-                        min: 0,
                         emptytext : "【配额】为空",
                         validate : function(value) {
+                            if (value.length > 30) {
+                                return '名称不能超过30个字符';
+                            }
                             if (value.length == 0) {
-                                return '配额不能为空';
+                                return '名称不能为空';
                             }
                         }
                     }
                 },
                 {
-                    field : 'nowTodayCount', 
+                    field : 'nowTodayCount',
                     title : '已分配',
                     halign: 'center',
                     align: 'center'
                 },
                 {
-                    field : 'quotaStatus', 
+                    field : 'quotaStatus',
                     title : '状态',
                     halign: 'center',
                     align: 'center',
@@ -212,19 +214,8 @@
         // 批量暂停
         function batchDisable() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
-            var quotaStatusList = $.table.selectColumns("quotaStatus");
-            var submitFlag = false;
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
-                return;
-            }
-            for (var i=0;i<quotaStatusList.length;i++){
-                if (quotaStatusList[i] == "0"){
-                    submitFlag = true;
-                }
-            }
-            if (submitFlag){
-                $.modal.alertWarning("勾选信息有误");
                 return;
             }
             $.modal.confirm("确定要将选中的" + rows.length + "条数据暂停吗?", function() {
@@ -237,19 +228,8 @@
         // 批量恢复
         function batchEnable() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
-            var quotaStatusList = $.table.selectColumns("quotaStatus");
-            var submitFlag = false;
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
-                return;
-            }
-            for (var i=0;i<quotaStatusList.length;i++){
-                if (quotaStatusList[i] == "1"){
-                    submitFlag = true;
-                }
-            }
-            if (submitFlag){
-                $.modal.alertWarning("勾选信息有误");
                 return;
             }
             $.modal.confirm("确定要将选中的" + rows.length + "条数据恢复吗?", function() {
@@ -258,19 +238,9 @@
                 $.operate.submit(url, "post", "json", data);
             });
         }
-        //修改配额
-        function editAllowTodayCount (field, row, oldValue, $el) {
-            var allowTodayCount = row[field];
-            var quotaId = row.quotaId;
-            $.ajax({
-                type: "POST",
-                url: prefix + "/edit",
-                data: {"allowTodayCount":allowTodayCount,"quotaId":quotaId},
-                dataType:"json",
-                success: function(data){
-                    $.modal.msgSuccess(data.msg);
-                }
-            });
+
+        function onEditableSave (field, row, oldValue, $el) {
+            alert("字段名：" + field + "，当前值：" + row[field]  + "，旧值：" + oldValue);
         }
     </script>
 </body>
