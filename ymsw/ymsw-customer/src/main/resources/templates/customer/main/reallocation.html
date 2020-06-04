@@ -90,19 +90,20 @@
 
     //点击确定时提交，可参考修改密码user/resetPwd.html
     function submitHandler() {
-        var data = [];  //需要提交的数据
+        var userList = [];  //需要提交的数据
         var submit = true;
         var totolCount = 0;
         $("input:checkbox:checked").each(function () {
-            var customerId = $(this).val();
-            var count = $("input[name=count"+customerId+"]").val();
+            var userId = $(this).val();
+            var count = $("input[name=count"+userId+"]").val();
             if ($.common.isEmpty(count)){
                 submit = false;
             }else {
                 totolCount += parseInt(count,10);
             }
-            data.push({"customerId":customerId,"params":{"count":count}});
+            userList.push({"userId":userId,"params":{"count":count}});
         })
+        var data = {"userList":userList,"ids":ids}
         //如果勾选下了客户经理而没有设置对应的数目，就禁止提交。如果带分配的客户数量和总数目不相等，也禁止提交。
         if (submit) {
             if (totolCount != ids.length) {

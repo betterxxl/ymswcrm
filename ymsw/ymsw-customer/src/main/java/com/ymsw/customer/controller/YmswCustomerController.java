@@ -9,6 +9,7 @@ import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.customer.service.IYmswRemarkService;
+import com.ymsw.customer.vo.YmswReallocationVo;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
 import com.ymsw.system.service.ISysDeptService;
@@ -267,11 +268,16 @@ public class YmswCustomerController extends BaseController
     @RequiresPermissions("customer:manage:reallocation")
     @PostMapping("/saveReallocation")
     @ResponseBody
-    public AjaxResult saveReallocation(@RequestBody List<YmswCustomer> ymswCustomerList)
+    public AjaxResult saveReallocation(@RequestBody YmswReallocationVo ymswReallocationVo)
     {
-        for (YmswCustomer ymswCustomer : ymswCustomerList) {
-            System.out.println(ymswCustomer.getCustomerId());
+        List<SysUser> userList = ymswReallocationVo.getUserList();
+        for (SysUser ymswCustomer : userList) {
+            System.out.println(ymswCustomer.getUserId());
             System.out.println(ymswCustomer.getParams().get("count"));
+        }
+        List<Long> ids = ymswReallocationVo.getIds();
+        for (Long id : ids) {
+            System.out.println(id);
         }
         return AjaxResult.success();
     }
