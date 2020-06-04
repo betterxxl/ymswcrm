@@ -313,6 +313,19 @@
                 $.operate.submit(url, "post", "json", data);
             });
         }
+
+        // 抽回重分配
+        function reallocation(){
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            // $.modal.confirm("确定要将选中的" + rows.length + "条数据重新分配吗?", function() {
+                //ids=rows  将选中的需要重分配的customerIds传到后台，后台再放入mmap传到重分配页面
+                $.modal.open('重分配配置', ctx + 'customer/main/reallocation?ids='+rows);
+            // });
+        }
     </script>
 </body>
 

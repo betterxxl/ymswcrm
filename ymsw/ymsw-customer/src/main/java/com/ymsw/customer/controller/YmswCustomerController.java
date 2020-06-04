@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
@@ -17,11 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ymsw.common.annotation.Log;
 import com.ymsw.common.enums.BusinessType;
 import com.ymsw.customer.domain.YmswCustomer;
@@ -31,6 +28,8 @@ import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 客户信息表Controller
@@ -167,6 +166,10 @@ public class YmswCustomerController extends BaseController
         //计算年龄
         String customerBirth = ymswCustomer.getCustomerBirth();
         Calendar date = Calendar.getInstance();
+        //当出生年份为空时，将今年的年份作为客户的出生年份，避免数据库里出生年份为空时报空指针错误
+        if (StringUtils.isEmpty(customerBirth)){
+            customerBirth = String.valueOf(date.get(Calendar.YEAR));
+        }
         int age = Integer.valueOf(date.get(Calendar.YEAR))-Integer.valueOf(customerBirth);
         ymswCustomer.setCustomerBirth(String.valueOf(age));//赋值age为年龄
         //通过customerId查询该客户的业务经理添加的备注
@@ -244,5 +247,32 @@ public class YmswCustomerController extends BaseController
     {
         YmswCustomer ymswCustomer = ymswCustomerService.getCustomerInfo(customerPhone);
         return AjaxResult.success(ymswCustomer);
+    }
+
+    /**
+     * 跳转到抽回重分配页面
+     */
+    @RequiresPermissions("customer:manage:reallocation")
+    @GetMapping("/reallocation")
+    public String reallocation(ModelMap mmap,String ids)
+    {
+        mmap.put("ids",ids);//需要重分配的customerIds，再传到reallocation.html页面
+        return prefix + "/reallocation";
+    }
+
+    /**
+     *重回重分配业务
+     */
+    @Log(title = "客户信息表", businessType = BusinessType.UPDATE)
+    @RequiresPermissions("customer:manage:reallocation")
+    @PostMapping("/saveReallocation")
+    @ResponseBody
+    public AjaxResult saveReallocation(@RequestBody List<YmswCustomer> ymswCustomerList)
+    {
+        for (YmswCustomer ymswCustomer : ymswCustomerList) {
+            System.out.println(ymswCustomer.getCustomerId());
+            System.out.println(ymswCustomer.getParams().get("count"));
+        }
+        return AjaxResult.success();
     }
 }

@@ -4,6 +4,7 @@ import com.ymsw.common.annotation.Log;
 import com.ymsw.common.constant.UserConstants;
 import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.common.core.page.TableDataInfo;
 import com.ymsw.common.enums.BusinessType;
 import com.ymsw.common.utils.poi.ExcelUtil;
@@ -277,5 +278,16 @@ public class SysUserController extends BaseController
     {
         userService.checkUserAllowed(user);
         return toAjax(userService.changeStatus(user));
+    }
+
+    /**
+     * 使用数据范围，在根据名字模糊查询员工列表（在抽回重分配页面用到）
+     */
+    @PostMapping("/searchUserListByUserName")
+    @ResponseBody
+    public AjaxResult changeStatus(BaseEntity baseEntity)
+    {
+        List<SysUser> sysUsers = userService.selectUsers(baseEntity);
+        return AjaxResult.success(sysUsers);
     }
 }

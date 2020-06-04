@@ -191,7 +191,7 @@ public interface ISysUserService
 
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
-     * @param BaseEntity 超级父类
+     * @param baseEntity 超级父类
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUsers(BaseEntity baseEntity);
