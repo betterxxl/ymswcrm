@@ -1,7 +1,10 @@
 package com.ymsw.quota.service;
 
 import com.ymsw.quota.domain.QuotaManager;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 配额管理Service接口
@@ -58,4 +61,9 @@ public interface IQuotaManagerService
      * @return 结果
      */
     public int deleteQuotaManagerById(Long quotaId);
+
+    /**
+     * 批量修改配额状态
+     */
+    int changeStatus(Map<String, Object> params);
 }

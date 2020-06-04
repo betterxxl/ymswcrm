@@ -1,6 +1,9 @@
 package com.ymsw.quota.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ymsw.quota.mapper.QuotaManagerMapper;
@@ -90,5 +93,13 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
     public int deleteQuotaManagerById(Long quotaId)
     {
         return quotaManagerMapper.deleteQuotaManagerById(quotaId);
+    }
+
+    /**
+     * 批量修改配额状态
+     */
+    @Override
+    public int changeStatus(Map<String, Object> params) {
+        return quotaManagerMapper.changeStatus(params);
     }
 }

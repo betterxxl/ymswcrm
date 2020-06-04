@@ -1,6 +1,7 @@
 package com.ymsw.quota.controller;
 
-import java.util.List;
+import java.util.*;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,5 +122,21 @@ public class QuotaManagerController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(quotaManagerService.deleteQuotaManagerByIds(ids));
+    }
+
+    /**
+     * 批量修改配额状态
+     */
+    @RequiresPermissions("quota:main:changeStatus")
+    @Log(title = "配额管理", businessType = BusinessType.UPDATE)
+    @PostMapping( "/batchChangeStatus")
+    @ResponseBody
+    public AjaxResult batchChangeStatus(String ids, String quotaStatus)
+    {
+        List<String> quotaIds = Arrays.asList(ids.split(","));
+        Map<String, Object> params = new HashMap<>();
+        params.put("quotaIds", quotaIds);
+        params.put("quotaStatus", quotaStatus);
+        return toAjax(quotaManagerService.changeStatus(params));
     }
 }

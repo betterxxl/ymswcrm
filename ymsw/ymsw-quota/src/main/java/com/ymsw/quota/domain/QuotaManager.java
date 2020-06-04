@@ -42,7 +42,29 @@ public class QuotaManager extends BaseEntity
     @Excel(name = "配额状态 0 关闭 1开启")
     private String quotaStatus;
 
-    public void setQuotaId(Long quotaId) 
+    /** 员工姓名 */
+    private String userName;
+
+    /** 员工电话号码 */
+    private String phonenumber;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public void setQuotaId(Long quotaId)
     {
         this.quotaId = quotaId;
     }

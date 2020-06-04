@@ -2,12 +2,31 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('配额管理列表')" />
+    <th:block th:include="include :: bootstrap-editable-css" />
+    <style>
+        #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
+    </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
-                <form id="formId">
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="input-group col-xs-2" style="margin-left: 5px">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额总数</div>
+                            <input type="text" class="form-control" value="125" disabled>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额设置</div>
+                            <input type="text" class="form-control" name="customerPhone">
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 search-collapse">
+                <!--<form id="formId">
                     <div class="select-list">
                         <ul>
                             <li>
@@ -42,29 +61,45 @@
                             </li>
                         </ul>
                     </div>
+                </form>-->
+                <form id="formId" class="form-inline">
+                <div class="row">
+                    <div class="input-group col-xs-2" style="margin-left: 5px">
+                        <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
+                        <input type="text" class="form-control" name="customerName">
+                    </div>
+                    <div class="input-group col-xs-2 col-xs-offset-1">
+                        <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                        <input type="text" class="form-control" name="customerPhone">
+                        <!--                            </div>-->
+                    </div>
+                    <div class="input-group col-xs-2 col-xs-offset-1">
+                        <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
+                        <select name="params[deptId]" class="form-control">
+                            <option value="">-不限-</option>
+                            <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
+                        </select>
+                    </div>
+                </div>
                 </form>
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="quota:main:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-danger multiple disabled" onclick="batchDisable()" shiro:hasPermission="quota:main:changeStatus">
+                    <i class="fa fa-remove"></i> 暂停
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="quota:main:edit">
-                    <i class="fa fa-edit"></i> 修改
+                <a class="btn btn-primary multiple disabled" onclick="batchEnable()" shiro:hasPermission="quota:main:changeStatus">
+                    <i class="fa fa-edit"></i> 恢复
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="quota:main:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="quota:main:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>
             </div>
+
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
         </div>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-table-editable-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('quota:main:edit')}]];
         var removeFlag = [[${@permission.hasPermi('quota:main:remove')}]];
@@ -73,43 +108,72 @@
         $(function() {
             var options = {
                 url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
+                // createUrl: prefix + "/add",
+                // updateUrl: prefix + "/edit/{id}",
+                //removeUrl: prefix + "/batchChangeStatus",
+                // exportUrl: prefix + "/export",
                 modalName: "配额管理",
+                striped: true,//隔行换色
+                showToggle: false,
+                onEditableSave: onEditableSave,
+                rememberSelected: true,
+                uniqueId: "quotaId",
                 columns: [{
+                    field: 'state',
                     checkbox: true
                 },
                 {
-                    field : 'quotaId', 
-                    title : '配额管理id',
-                    visible: false
+                    field : 'quotaId',
+                    title : '编号',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
-                    field : 'userId', 
-                    title : '用户id'
+                    field : 'userName',
+                    title : '姓名',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
-                    field : 'allowTotalCount', 
-                    title : '总限额数'
-                },
-                {
-                    field : 'nowTotalCount', 
-                    title : '当前客户数'
+                    field : 'phonenumber',
+                    title : '业务手机',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'allowTodayCount', 
-                    title : '今日配额数'
+                    title : '配额',
+                    halign: 'center',
+                    align: 'center',
+                    editable : {
+                        type : 'text',
+                        title : '配额',
+                        emptytext : "【配额】为空",
+                        validate : function(value) {
+                            if (value.length > 30) {
+                                return '名称不能超过30个字符';
+                            }
+                            if (value.length == 0) {
+                                return '名称不能为空';
+                            }
+                        }
+                    }
                 },
                 {
                     field : 'nowTodayCount', 
-                    title : '今日已分配客户数'
+                    title : '已分配',
+                    halign: 'center',
+                    align: 'center'
                 },
                 {
                     field : 'quotaStatus', 
-                    title : '配额状态 0 关闭 1开启'
-                },
+                    title : '状态',
+                    halign: 'center',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return statusTools(row);
+                    }
+                }/*,
                 {
                     title: '操作',
                     align: 'center',
@@ -119,10 +183,65 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.quotaId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                }*/]
             };
             $.table.init(options);
         });
+
+        /* 配额状态显示 */
+        function statusTools(row) {
+            if (row.quotaStatus == 0) {
+                return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.quotaId + '\')"></i> ';
+            } else {
+                return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.quotaId + '\')"></i> ';
+            }
+        }
+
+        /* 配额管理-停用 */
+        function disable(quotaId) {
+            $.modal.confirm("确认要暂停吗？", function() {
+                $.operate.post(prefix + "/batchChangeStatus", { "ids": quotaId, "quotaStatus": 0 });
+            })
+        }
+
+        /* 配额管理启用 */
+        function enable(quotaId) {
+            $.modal.confirm("确认要恢复吗？", function() {
+                $.operate.post(prefix + "/batchChangeStatus", { "ids": quotaId, "quotaStatus": 1 });
+            })
+        }
+
+        // 批量暂停
+        function batchDisable() {
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.confirm("确定要将选中的" + rows.length + "条数据暂停吗?", function() {
+                var url = prefix + "/batchChangeStatus";
+                var data = { "ids": rows.join(), "quotaStatus":0 };
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
+
+        // 批量恢复
+        function batchEnable() {
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.confirm("确定要将选中的" + rows.length + "条数据恢复吗?", function() {
+                var url = prefix + "/batchChangeStatus";
+                var data = { "ids": rows.join(), "quotaStatus":1 };
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
+
+        function onEditableSave (field, row, oldValue, $el) {
+            alert("字段名：" + field + "，当前值：" + row[field]  + "，旧值：" + oldValue);
+        }
     </script>
 </body>
 </html>

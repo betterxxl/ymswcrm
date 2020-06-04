@@ -1,7 +1,10 @@
 package com.ymsw.quota.mapper;
 
 import com.ymsw.quota.domain.QuotaManager;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 配额管理Mapper接口
@@ -58,4 +61,9 @@ public interface QuotaManagerMapper
      * @return 结果
      */
     public int deleteQuotaManagerByIds(String[] quotaIds);
+
+    /**
+     * 批量修改配额状态
+     */
+    int changeStatus(Map<String, Object> params);
 }
