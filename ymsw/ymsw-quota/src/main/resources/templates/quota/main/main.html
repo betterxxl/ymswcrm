@@ -212,8 +212,19 @@
         // 批量暂停
         function batchDisable() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var quotaStatusList = $.table.selectColumns("quotaStatus");
+            var submitFlag = false;
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            for (var i=0;i<quotaStatusList.length;i++){
+                if (quotaStatusList[i] == "0"){
+                    submitFlag = true;
+                }
+            }
+            if (submitFlag){
+                $.modal.alertWarning("勾选信息有误");
                 return;
             }
             $.modal.confirm("确定要将选中的" + rows.length + "条数据暂停吗?", function() {
@@ -226,8 +237,19 @@
         // 批量恢复
         function batchEnable() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var quotaStatusList = $.table.selectColumns("quotaStatus");
+            var submitFlag = false;
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            for (var i=0;i<quotaStatusList.length;i++){
+                if (quotaStatusList[i] == "1"){
+                    submitFlag = true;
+                }
+            }
+            if (submitFlag){
+                $.modal.alertWarning("勾选信息有误");
                 return;
             }
             $.modal.confirm("确定要将选中的" + rows.length + "条数据恢复吗?", function() {
