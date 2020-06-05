@@ -66,4 +66,6 @@ public interface QuotaManagerMapper
      * 批量修改配额状态
      */
     int changeStatus(Map<String, Object> params);
+
+    int countTotal();
 }

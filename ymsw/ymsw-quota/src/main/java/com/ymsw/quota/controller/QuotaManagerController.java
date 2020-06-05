@@ -139,4 +139,15 @@ public class QuotaManagerController extends BaseController
         params.put("quotaStatus", quotaStatus);
         return toAjax(quotaManagerService.changeStatus(params));
     }
+
+    /**
+     * 批量修改配额状态
+     */
+    @PostMapping( "/countTotal")
+    @ResponseBody
+    public AjaxResult countTotal()
+    {
+        int total = quotaManagerService.countTotal();
+        return AjaxResult.success(total);
+    }
 }

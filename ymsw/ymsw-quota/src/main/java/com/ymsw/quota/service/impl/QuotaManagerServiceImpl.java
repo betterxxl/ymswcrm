@@ -102,4 +102,10 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
     public int changeStatus(Map<String, Object> params) {
         return quotaManagerMapper.changeStatus(params);
     }
+
+    @Override
+    public int countTotal() {
+        int total = quotaManagerMapper.countTotal();
+        return total;
+    }
 }

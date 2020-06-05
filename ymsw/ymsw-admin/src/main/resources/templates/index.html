@@ -35,18 +35,18 @@
 <!--                    <p>YINGMAOBUSINESS</p>-->
             	</li>
             	<li>
-            		<div class="user-panel" style="height: 80px;">
+            		<div class="user-panel" style="height: 40px;">
             			<a class="menuItem" title="个人中心" th:href="@{/system/user/profile}">
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
 <!--		                    	<img th:src="(${user.avatar} == '') ? @{/img/logo2.png} : @{${user.avatar}}" class="img-circle" alt="User Image">-->
-		                    	<img th:src="@{/img/logo2.png}" class="img-circle" alt="User Image">
+		                    	<!--<img th:src="@{/img/logo2.png}" class="img-circle" alt="User Image">-->
 					        </div>
 				        </a>
 				        <div class="pull-left info">
-				          <p>[[${user.userName}]]</p>
+				          <p>[[${user.userName}]]&nbsp;<a th:href="@{logout}" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 退出登录</a></p>
 <!--				          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>-->
-				          <a th:href="@{logout}" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 退出登录</a>
+
 				        </div>
 				    </div>
             	</li>

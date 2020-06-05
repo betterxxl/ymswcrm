@@ -15,12 +15,11 @@
                     <div class="row">
                         <div class="input-group col-xs-2" style="margin-left: 5px">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额总数</div>
-                            <input type="text" class="form-control" value="125" disabled>
+                            <input type="text" class="form-control" value="125" disabled id="countTotal">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额设置</div>
-                            <input type="text" class="form-control" name="customerPhone">
-                            <!--                            </div>-->
+                            <input type="number" class="form-control" name="customerPhone">
                         </div>
                     </div>
                 </form>
@@ -86,10 +85,10 @@
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-danger multiple disabled" onclick="batchDisable()" shiro:hasPermission="quota:main:changeStatus">
-                    <i class="fa fa-remove"></i> 暂停
+                    <i class="fa fa-times-circle"></i> 暂停
                 </a>
                 <a class="btn btn-primary multiple disabled" onclick="batchEnable()" shiro:hasPermission="quota:main:changeStatus">
-                    <i class="fa fa-edit"></i> 恢复
+                    <i class="fa fa-refresh"></i> 恢复
                 </a>
             </div>
 
@@ -273,6 +272,17 @@
                 }
             });
         }
+
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: prefix + "/countTotal",
+                dataType:"json",
+                success: function(result){
+                    $("#countTotal").val(result.data);
+                }
+            });
+        })
     </script>
 </body>
 </html>

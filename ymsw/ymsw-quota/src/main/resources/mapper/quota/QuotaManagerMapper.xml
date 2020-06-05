@@ -24,12 +24,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectQuotaManager">
         select u.user_name, u.phonenumber, quota_id, qm.user_id, allow_total_count, now_total_count, allow_today_count, now_today_count, quota_status
         from quota_manager qm
-        left join sys_user u on u.user_id = qm.user_id and u.status = '0'  /*在职的员工*/
+        left join sys_user u on u.user_id = qm.user_id
     </sql>
 
     <select id="selectQuotaManagerList" parameterType="QuotaManager" resultMap="QuotaManagerResult">
         <include refid="selectQuotaManager"/>
         <where>
+            u.status = '0'  /*在职的员工*/
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="allowTotalCount != null "> and allow_total_count = #{allowTotalCount}</if>
             <if test="nowTotalCount != null "> and now_total_count = #{nowTotalCount}</if>
@@ -97,5 +98,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{quotaId}
         </foreach>
     </update>
+
+    <select id="countTotal" resultType="int">
+        select sum(allow_today_count) from quota_manager qm left join sys_user u on u.user_id = qm.user_id where u.status = 0
+    </select>
     
 </mapper>
