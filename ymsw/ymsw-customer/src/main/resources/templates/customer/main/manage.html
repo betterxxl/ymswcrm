@@ -159,6 +159,7 @@
                 striped: true,//隔行换色
                 sortName: "userId",
                 sortOrder: "desc",
+                rememberSelected: true,
                 showToggle: false,
                 modalName: "客户详情",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
@@ -168,6 +169,7 @@
                     }
                 },
                 columns: [{
+                    field: 'state',
                     checkbox: true
                 },
                 {
