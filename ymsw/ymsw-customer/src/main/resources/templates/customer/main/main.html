@@ -4,6 +4,8 @@
     <th:block th:include="include :: header('客户信息表列表')" />
     <style>
         #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
+        #bootstrap-table>thead>tr>th {border: 1px solid white}
+        #bootstrap-table>tbody>tr:nth-child(odd) {background: rgba(237, 255, 245, 0.68);}
     </style>
 </head>
 <body class="gray-bg">
@@ -217,7 +219,8 @@
                     field : 'remark',
                     title : '备注',
                     halign: 'center',
-                    align: 'left'
+                    align: 'left',
+                    width: 500,
                 },
                 {
                     field : 'distributeTime',

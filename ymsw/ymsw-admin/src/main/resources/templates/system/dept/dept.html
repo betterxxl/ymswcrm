@@ -2,6 +2,10 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('部门列表')" />
+	<style>
+		/*#bootstrap-tree-table>thead>tr {background-color: #f94a35;color: white;}
+		#bootstrap-tree-table>thead>tr>th {border: 2px solid white}*/
+	</style>
 </head>
 <body class="gray-bg">
 	<div class="container-div">
@@ -13,12 +17,12 @@
 							<li>
 								部门名称：<input type="text" name="deptName"/>
 							</li>
-							<li>
+							<!--<li>
 								部门状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
-							</li>
+							</li>-->
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 <!--								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>-->
@@ -71,7 +75,7 @@
 		            title: '部门名称',
 		            align: "left"
 		        },
-		        {
+		        /*{
 		            field: 'orderNum',
 		            title: '排序',
 		            align: "left"
@@ -83,7 +87,7 @@
 		            formatter: function(value, item, index) {
 		            	return $.table.selectDictLabel(datas, item.status);
 		            }
-		        },
+		        },*/
 		        {
 		            field: 'createTime',
 		            title: '创建时间',
