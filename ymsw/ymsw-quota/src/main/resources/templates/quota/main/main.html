@@ -145,14 +145,15 @@
                     halign: 'center',
                     align: 'center',
                     editable : {
-                        type : 'number',
+                        type : 'text',
                         title : '配额',
                         min: 0,
                         emptytext : "【配额】为空",
                         validate : function(value) {
-                            if (value.length == 0) {
-                                return '配额不能为空';
-                            }
+                            if (!value) return '配额不能为空';
+                            if (isNaN(value)) return '必须是数字';
+                            var r = /^\d+$/
+                            if (!r.test(value)) return '必须是正整数';
                         }
                     }
                 },

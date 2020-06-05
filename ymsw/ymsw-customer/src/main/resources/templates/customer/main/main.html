@@ -13,14 +13,14 @@
                 <form id="formId" class="form-inline">
                     <div class="row">
                         <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
-                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">星级</div>
+                            <div class="input-group-addon " style="background-color: #efefef;">星级</div>
                             <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户类型</div>
+                            <div class="input-group-addon " style="background-color: #efefef;">客户类型</div>
                             <select name="customerType" th:with="type=${@dict.getType('customer_type')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -28,14 +28,14 @@
                         </div>
 
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">客户状态</div>
+                            <div class="input-group-addon " style="background-color: #efefef;">客户状态</div>
                             <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">未跟进天数</div>
+                            <div class="input-group-addon " style="background-color: #efefef;">未跟进天数</div>
                             <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -44,20 +44,20 @@
                     </div><br>
                     <div class="row">
                         <div class="input-group col-xs-2" style="margin-left: 5px">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
+                            <div class="input-group-addon" style="background-color: #efefef;">姓名</div>
                             <input type="text" class="form-control" name="customerName">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                            <div class="input-group-addon" style="background-color: #efefef;">手机号</div>
                             <input type="text" class="form-control" name="customerPhone">
                             <!--                            </div>-->
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">最后备注开始</div>
+                            <div class="input-group-addon" style="background-color: #efefef;">最后备注开始</div>
                             <input type="text" class="time-input form-control" id="startTime" name="params[beginRemarkTime]" />
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">最后备注结束</div>
+                            <div class="input-group-addon" style="background-color: #efefef;">最后备注结束</div>
                             <input type="text" class="time-input form-control" id="endTime" name="params[endRemarkTime]"/>
                         </div>
                     </div><br>
@@ -153,15 +153,13 @@
                     field : 'customerId',
                     title : '客户编号',
                     halign: 'center',
-                    align: 'center',
-                    width: 80
+                    align: 'center'
                 },
                 {
                     field : 'customerName',
                     title : '客户姓名',
                     halign: 'center',
                     align: 'center',
-                    width: 80,
                     formatter: function(value, row, index) {
                         return "<span style='color: #b60000;'>"+value+"</span>";
                     }
@@ -171,7 +169,6 @@
                     title : '性别',
                     halign: 'center',
                     align: 'center',
-                    width: 80,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(customerSexDatas, value);
                     }
@@ -181,7 +178,6 @@
                     title : '年龄',
                     halign: 'center',
                     align: 'center',
-                    width: 80,
                     formatter: function(value, row, index) {
                         var date = new Date();
                         return date.getFullYear()-value;
@@ -191,15 +187,13 @@
                     field : 'customerQuota',
                     title : '额度(万)',
                     halign: 'center',
-                    align: 'center',
-                    width: 80,
+                    align: 'center'
                 },
                 {
                     field : 'customerStar',
                     title : '星级',
                     halign: 'center',
                     align: 'center',
-                    width: 80,
                     formatter: function(value, row, index) {
                         return $.table.selectDictLabel(customerStarDatas, value);
                     }
@@ -209,7 +203,6 @@
                     title : '客户状态',
                     halign: 'center',
                     align: 'center',
-                    width: 140,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(customerStatusDatas, value);
                     }
@@ -218,8 +211,7 @@
                     field : 'userName',
                     title : '归属顾问',
                     halign: 'center',
-                    align: 'center',
-                    width: 80,
+                    align: 'center'
                 },
                 {
                     field : 'remark',
@@ -232,7 +224,6 @@
                     title : '分配时间',
                     halign: 'center',
                     align: 'center',
-                    width: 140,
                     sortable: true
                 },
                 {
@@ -240,7 +231,6 @@
                     title : '备注时间',
                     halign: 'center',
                     align: 'center',
-                    width: 140,
                     sortable: true
                 },
                 {
@@ -248,7 +238,6 @@
                     title : '申请时间',
                     halign: 'center',
                     align: 'center',
-                    width: 140,
                     sortable: true
                 },
                 /*{
