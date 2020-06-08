@@ -3,9 +3,13 @@
 <head>
     <th:block th:include="include :: header('修改订单信息表')"/>
     <th:block th:include="include :: datetimepicker-css"/>
+    <th:block th:include="include :: select2-css" />
+    <style>
+        body{font-size: 15px}
+    </style>
 </head>
 <body class="white-bg">
-<div class="ibox-content" style="background-color: #efefef">
+<div class="ibox-content" style="background-color: #efefef;height: 100%">
     <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
         <div class="form-group">
             <label for="exampleInputName2">合同编号：</label>
@@ -34,7 +38,7 @@
             <input name="customerId" th:field="*{orderId}" type="hidden">
             <div>
                 <div class="input-group col-xs-2">
-                    <div class="input-group-addon" style="background-color: #efefef;">进件助理</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">进件助理</div>
                     <select name="incomingAssistant" class="form-control"
                             th:with="type=${@dict.getType('incoming_assistant')}">
                         <option value="">-请选择-</option>
@@ -43,7 +47,7 @@
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">进件渠道</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">进件渠道</div>
                     <select name="incomingChannel" class="form-control"
                             th:with="type=${@dict.getType('incoming_channel')}">
                         <option value="">-请选择-</option>
@@ -52,7 +56,7 @@
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">进件类型</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">进件类型</div>
                     <select name="incomingType" class="form-control"
                             th:with="type=${@dict.getType('incoming_type')}">
                         <option value="">-请选择-</option>
@@ -61,7 +65,7 @@
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">订单状态</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">订单状态</div>
                     <select name="orderStatus" class="form-control"
                             th:with="type=${@dict.getType('order_status')}">
                         <option value="">-请选择-</option>
@@ -70,7 +74,7 @@
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">客户经理</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">客户经理</div>
                     <select name="userId" class="form-control" >
                         <option value="">-请选择-</option>
                         <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}" th:selected="*{userId} eq ${user.userId}"></option>
@@ -80,28 +84,28 @@
 
             <div style="margin-top: 20px">
                 <div class="input-group col-xs-2">
-                    <div class="input-group-addon" style="background-color: #efefef;">银行经理</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">银行经理</div>
                     <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text" maxlength="10">
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">点数</div>
-                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="number">
-                    <div class="input-group-addon">%</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">点数</div>
+                    <input name="orderRate" th:field="*{orderRate}" class="form-control" type="number" min="0">
+                    <div class="input-group-addon"style="font-size: 15px">%</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">批款额度</div>
-                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="number">
-                    <div class="input-group-addon">万</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">批款额度</div>
+                    <input name="allowAmount" th:field="*{allowAmount}" class="form-control" type="number" min="0">
+                    <div class="input-group-addon"style="font-size: 15px">万</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">创收</div>
-                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="number">
-                    <div class="input-group-addon">元</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">创收</div>
+                    <input name="incomeGeneration" th:field="*{incomeGeneration}" class="form-control" type="number" min="0">
+                    <div class="input-group-addon"style="font-size: 15px">元</div>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">渠道费</div>
-                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="number">
-                    <div class="input-group-addon">元</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">渠道费</div>
+                    <input name="channelFee" th:field="*{channelFee}" class="form-control" type="number" min="0">
+                    <div class="input-group-addon" style="font-size: 15px">元</div>
                 </div>
             </div>
             <div class="input-group" style="margin-top: 10px;width: 100%">
@@ -110,10 +114,10 @@
             </div>
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-offset-5 col-sm-10">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                    <button type="button" class="btn btn-md btn-primary" onclick="submitHandler()"><i
                             class="fa fa-check"></i>保 存
                     </button>&nbsp;
-                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                    <button type="button" class="btn btn-md btn-danger" onclick="closeItem()"><i
                             class="fa fa-reply-all"></i>关 闭
                     </button>
                 </div>
@@ -123,6 +127,7 @@
 </div>
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: datetimepicker-js"/>
+<th:block th:include="include :: select2-js" />
 <script type="text/javascript">
     var prefix = ctx + "order/main";
     $("#form-main-edit").validate({

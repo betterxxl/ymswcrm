@@ -3,8 +3,10 @@
 <head>
 	<th:block th:include="include :: header('部门列表')" />
 	<style>
-		/*#bootstrap-tree-table>thead>tr {background-color: #f94a35;color: white;}
-		#bootstrap-tree-table>thead>tr>th {border: 2px solid white}*/
+		#bootstrap-tree-table>thead>tr {background-color: rgb(237,85,101);color: white}
+		#bootstrap-tree-table>thead>tr>th {font-size: 15px;text-align: center}
+		#bootstrap-tree-table>tbody>tr:nth-child(odd) {background: rgba(237, 255, 245, 0.68);}
+		body{font-size: 15px}
 	</style>
 </head>
 <body class="gray-bg">
@@ -24,7 +26,7 @@
 								</select>
 							</li>-->
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-primary btn-rounded btn-md" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 <!--								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>-->
 							</li>
 						</ul>
@@ -32,14 +34,14 @@
 				</form>
 			</div>
                 
-            <div class="btn-group-sm" id="toolbar" role="group">
-		        <a class="btn btn-success" onclick="$.operate.add(100)" shiro:hasPermission="system:dept:add">
+            <div class="btn-group-md" id="toolbar" role="group">
+		        <a class="btn btn-warning" onclick="$.operate.add(100)" shiro:hasPermission="system:dept:add">
                     <i class="fa fa-plus"></i> 新增
                 </a>
-                <a class="btn btn-primary" onclick="$.operate.edit()" shiro:hasPermission="system:dept:edit">
+                <a class="btn btn-warning" onclick="$.operate.edit()" shiro:hasPermission="system:dept:edit">
 		            <i class="fa fa-edit"></i> 修改
 		        </a>
-                <a class="btn btn-info" id="expandAllBtn">
+                <a class="btn btn-warning" id="expandAllBtn">
                     <i class="fa fa-exchange"></i> 展开/折叠
                 </a>
 	        </div>
@@ -75,33 +77,20 @@
 		            title: '部门名称',
 		            align: "left"
 		        },
-		        /*{
-		            field: 'orderNum',
-		            title: '排序',
-		            align: "left"
-		        },
-		        {
-		            field: 'status',
-		            title: '状态',
-		            align: "left",
-		            formatter: function(value, item, index) {
-		            	return $.table.selectDictLabel(datas, item.status);
-		            }
-		        },*/
 		        {
 		            field: 'createTime',
 		            title: '创建时间',
-		            align: "left"
+		            align: "center"
 		        },
 		        {
 		            title: '操作',
-		            align: 'left',
+		            align: 'center',
 		            formatter: function(value, row, index) {
 		                if (row.parentId != 0) {
 		                    var actions = [];
-		                    actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.deptId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		                    actions.push('<a class="btn btn-info  btn-xs ' + addFlag + '" href="javascript:void(0)" onclick="$.operate.add(\'' + row.deptId + '\')"><i class="fa fa-plus"></i>新增</a> ');
-		                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.deptId + '\')"><i class="fa fa-trash"></i>删除</a>');
+		                    actions.push('<a class="btn btn-primary btn-md ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.deptId + '\')"><i class="fa fa-edit"></i> 编辑</a> ');
+		                    actions.push('<a class="btn btn-primary  btn-md ' + addFlag + '" href="javascript:void(0)" onclick="$.operate.add(\'' + row.deptId + '\')"><i class="fa fa-plus"></i> 新增</a> ');
+		                    actions.push('<a class="btn btn-danger btn-md ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.deptId + '\')"><i class="fa fa-trash"></i> 删除</a>');
 		                    return actions.join('');
 		                } else {
 		                    return "";

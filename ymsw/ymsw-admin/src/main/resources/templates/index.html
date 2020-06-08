@@ -22,13 +22,10 @@
 
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
-        <!--<div class="nav-close">
-            <i class="fa fa-times-circle"></i>
-        </div>-->
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
-                <li class="text-center" style="height: 80px;background-color: #f94a39;color: white;padding-top: 8px">
-                    <span style="font-size: 30px;font-weight: bold">英 茂 商 务</span><span>YINGMAO BUSINESS</span>
+                <li class="text-center" style="height: 80px;color: rgb(237,85,101);border-bottom: rgb(237,85,101) 2px solid;padding-top: 8px">
+                    <span style="font-size: 30px;font-weight: bold">英 茂 商 务</span><strong>YINGMAO BUSINESS</strong>
             	</li>
             	<li>
             		<div class="user-panel text-center">
@@ -59,35 +56,28 @@
     <!--右侧部分开始-->
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="row border-bottom" style="">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;height: 80px;background-color: #f94a39">
-<!--            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;height: 80px;background-color: #f9fafc;border-bottom: 3px solid red">-->
-                <!--<div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2" style="color:#FFF;" href="#" title="收起菜单">
-                    	<i class="fa fa-bars"></i>
-                    </a>
-                </div>-->
-                <ul class="nav navbar-top-links navbar-right welcome-message">
-<!--				    <li><a title="英茂商务" href="http://www.yingmaosw.cn/" target="_blank">武汉市英茂商务咨询有限公司</a></li>-->
-                    <!-- <li><a title="开发文档" href="http://doc.ymsw.vip" target="_blank"><i class="fa fa-question-circle"></i> 开发文档</a></li>  -->
-<!--	                <li><a title="全屏显示" href="javascript:void(0)" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>-->
-                    <!--<li class="dropdown user-menu">
-						<a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
-							<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}" class="user-image">
-							<span class="hidden-xs">[[${user.userName}]]</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li class="mt5">
-								<a th:href="@{/system/user/profile}" class="menuItem">
-								<i class="fa fa-user"></i> 个人中心</a>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<a th:href="@{logout}">
-								<i class="fa fa-sign-out"></i> 退出登录</a>
-							</li>
-						</ul>
-					</li>-->
-                </ul>
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;height: 80px;background-color: rgb(249,250,252);border-bottom: rgb(237,85,101) 2px solid">
+                <div class="row" style="margin-left: 10px">
+                    <div class="col-md-2">
+                        <p style="font-weight: bold;font-size: 24px;color: rgb(237,85,101);margin-top: 10px">客户管理系统</p>
+                        <p style="margin-top: -4px;font-size: 14px;font-weight: bold"><a th:title="英茂商务" href="http://www.yingmaosw.cn/" target="_blank">武汉市英茂商务咨询有限公司</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top: 40px;height: 34px;line-height: 34px;background-image: linear-gradient(to right,rgb(249,250,252),rgb(237,85,101),rgb(249,250,252))">
+                            <marquee style="color: yellow">
+                                <span class="glyphicon glyphicon-bullhorn" style="margin-right: 10px"></span>
+                                5月奖励政策宣贯：A、信贷--成功放开30万加（含）每单奖励100元；B、抵押和企业贷--放款30万到100万，每单奖励188元；放款100万到200万奖励300元；放款200万以上奖励888元。
+                            </marquee>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>
+                        <button type="button" class="btn btn-success" style="margin-top: 40px">公告 <span class="badge">14</span></button>
+                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>
+                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>
+                    </div>
+
+                </div>
             </nav>
         </div>
         <div class="row content-tabs">
@@ -104,9 +94,6 @@
             </button>
             <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
         </div>
-        
-        <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
-                    
         <div class="row mainContent" id="content-main">
             <iframe class="ymsw_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main"
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
@@ -130,11 +117,6 @@
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript"> 
 var ctx = [[@{/}]];
-/*用户管理-重置密码*/
-function resetPwd() {
-    var url = ctx + 'system/user/profile/resetPwd';
-    $.modal.open("重置密码", url, '800', '500');
-}
 </script>
 </body>
 </html>

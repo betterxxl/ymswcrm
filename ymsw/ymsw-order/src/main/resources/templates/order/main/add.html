@@ -3,6 +3,10 @@
 <head>
     <th:block th:include="include :: header('新增订单信息表')"/>
     <th:block th:include="include :: bootstrap-fileinput-css"/>
+    <th:block th:include="include :: select2-css" />
+    <style>
+        body{font-size: 15px}
+    </style>
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -71,8 +75,8 @@
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>点数</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input name="orderRate" type="number" class="form-control" required>
-                            <div class="input-group-addon">%</div>
+                            <input name="orderRate" type="number" class="form-control" required min="0">
+                            <div class="input-group-addon" style="font-size: 15px">%</div>
                         </div>
                     </div>
                 </div>
@@ -84,8 +88,8 @@
                     <label class="col-sm-3 control-label"><span style="color: red">*&nbsp;</span>诚意金</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input name="sincerityMoney" class="form-control" type="number" required>
-                            <div class="input-group-addon">元</div>
+                            <input name="sincerityMoney" class="form-control" type="number" required min="0">
+                            <div class="input-group-addon" style="font-size: 15px">元</div>
                         </div>
                     </div>
                 </div>
@@ -134,6 +138,7 @@
 </div>
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: bootstrap-fileinput-js"/>
+<th:block th:include="include :: select2-js" />
 <script type="text/javascript">
     var prefix = ctx + "order/main"
     $("#form-main-add").validate({

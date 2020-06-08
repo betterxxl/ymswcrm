@@ -531,7 +531,7 @@ $(function() {
                 }
             },
             "step": "---------",
-            "full": {
+            /*"full": {
                 name: "全屏显示",
                 icon: "fa-arrows-alt",
                 callback: function(key, opt) {
@@ -539,7 +539,7 @@ $(function() {
                     var target = $('.ymsw_iframe[data-id="' + this.data('id') + '"]');
                 	target.fullScreen(true);
                 }
-            },
+            },*/
             "refresh": {
                 name: "刷新页面",
                 icon: "fa-refresh",

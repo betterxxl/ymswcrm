@@ -5,50 +5,53 @@
     <th:block th:include="include :: bootstrap-editable-css" />
     <th:block th:include="include :: select2-css" />
     <style>
-        #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
+        #bootstrap-table>thead>tr {background-color: rgb(237,85,101);color: white;}
+        #bootstrap-table>thead>tr>th {border: 1px solid white;font-size: 15px}
+        #bootstrap-table>tbody>tr:nth-child(odd) {background: rgba(237, 255, 245, 0.68);}
+        body{font-size: 15px}
     </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-            <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse" style="padding-left: 30px">
                 <div class="form-inline">
                     <div class="row">
-                        <div class="input-group col-xs-2" style="margin-left: 5px">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额总数</div>
+                        <div class="input-group col-xs-2">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">配额总数</div>
                             <input type="text" class="form-control" value="125" disabled id="countTotal" style="color: red;font-weight: bold">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额设置</div>
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">配额设置</div>
                             <input type="number" class="form-control" min="0" id="allowTodayCount">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse" style="padding-left: 30px">
                 <form id="formId" class="form-inline">
                     <div class="row">
-                        <div class="input-group col-xs-2" style="margin-left: 5px">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
+                        <div class="input-group col-xs-2">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">姓名</div>
                             <input type="text" class="form-control" name="params[userName]">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">手机号</div>
                             <input type="text" class="form-control" name="params[phonenumber]">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
+                            <div class="input-group-addon " style="background-color: #efefef;width: 50%">所属组织</div>
                             <select name="params[deptId]" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
                             </select>
                         </div>
-                        <a class="btn btn-primary btn-rounded btn-sm" style="margin-left: 20px" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        <a class="btn btn-primary btn-rounded btn-md" style="margin-left: 20px" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                     </div>
                 </form>
             </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
+            <div class="btn-group-md" id="toolbar" role="group">
                 <a class="btn btn-danger multiple disabled" onclick="batchDisable()" shiro:hasPermission="quota:main:changeStatus">
                     <i class="fa fa-times-circle"></i> 暂停
                 </a>
@@ -163,14 +166,14 @@
 
         /* 配额管理-停用 */
         function disable(quotaId) {
-            $.modal.confirm("确认要暂停吗？", function() {
+            $.modal.confirm("确定要暂停吗？", function() {
                 $.operate.post(prefix + "/batchChangeStatus", { "ids": quotaId, "quotaStatus": 0 });
             })
         }
 
         /* 配额管理启用 */
         function enable(quotaId) {
-            $.modal.confirm("确认要恢复吗？", function() {
+            $.modal.confirm("确定要恢复吗？", function() {
                 $.operate.post(prefix + "/batchChangeStatus", { "ids": quotaId, "quotaStatus": 1 });
             })
         }
@@ -268,7 +271,7 @@
             }else {
                 var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
                 if (rows.length == 0) {
-                    $.modal.confirm("确认设置所有配额？",function () {
+                    $.modal.confirm("确定设置所有配额？",function () {
                         data = { "ids":null, "allowTodayCount":allowTodayCount};
                         $.operate.submit(url, "post", "json", data,function () {
                             $.ajax({
@@ -282,7 +285,7 @@
                         });
                     });
                 }else {
-                    $.modal.confirm("确认设置"+rows.length+"条数据的配额？",function () {
+                    $.modal.confirm("确定设置"+rows.length+"条数据的配额？",function () {
                         data = { "ids":rows.join(), "allowTodayCount":allowTodayCount};
                         $.operate.submit(url, "post", "json", data,function () {
                             $.ajax({

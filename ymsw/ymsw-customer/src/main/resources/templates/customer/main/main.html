@@ -2,42 +2,43 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('客户信息表列表')" />
+    <th:block th:include="include :: select2-css" />
     <style>
-        #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
-        #bootstrap-table>thead>tr>th {border: 1px solid white}
+        #bootstrap-table>thead>tr {background-color: rgb(237,85,101);color: white;}
+        #bootstrap-table>thead>tr>th {border: 1px solid white;font-size: 15px}
         #bootstrap-table>tbody>tr:nth-child(odd) {background: rgba(237, 255, 245, 0.68);}
+        body{font-size: 15px}
     </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-            <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse" style="padding-left: 30px">
                 <form id="formId" class="form-inline">
                     <div class="row">
-                        <div class="input-group col-xs-2 col-xs-offset-1" style="margin-left: 5px">
-                            <div class="input-group-addon " style="background-color: #efefef;">星级</div>
+                        <div class="input-group col-xs-2">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 50%">星级</div>
                             <select name="customerStar" th:with="type=${@dict.getType('customer_star')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;">客户类型</div>
+                            <div class="input-group-addon " style="background-color: #efefef;width: 50%">客户类型</div>
                             <select name="customerType" th:with="type=${@dict.getType('customer_type')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
-
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;">客户状态</div>
+                            <div class="input-group-addon " style="background-color: #efefef;width: 50%">客户状态</div>
                             <select name="customerStatus" th:with="type=${@dict.getType('customer_status')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon " style="background-color: #efefef;">未跟进天数</div>
+                            <div class="input-group-addon " style="background-color: #efefef;width: 50%">未跟进天数</div>
                             <select name="params[noDays]" th:with="type=${@dict.getType('customer_no_days')}" class="form-control">
                                 <option value="">-不限-</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -45,26 +46,25 @@
                         </div>
                     </div><br>
                     <div class="row">
-                        <div class="input-group col-xs-2" style="margin-left: 5px">
-                            <div class="input-group-addon" style="background-color: #efefef;">姓名</div>
+                        <div class="input-group col-xs-2">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">姓名</div>
                             <input type="text" class="form-control" name="customerName">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;">手机号</div>
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">手机号</div>
                             <input type="text" class="form-control" name="customerPhone">
-                            <!--                            </div>-->
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;">最后备注开始</div>
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">最后备注开始</div>
                             <input type="text" class="time-input form-control" id="startTime" name="params[beginRemarkTime]" />
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
-                            <div class="input-group-addon" style="background-color: #efefef;">最后备注结束</div>
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">最后备注结束</div>
                             <input type="text" class="time-input form-control" id="endTime" name="params[endRemarkTime]"/>
                         </div>
                     </div><br>
                     <div class="row">
-                        <div class="checkbox check-box" style="margin-left: 5px">
+                        <div class="checkbox check-box">
                             <input type="checkbox" name="hasCar" value="1"> <i></i>房
                         </div>
                         <div class="checkbox check-box">
@@ -85,32 +85,20 @@
                         <div class="checkbox check-box">
                             <input type="checkbox" name="customerSalary" value="1"> <i></i>代发工资
                         </div>
-                        <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        <a class="btn btn-primary btn-rounded btn-md" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                     </div>
                 </form>
             </div>
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-info" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
+            <div class="btn-group-md" id="toolbar" role="group">
+                <a class="btn btn-warning" onclick="$.operate.add()" shiro:hasPermission="customer:main:add">
                     <i class="fa fa-plus"></i> 新增客户
                 </a>
-                <a class="btn btn-success" onclick="addTOPool()" shiro:hasPermission="customer:pool:addToCollectionPool">
+                <a class="btn btn-warning multiple disabled" onclick="addTOPool()" shiro:hasPermission="customer:pool:addToCollectionPool">
                     <i class="fa fa-plus"></i> 放入公共池
                 </a>
-                <a class="btn btn-warning" onclick="addTOCollection()" shiro:hasPermission="customer:pool:addToCollectionPool">
+                <a class="btn btn-warning multiple disabled" onclick="addTOCollection()" shiro:hasPermission="customer:pool:addToCollectionPool">
                     <i class="fa fa-plus"></i> 加入收藏夹
                 </a>
-                <!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="customer:main:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:main:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>-->
-                <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="customer:main:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>-->
-                <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="customer:main:import">
-			            <i class="fa fa-upload"></i> 导入
-			        </a>-->
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -118,6 +106,7 @@
         </div>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: select2-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('customer:main:edit')}]];
         var removeFlag = [[${@permission.hasPermi('customer:main:remove')}]];
@@ -163,7 +152,7 @@
                     halign: 'center',
                     align: 'center',
                     formatter: function(value, row, index) {
-                        return "<span style='color: #b60000;'>"+value+"</span>";
+                        return "<strong style='color: rgb(237,85,101);'>"+value+"</strong>";
                     }
                 },
                 {

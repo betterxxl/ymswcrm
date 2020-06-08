@@ -3,10 +3,14 @@
 <head>
     <th:block th:include="include :: header('客户详情')"/>
     <th:block th:include="include :: datetimepicker-css"/>
+    <th:block th:include="include :: select2-css" />
+    <style>
+        body{font-size: 15px}
+    </style>
 </head>
 <body class="white-bg">
 <input id="userId" name="userId" type="hidden" th:value="${ymswCustomer.customerId}"/>
-    <div class="ibox-content"  style="background-color: #efefef">
+    <div class="ibox-content"  style="background-color: #efefef;height: 100%">
         <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
             <div class="form-group">
                 <label for="exampleInputName2">姓名：</label>
@@ -34,35 +38,35 @@
                 <input name="customerId" th:field="*{customerId}" type="hidden">
                 <input type="text" hidden th:value="*{customerName}" name="customerName">
                 <div class="input-group col-xs-2">
-                    <div class="input-group-addon" style="background-color: #efefef;">星级</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%">星级</div>
                     <select name="customerStar" class="form-control" th:with="type=${@dict.getType('customer_star')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStar}"></option>
                     </select>
                 </div>
 
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">状态</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%">状态</div>
                     <select name="customerStatus" class="form-control"
                             th:with="type=${@dict.getType('customer_status')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerStatus}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">职业</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%">职业</div>
                     <select name="customerOccupation" class="form-control"
                             th:with="type=${@dict.getType('customer_occupation')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerOccupation}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">渠道</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%">渠道</div>
                     <select name="channel" class="form-control"
                             th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
-                    <div class="input-group-addon" style="background-color: #efefef;">薪资</div>
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%">薪资</div>
                     <select name="customerSalary" class="form-control"
                             th:with="type=${@dict.getType('customer_salary')}">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{customerSalary}"></option>
@@ -86,18 +90,19 @@
                 </div>
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-sm-offset-5 col-sm-10">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                        <button type="button" class="btn btn-md btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                        <button type="button" class="btn btn-md btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="search-collapse">
+            <h4 class="form-header h4" style="font-weight: bold">备注：</h4>
             <div th:each="ymswRemark:${ymswRemarks}" style="margin: 10px">
-                <span class="glyphicon glyphicon-edit" style="color: red" aria-hidden="true"></span>&nbsp;
-                <span th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;提交于&nbsp;&nbsp;
-                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
-                <span th:text="${ymswRemark.remarkContent}"></span>
+                <span class="glyphicon glyphicon-edit" style="color: rgb(26,179,148)" aria-hidden="true"></span>&nbsp;
+                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;提交于&nbsp;&nbsp;
+                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span style="color: black;" th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>
         <!--<div class="search-collapse" shiro:hasRole="business">
@@ -112,6 +117,7 @@
             </div>
         </div>-->
         <div class="search-collapse">
+            <h4 class="form-header h4" style="font-weight: bold">主管点评：</h4>
             <div th:each="ymswRemark:${remarkList}" style="margin: 10px">
                 <span class="glyphicon glyphicon-edit" style="color: green" aria-hidden="true"></span>&nbsp;
                 <span th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;点评于&nbsp;&nbsp;
@@ -123,6 +129,7 @@
 
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: datetimepicker-js"/>
+<th:block th:include="include :: select2-js" />
 <script type="text/javascript">
     var prefix = ctx + "customer/main";
     $("#form-main-edit").validate({
