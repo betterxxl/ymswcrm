@@ -103,9 +103,20 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
         return quotaManagerMapper.changeStatus(params);
     }
 
+    /**
+     * 回显配额总数
+     */
     @Override
     public int countTotal() {
         int total = quotaManagerMapper.countTotal();
         return total;
+    }
+
+    /**
+     * 批量配额设置
+     */
+    @Override
+    public int batchEdit(Map<String, Object> params) {
+        return quotaManagerMapper.batchEdit(params);
     }
 }

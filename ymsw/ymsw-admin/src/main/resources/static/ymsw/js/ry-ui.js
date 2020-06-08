@@ -1354,9 +1354,9 @@
             	 var json = {};
                  $.each($("#" + formId).serializeArray(), function(i, field) {
                  	 if(json[field.name]) {
-                         json[field.name] += ("," + field.value);
+                         json[field.name] += ("," + (field.value).trim());
 					 } else {
-                         json[field.name] = field.value;
+                         json[field.name] = (field.value).trim();
                      }
                  });
             	return json;

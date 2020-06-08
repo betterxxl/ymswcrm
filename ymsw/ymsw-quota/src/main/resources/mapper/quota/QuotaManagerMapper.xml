@@ -25,18 +25,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select u.user_name, u.phonenumber, quota_id, qm.user_id, allow_total_count, now_total_count, allow_today_count, now_today_count, quota_status
         from quota_manager qm
         left join sys_user u on u.user_id = qm.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
     </sql>
 
     <select id="selectQuotaManagerList" parameterType="QuotaManager" resultMap="QuotaManagerResult">
         <include refid="selectQuotaManager"/>
         <where>
             u.status = '0'  /*在职的员工*/
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="allowTotalCount != null "> and allow_total_count = #{allowTotalCount}</if>
-            <if test="nowTotalCount != null "> and now_total_count = #{nowTotalCount}</if>
-            <if test="allowTodayCount != null "> and allow_today_count = #{allowTodayCount}</if>
-            <if test="nowTodayCount != null "> and now_today_count = #{nowTodayCount}</if>
-            <if test="quotaStatus != null  and quotaStatus != ''"> and quota_status = #{quotaStatus}</if>
+            <if test="params.userName != null and params.userName !=''"> and u.user_name like concat('%',#{params.userName},'%')</if>
+            <if test="params.phonenumber != null and params.phonenumber !=''"> and u.phonenumber like concat('%',#{params.phonenumber},'%')</if>
+            <if test="params.deptId != null and params.deptId !=''">
+                and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+            </if>
         </where>
     </select>
     
@@ -99,8 +99,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </update>
 
+    <!--回显配额总数-->
     <select id="countTotal" resultType="int">
         select sum(allow_today_count) from quota_manager qm left join sys_user u on u.user_id = qm.user_id where u.status = 0
     </select>
+
+    <!--批量配额设置-->
+    <update id="batchEdit">
+        UPDATE quota_manager SET allow_today_count = #{allowTodayCount}
+        <where>
+            <if test="quotaIds != null">quota_id in
+                <foreach collection="quotaIds" open="(" close=")" item="quotaId" separator=",">
+                    #{quotaId}
+                </foreach>
+            </if>
+        </where>
+    </update>
     
 </mapper>

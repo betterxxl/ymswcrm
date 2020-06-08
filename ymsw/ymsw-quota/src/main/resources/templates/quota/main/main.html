@@ -3,6 +3,7 @@
 <head>
     <th:block th:include="include :: header('配额管理列表')" />
     <th:block th:include="include :: bootstrap-editable-css" />
+    <th:block th:include="include :: select2-css" />
     <style>
         #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
     </style>
@@ -11,75 +12,39 @@
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
-                <form class="form-inline">
+                <div class="form-inline">
                     <div class="row">
                         <div class="input-group col-xs-2" style="margin-left: 5px">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额总数</div>
-                            <input type="text" class="form-control" value="125" disabled id="countTotal">
+                            <input type="text" class="form-control" value="125" disabled id="countTotal" style="color: red;font-weight: bold">
                         </div>
                         <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon" style="background-color: #efefef;width: 120px">配额设置</div>
-                            <input type="number" class="form-control" name="customerPhone">
+                            <input type="number" class="form-control" min="0" id="allowTodayCount">
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="col-sm-12 search-collapse">
-                <!--<form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <p>用户id：</p>
-                                <input type="text" name="userId"/>
-                            </li>
-                            <li>
-                                <p>总限额数：</p>
-                                <input type="text" name="allowTotalCount"/>
-                            </li>
-                            <li>
-                                <p>当前客户数：</p>
-                                <input type="text" name="nowTotalCount"/>
-                            </li>
-                            <li>
-                                <p>今日配额数：</p>
-                                <input type="text" name="allowTodayCount"/>
-                            </li>
-                            <li>
-                                <p>今日已分配客户数：</p>
-                                <input type="text" name="nowTodayCount"/>
-                            </li>
-                            <li>
-                                <p>配额状态 0 关闭 1开启：</p>
-                                <select name="quotaStatus">
-                                    <option value="">所有</option>
-                                </select>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>-->
                 <form id="formId" class="form-inline">
-                <div class="row">
-                    <div class="input-group col-xs-2" style="margin-left: 5px">
-                        <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
-                        <input type="text" class="form-control" name="customerName">
+                    <div class="row">
+                        <div class="input-group col-xs-2" style="margin-left: 5px">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">姓名</div>
+                            <input type="text" class="form-control" name="params[userName]">
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
+                            <input type="text" class="form-control" name="params[phonenumber]">
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
+                            <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
+                            <select name="params[deptId]" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
+                            </select>
+                        </div>
+                        <a class="btn btn-primary btn-rounded btn-sm" style="margin-left: 20px" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                     </div>
-                    <div class="input-group col-xs-2 col-xs-offset-1">
-                        <div class="input-group-addon" style="background-color: #efefef;width: 120px">手机号</div>
-                        <input type="text" class="form-control" name="customerPhone">
-                        <!--                            </div>-->
-                    </div>
-                    <div class="input-group col-xs-2 col-xs-offset-1">
-                        <div class="input-group-addon " style="background-color: #efefef;width: 120px">所属组织</div>
-                        <select name="params[deptId]" class="form-control">
-                            <option value="">-不限-</option>
-                            <option th:each="sysDept,sysDepts:${sysDepts}" th:value="${sysDept.deptId}" th:text="${sysDept.deptName}"></option>
-                        </select>
-                    </div>
-                </div>
                 </form>
             </div>
 
@@ -99,6 +64,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: bootstrap-table-editable-js" />
+     <th:block th:include="include :: select2-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('quota:main:edit')}]];
         var removeFlag = [[${@permission.hasPermi('quota:main:remove')}]];
@@ -259,7 +225,7 @@
             });
         }
 
-        //修改配额
+        //单元格内修改配额
         function editAllowTodayCount (field, row, oldValue, $el) {
             var allowTodayCount = row[field];
             var quotaId = row.quotaId;
@@ -270,11 +236,17 @@
                 dataType:"json",
                 success: function(data){
                     $.modal.msgSuccess(data.msg);
+                    countTotal();
                 }
             });
         }
 
+        //回显配额总数
         $(function () {
+            countTotal();
+        })
+
+        function countTotal(){
             $.ajax({
                 type: "POST",
                 url: prefix + "/countTotal",
@@ -283,6 +255,48 @@
                     $("#countTotal").val(result.data);
                 }
             });
+        }
+
+        //批量配额设置
+        $("#allowTodayCount").blur(function () {
+            var url = prefix + "/batchEdit";
+            var data;
+            var allowTodayCount = $(this).val();
+            var r = /^\d+$/;
+            if (!r.test(allowTodayCount)){
+                $.modal.msgError("请输入正整数！");
+            }else {
+                var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+                if (rows.length == 0) {
+                    $.modal.confirm("确认设置所有配额？",function () {
+                        data = { "ids":null, "allowTodayCount":allowTodayCount};
+                        $.operate.submit(url, "post", "json", data,function () {
+                            $.ajax({
+                                type: "POST",
+                                url: prefix + "/countTotal",
+                                dataType:"json",
+                                success: function(result){
+                                    $("#countTotal").val(result.data);
+                                }
+                            });
+                        });
+                    });
+                }else {
+                    $.modal.confirm("确认设置"+rows.length+"条数据的配额？",function () {
+                        data = { "ids":rows.join(), "allowTodayCount":allowTodayCount};
+                        $.operate.submit(url, "post", "json", data,function () {
+                            $.ajax({
+                                type: "POST",
+                                url: prefix + "/countTotal",
+                                dataType:"json",
+                                success: function(result){
+                                    $("#countTotal").val(result.data);
+                                }
+                            });
+                        });
+                    });
+                }
+            }
         })
     </script>
 </body>

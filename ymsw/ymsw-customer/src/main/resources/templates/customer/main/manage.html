@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('客户信息表列表')" />
+    <th:block th:include="include :: select2-css" />
     <style>
         #bootstrap-table>thead>tr {background-color: #f94a35;color: white;}
     </style>
@@ -139,6 +140,7 @@
         </div>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: select2-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('customer:main:edit')}]];
         var removeFlag = [[${@permission.hasPermi('customer:main:remove')}]];

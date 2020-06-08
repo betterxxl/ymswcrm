@@ -2,6 +2,10 @@ package com.ymsw.quota.controller;
 
 import java.util.*;
 
+import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.StringUtils;
+import com.ymsw.system.domain.SysDept;
+import com.ymsw.system.service.ISysDeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,11 +38,16 @@ public class QuotaManagerController extends BaseController
 
     @Autowired
     private IQuotaManagerService quotaManagerService;
+    @Autowired
+    private ISysDeptService sysDeptService;
 
     @RequiresPermissions("quota:main:view")
     @GetMapping()
-    public String main()
+    public String main(ModelMap mmap)
     {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysDepts", sysDepts);
         return prefix + "/main";
     }
 
@@ -141,7 +150,7 @@ public class QuotaManagerController extends BaseController
     }
 
     /**
-     * 批量修改配额状态
+     * 回显配额总数
      */
     @PostMapping( "/countTotal")
     @ResponseBody
@@ -149,5 +158,24 @@ public class QuotaManagerController extends BaseController
     {
         int total = quotaManagerService.countTotal();
         return AjaxResult.success(total);
+    }
+
+    /**
+     * 批量配额设置
+     */
+    @RequiresPermissions("quota:main:edit")
+    @Log(title = "配额管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/batchEdit")
+    @ResponseBody
+    public AjaxResult batchEdit(String ids, String allowTodayCount)
+    {
+        List<String> quotaIds = null;
+        if (StringUtils.isNotEmpty(ids)) {
+            quotaIds = Arrays.asList(ids.split(","));
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("quotaIds", quotaIds);
+        params.put("allowTodayCount", allowTodayCount);
+        return toAjax(quotaManagerService.batchEdit(params));
     }
 }

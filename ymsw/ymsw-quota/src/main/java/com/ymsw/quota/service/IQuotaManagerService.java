@@ -67,5 +67,13 @@ public interface IQuotaManagerService
      */
     int changeStatus(Map<String, Object> params);
 
+    /**
+     * 回显配额总数
+     */
     int countTotal();
+
+    /**
+     * 批量配额设置
+     */
+    int batchEdit(Map<String, Object> params);
 }
