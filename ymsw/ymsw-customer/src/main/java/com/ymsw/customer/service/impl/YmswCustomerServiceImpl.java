@@ -133,6 +133,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int updateYmswCustomer(YmswCustomer ymswCustomer) {
         //如果备注内容不为空，就添加一条备注记录，同时修改最后备注时间
         String remark = ymswCustomer.getRemark();

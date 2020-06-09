@@ -1,6 +1,9 @@
 package com.ymsw.customer.service.impl;
 
 import java.util.List;
+
+import com.ymsw.common.utils.DateUtils;
+import com.ymsw.framework.util.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ymsw.customer.mapper.YmswRemarkMapper;
@@ -53,6 +56,9 @@ public class YmswRemarkServiceImpl implements IYmswRemarkService
     @Override
     public int insertYmswRemark(YmswRemark ymswRemark)
     {
+        ymswRemark.setRemarkTime(DateUtils.getNowDate());
+        ymswRemark.setIsCharge("1");//设置为主管点评  是否主管 0否 1是
+        ymswRemark.setUserId(ShiroUtils.getUserId());//设置操作人
         return ymswRemarkMapper.insertYmswRemark(ymswRemark);
     }
 

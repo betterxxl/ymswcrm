@@ -769,6 +769,19 @@
         },
         // 操作封装处理
         operate: {
+    		//提交数据（自己封装，保存成功后提示成功，1500毫秒后刷新当前页面）
+    		ajax: function(url, type, dataType, data){
+				$.ajax({
+					type: type,
+					url: url,
+					data: data,
+					dataType:dataType,
+					success: function(result){
+						$.modal.msgSuccess(result.msg);
+						setTimeout(function () {location.reload();}, 1500); //保存成功后1500毫秒后刷新页面
+					}
+				});
+			},
         	// 提交数据
         	submit: function(url, type, dataType, data, callback) {
             	var config = {

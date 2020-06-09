@@ -8,9 +8,9 @@
         body{font-size: 15px}
     </style>
 </head>
-<body class="white-bg">
-<input id="userId" name="userId" type="hidden" th:value="${ymswCustomer.customerId}"/>
-    <div class="ibox-content"  style="background-color: #efefef;height: 100%">
+<body style="background-color: #efefef;">
+    <input id="customerId" name="customerId" type="hidden" th:value="${ymswCustomer.customerId}"/>
+    <div class="ibox-content"  style="background-color: #efefef;">
         <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
             <div class="form-group">
                 <label for="exampleInputName2">姓名：</label>
@@ -102,26 +102,26 @@
                 <span class="glyphicon glyphicon-edit" style="color: rgb(26,179,148)" aria-hidden="true"></span>&nbsp;
                 <span style="color: rgb(237,85,101);font-weight: bold" th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;提交于&nbsp;&nbsp;
                 <span style="color: rgb(237,85,101);font-weight: bold" th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
-                <span style="color: black;" th:text="${ymswRemark.remarkContent}"></span>
+                <span th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>
-        <!--<div class="search-collapse" shiro:hasRole="business">
+        <div class="search-collapse" shiro:hasPermission="customer:main:chargeRemark">
             <div style="margin: 10px;">
                 <label for="exampleInputName2">主管点评：</label>
                 <textarea class="form-control" rows="2" id="chargeRemark"></textarea>
             </div>
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-offset-5 col-sm-10">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="submitRemark()"><i class="fa fa-check"></i>点 评</button>&nbsp;
+                    <button type="button" class="btn btn-md btn-primary" onclick="submitRemark()"><i class="fa fa-check"></i>点 评</button>&nbsp;
                 </div>
             </div>
-        </div>-->
+        </div>
         <div class="search-collapse">
             <h4 class="form-header h4" style="font-weight: bold">主管点评：</h4>
             <div th:each="ymswRemark:${remarkList}" style="margin: 10px">
-                <span class="glyphicon glyphicon-edit" style="color: green" aria-hidden="true"></span>&nbsp;
-                <span th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;点评于&nbsp;&nbsp;
-                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-edit" style="color: rgb(26,179,148)" aria-hidden="true"></span>&nbsp;
+                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;点评于&nbsp;&nbsp;
+                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
                 <span th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>
@@ -156,21 +156,20 @@
             data.push({"name": "hasWeilidai", "value": hasWeilidai});
             data.push({"name": "isOverdue", "value": isOverdue});
             $.operate.saveTab(prefix + "/edit", data);
-            // $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize());
         }
     }
 
-  /*  function submitRemark() {
-        var content = $("#chargeRemark").val();
-        if ($.common.isNotEmpty(content)) {
-            var data={"remark":content};
-            $.operate.post(prefix + "/edit", data,function () {
-                $.modal.msgSuccess("操作成功！");
-            });
+    //保存点评
+    function submitRemark() {
+        var remarkContent = $("#chargeRemark").val();
+        var customerId = $("#customerId").val();
+        if ($.common.isNotEmpty(remarkContent)) {
+            var data={"remarkContent":remarkContent,"customerId":customerId};
+            $.operate.ajax(ctx + "customer/remark/add","post","json",data);
         }else {
             $.modal.msgWarning("请填写点评！");
         }
-    }*/
+    }
 </script>
 </body>
 </html>
