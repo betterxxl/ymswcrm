@@ -131,8 +131,8 @@
     </div>
     <div class="row">
         <div class="text-center">
-            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            <button type="button" class="btn btn-md btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+            <button type="button" class="btn btn-md btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
         </div>
     </div>
 </div>
@@ -263,6 +263,7 @@
             enctype: 'multipart/form-data',
             validateInitialCount:true,
             autoReplace:false,
+            layoutTemplates:{actionUpload:'',actionDrag: '<span class="file-drag-handle"><i class="glyphicon glyphicon-ok" style="color: green"></i></span>'},//去掉预览图上的上传图标
             initialPreviewConfig:initialPreviewConfig,
             uploadExtraData: function (previewId, index) {   //传参
                 var data = {"inputName": "uploadFiles"};    //此处自定义传参
