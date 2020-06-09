@@ -136,6 +136,7 @@
         focusCleanup: true
     });
 
+    //修改客户信息后保存
     function submitHandler() {
         if ($.validate.form()) {
             var data = $("#form-main-edit").serializeArray();
@@ -155,7 +156,8 @@
             data.push({"name": "hasAccumulation", "value": hasAccumulation});
             data.push({"name": "hasWeilidai", "value": hasWeilidai});
             data.push({"name": "isOverdue", "value": isOverdue});
-            $.operate.saveTab(prefix + "/edit", data);
+            // $.operate.saveTab(prefix + "/edit", data);
+            $.operate.ajax(prefix + "/edit","post","json",data);
         }
     }
 

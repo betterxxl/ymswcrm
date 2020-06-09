@@ -3,6 +3,7 @@ package com.ymsw.customer.controller;
 import java.util.Calendar;
 import java.util.List;
 
+import com.ymsw.common.annotation.RepeatSubmit;
 import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
@@ -194,6 +195,7 @@ public class YmswCustomerController extends BaseController
     @Log(title = "客户信息表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
+    @RepeatSubmit
     public AjaxResult editSave(@Validated YmswCustomer ymswCustomer)
     {
         return toAjax(ymswCustomerService.updateYmswCustomer(ymswCustomer));

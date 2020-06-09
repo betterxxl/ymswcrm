@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ymsw.common.annotation.Excel;
 import com.ymsw.common.core.domain.BaseEntity;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -63,7 +65,7 @@ public class YmswRemark extends BaseEntity
     {
         this.remarkContent = remarkContent;
     }
-
+    @NotBlank(message = "备注不能为空")
     public String getRemarkContent() 
     {
         return remarkContent;

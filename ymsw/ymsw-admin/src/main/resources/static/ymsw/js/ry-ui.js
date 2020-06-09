@@ -777,7 +777,11 @@
 					data: data,
 					dataType:dataType,
 					success: function(result){
-						$.modal.msgSuccess(result.msg);
+						if (result.code == 0){
+							$.modal.msgSuccess(result.msg);
+						}else {
+							$.modal.msgError(result.msg);
+						}
 						setTimeout(function () {location.reload();}, 1500); //保存成功后1500毫秒后刷新页面
 					}
 				});

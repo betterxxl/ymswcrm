@@ -3,6 +3,7 @@
 <head>
     <th:block th:include="include :: header('新增客户信息表')" />
     <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
     <style>
         body{font-size: 15px}
     </style>
@@ -78,6 +79,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: select2-js" />
     <script type="text/javascript">
         var prefix = ctx + "customer/main"
         $("#form-main-add").validate({
