@@ -76,6 +76,9 @@ public class SysUser extends BaseEntity
     @Excel(name = "最后登陆IP", type = Type.EXPORT)
     private String loginIp;
 
+    /** 用户标识 */
+    private String userFlag;
+
     /** 最后登陆时间 */
     @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
@@ -85,6 +88,14 @@ public class SysUser extends BaseEntity
 
     /** 岗位名称     */
     private String postName;
+
+    public String getUserFlag() {
+        return userFlag;
+    }
+
+    public void setUserFlag(String userFlag) {
+        this.userFlag = userFlag;
+    }
 
     public String getPostName() {
         return postName;
