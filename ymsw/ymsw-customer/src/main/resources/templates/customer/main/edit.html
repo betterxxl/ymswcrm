@@ -73,7 +73,14 @@
                     </select>
                 </div>
                 <div style="margin-top: 10px">
-                    <div class="input-group">
+                    <div class="input-group col-xs-2">
+                        <div class="input-group-addon" style="background-color: #efefef;width: 50%">通话状态</div>
+                        <select name="phoneStatus" class="form-control"
+                                th:with="type=${@dict.getType('phone_status')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="margin-left: 20px">
                             <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasHouse}" id="hasHouse" th:attr ="checked=*{hasHouse}==1?true:false">房</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasCar}" id="hasCar" th:attr ="checked=*{hasCar}==1?true:false">车</label>
                             <label class="checkbox-inline check-box"><input type="checkbox" th:value="*{hasSocial}" id="hasSocial" th:attr ="checked=*{hasSocial}==1?true:false">社保</label>
