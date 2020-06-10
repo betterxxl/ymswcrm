@@ -105,7 +105,7 @@
                 <span th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>
-        <div class="search-collapse" shiro:hasPermission="customer:main:chargeRemark">
+        <div class="search-collapse" shiro:hasPermission="customer:main:chargeRemark" id="chargeRemark">
             <div style="margin: 10px;">
                 <label for="exampleInputName2">主管点评：</label>
                 <textarea class="form-control" rows="2" id="chargeRemark"></textarea>
@@ -131,6 +131,13 @@
 <th:block th:include="include :: datetimepicker-js"/>
 <th:block th:include="include :: select2-js" />
 <script type="text/javascript">
+    // 当客户对应的业务经理是当前登录人时隐藏主管点评。即自己不能点评自己，只有上级点评下级。
+    var userId = [[${@permission.getPrincipalProperty('userId')}]]; //当前登陆用户id
+    var id = [[${ymswCustomer.userId}]];    //客户对应的业务经理id
+    if (userId == id){  //当登陆用户id等于业务经理id时，隐藏主管点评。
+        $("#chargeRemark").hide();
+    }
+
     var prefix = ctx + "customer/main";
     $("#form-main-edit").validate({
         focusCleanup: true
