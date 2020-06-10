@@ -136,7 +136,7 @@ public class QuotaManagerController extends BaseController
     /**
      * 批量修改配额状态
      */
-    @RequiresPermissions("quota:main:changeStatus")
+    @RequiresPermissions("quota:main:edit")
     @Log(title = "配额管理", businessType = BusinessType.UPDATE)
     @PostMapping( "/batchChangeStatus")
     @ResponseBody
