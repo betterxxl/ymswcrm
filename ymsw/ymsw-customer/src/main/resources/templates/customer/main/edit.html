@@ -77,7 +77,7 @@
                         <div class="input-group-addon" style="background-color: #efefef;width: 50%">通话状态</div>
                         <select name="phoneStatus" class="form-control"
                                 th:with="type=${@dict.getType('phone_status')}">
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{phoneStatus}"></option>
                         </select>
                     </div>
                     <div class="input-group" style="margin-left: 20px">

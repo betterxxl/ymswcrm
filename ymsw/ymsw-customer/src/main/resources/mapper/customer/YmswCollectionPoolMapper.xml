@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerSex"    column="customer_sex"    />
         <result property="customerPhone"    column="customer_phone"    />
         <result property="customerStatus"    column="customer_status"    />
+        <result property="phoneStatus"    column="phone_status"    />
         <result property="customerBirth"    column="customer_birth"    />
         <result property="customerQuota"    column="customer_quota"    />
         <result property="customerStar"    column="customer_star"    />
@@ -49,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectYmswCollectionPoolList">
-        select ycp.cp_id, u.user_name, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, ycp.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
+        select ycp.cp_id, u.user_name, yr.remark_content, yc.customer_id,yc.phone_status, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, ycp.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_collection_pool ycp
         left join  ymsw_customer yc on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
@@ -65,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
+            <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
             <if test="customerStar != null "> and customer_star = #{customerStar}</if>
             <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
             <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
@@ -164,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
+            <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
             <if test="customerStar != null "> and customer_star = #{customerStar}</if>
             <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
             <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>

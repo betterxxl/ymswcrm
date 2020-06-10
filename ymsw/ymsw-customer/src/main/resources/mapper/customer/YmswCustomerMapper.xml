@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerBirth"    column="customer_birth"    />
         <result property="customerQuota"    column="customer_quota"    />
         <result property="customerStar"    column="customer_star"    />
+        <result property="phoneStatus"    column="phone_status"    />
         <result property="applyTime"    column="apply_time"    />
         <result property="hasHouse"    column="has_house"    />
         <result property="hasCar"    column="has_car"    />
@@ -36,13 +37,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectYmswCustomerVo">
-        select customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_social, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, dept_id, user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer
+        select customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, phone_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_social, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, dept_id, user_id, customer_occupation, customer_salary, channel, remark_time, distribute_time from ymsw_customer
     </sql>
 
     <!--我的客户列表查询，不包括收藏夹和公共池里的客户（通过ycp.customer_id is null来过滤）-->
     <!--数据范围：仅查询个人的客户-->
     <select id="selectYmswCustomerList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
-        select u.user_name, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
+        select u.user_name, yr.remark_content, yc.customer_id,yc.phone_status, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_customer yc
         left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
@@ -53,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <!--<if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>-->
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
+            <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
             <!--<if test="customerBirth != null "> and customer_birth = #{customerBirth}</if>-->
             <!--<if test="customerQuota != null "> and customer_quota = #{customerQuota}</if>-->
             <if test="customerStar != null "> and customer_star = #{customerStar}</if>
@@ -87,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!--    客户管理菜单里的客户列表查询，不包括收藏夹里的客户，但包含公共池里的客户（通过ycp.customer_id is null和ycp.cp_type = 1 来过滤）-->
     <!--数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）-->
     <select id="selectManageList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
-        select u.user_name, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
+        select u.user_name, yr.remark_content, yc.phone_status, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_customer yc
         left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id and ycp.cp_type = 1
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
@@ -97,6 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
         <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
         <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
+        <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
         <if test="customerStar != null "> and customer_star = #{customerStar}</if>
         <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
         <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
@@ -136,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerSex != null  and customerSex != ''">customer_sex,</if>
         <if test="customerPhone != null  and customerPhone != ''">customer_phone,</if>
         <if test="customerStatus != null  and customerStatus != ''">customer_status,</if>
+        <if test="phoneStatus != null  and phoneStatus != ''">phone_status,</if>
         <if test="customerBirth != null ">customer_birth,</if>
         <if test="customerQuota != null ">customer_quota,</if>
         <if test="customerStar != null ">customer_star,</if>
@@ -162,6 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerSex != null  and customerSex != ''">#{customerSex},</if>
         <if test="customerPhone != null  and customerPhone != ''">#{customerPhone},</if>
         <if test="customerStatus != null  and customerStatus != ''">#{customerStatus},</if>
+        <if test="phoneStatus != null  and phoneStatus != ''">#{phoneStatus},</if>
         <if test="customerBirth != null ">#{customerBirth},</if>
         <if test="customerQuota != null ">#{customerQuota},</if>
         <if test="customerStar != null ">#{customerStar},</if>
@@ -192,6 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerSex != null  and customerSex != ''">customer_sex = #{customerSex},</if>
         <if test="customerPhone != null  and customerPhone != ''">customer_phone = #{customerPhone},</if>
         <if test="customerStatus != null  and customerStatus != ''">customer_status = #{customerStatus},</if>
+        <if test="phoneStatus != null  and phoneStatus != ''">phone_status = #{phoneStatus},</if>
         <if test="customerStar != null">customer_star = #{customerStar},</if>
         <if test="customerBirth != null ">customer_birth = #{customerBirth},</if>
         <if test="customerQuota != null ">customer_quota = #{customerQuota},</if>
