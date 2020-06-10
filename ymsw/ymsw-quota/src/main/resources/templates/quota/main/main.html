@@ -121,7 +121,7 @@
                         validate : function(value) {
                             if (!value) return '配额不能为空';
                             if (isNaN(value)) return '必须是数字';
-                            var r = /^\d+$/
+                            var r = /^\d+$/;
                             if (!r.test(value)) return '必须是正整数';
                         }
                     }
