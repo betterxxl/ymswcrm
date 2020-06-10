@@ -66,6 +66,13 @@
                     </div><br>
                     <div class="row">
                         <div class="input-group col-xs-2">
+                            <div class="input-group-addon" style="background-color: #efefef;width: 50%">通话状态</div>
+                            <select name="phoneStatus" th:with="type=${@dict.getType('phone_status')}" class="form-control">
+                                <option value="">-不限-</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group col-xs-2 col-xs-offset-1">
                             <div class="input-group-addon " style="background-color: #efefef;width: 50%">所属组织</div>
                             <select name="params[deptId]" class="form-control">
                                 <option value="">-不限-</option>
@@ -79,7 +86,9 @@
                                 <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}"></option>
                             </select>
                         </div>
-                        <div class="input-group col-xs-offset-1" style="width: 48%">
+                    </div><br>
+                    <div class="row">
+                        <div class="input-group col-xs-6">
                             <div class="checkbox check-box">
                                 <input type="checkbox" name="params[cpType]" value="2"> <i></i><strong style="color: red">是否公共池</strong>
                             </div>
