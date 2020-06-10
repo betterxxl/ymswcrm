@@ -38,6 +38,9 @@ public class YmswCustomer extends BaseEntity
     /** 性别 0男 1女 2未知 */
     @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知")
     private String customerSex;
+    /** 通话状态 0未接 1已接通 */
+    @Excel(name = "通话状态", readConverterExp = "0=未接,1=已接通")
+    private String phoneStatus;
 
     /** 出生日期 */
     @Excel(name = "出生年份")
@@ -394,6 +397,14 @@ public class YmswCustomer extends BaseEntity
         return distributeTime;
     }
 
+    public String getPhoneStatus() {
+        return phoneStatus;
+    }
+
+    public void setPhoneStatus(String phoneStatus) {
+        this.phoneStatus = phoneStatus;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -420,6 +431,7 @@ public class YmswCustomer extends BaseEntity
             .append("channel", getChannel())
             .append("remarkTime", getRemarkTime())
             .append("distributeTime", getDistributeTime())
+            .append("phoneStatus",getPhoneStatus())
             .toString();
     }
 }
