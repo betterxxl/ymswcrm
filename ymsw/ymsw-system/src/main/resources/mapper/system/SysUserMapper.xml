@@ -72,6 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phonenumber != null and phonenumber != ''">
 			AND u.phonenumber like concat('%', #{phonenumber}, '%')
 		</if>
+		<if test="userFlag != null and userFlag != ''">
+			AND u.user_flag = #{userFlag}
+		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 			AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
 		</if>

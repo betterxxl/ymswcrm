@@ -120,8 +120,19 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
         return quotaManagerMapper.batchEdit(params);
     }
 
+    /**
+     * 根据门店（用户标识）修改总限额数
+     */
     @Override
     public int editAllowTotalCount(Map<String, Object> params) {
         return quotaManagerMapper.editAllowTotalCount(params);
+    }
+
+    /**
+     * 根据quotaIds批量修改总限额数
+     */
+    @Override
+    public int editTotalCount(Map<String, Object> params) {
+        return quotaManagerMapper.editTotalCount(params);
     }
 }

@@ -77,5 +77,13 @@ public interface QuotaManagerMapper
      */
     int batchEdit(Map<String, Object> params);
 
+    /**
+     * 根据门店（用户标识）修改总限额数
+     */
     int editAllowTotalCount(Map<String, Object> params);
+
+    /**
+     * 根据quotaIds批量修改总限额数
+     */
+    int editTotalCount(Map<String, Object> params);
 }

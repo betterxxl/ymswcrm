@@ -202,14 +202,33 @@ public class QuotaManagerController extends BaseController
     @ResponseBody
     public AjaxResult editAllowTotalCount(SysUser sysUser, String allowTotalCount)
     {
-        List<SysUser> sysUsers = sysUserService.selectUserList(sysUser);
+        List<SysUser> sysUsers = sysUserService.selectUserList(sysUser);//userFlag封装到sysUser里，根据userFlag查询出user集合
         List<Long> userIds = new ArrayList<>();
         for (SysUser user : sysUsers) {
-            userIds.add(user.getUserId());
+            userIds.add(user.getUserId());//获取userId集合
         }
         Map<String, Object> params = new HashMap<>();
         params.put("userIds", userIds);
         params.put("allowTotalCount", allowTotalCount);
-        return toAjax(quotaManagerService.editAllowTotalCount(params));
+        return toAjax(quotaManagerService.editAllowTotalCount(params)); //批量修改总限额数
+    }
+
+    /**
+     * 根据quotaIds批量修改总限额数
+     */
+    @RequiresPermissions("quota:limit:edit")
+    @Log(title = "配额管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/editTotalCount")
+    @ResponseBody
+    public AjaxResult editTotalCount(String ids, String allowTotalCount)
+    {
+        List<String> quotaIds = null;
+        if (StringUtils.isNotEmpty(ids)) {
+            quotaIds = Arrays.asList(ids.split(","));
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("quotaIds", quotaIds);
+        params.put("allowTotalCount", allowTotalCount);
+        return toAjax(quotaManagerService.editTotalCount(params));
     }
 }
