@@ -192,6 +192,7 @@
                 dataType:"json",
                 success: function(data){
                     $.modal.msgSuccess(data.msg);
+                    $.table.refresh();//修改完成后刷新表格
                 }
             });
         }
