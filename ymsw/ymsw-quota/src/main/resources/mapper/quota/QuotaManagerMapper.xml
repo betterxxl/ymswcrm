@@ -115,5 +115,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
         </where>
     </update>
+
+    <!--批量配额设置-->
+    <update id="editAllowTotalCount">
+        UPDATE quota_manager SET allow_total_count = #{allowTotalCount}
+        <where>
+            <if test="userIds != null">user_id in
+                <foreach collection="userIds" open="(" close=")" item="userId" separator=",">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </update>
     
 </mapper>

@@ -119,4 +119,9 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
     public int batchEdit(Map<String, Object> params) {
         return quotaManagerMapper.batchEdit(params);
     }
+
+    @Override
+    public int editAllowTotalCount(Map<String, Object> params) {
+        return quotaManagerMapper.editAllowTotalCount(params);
+    }
 }

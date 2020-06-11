@@ -5,7 +5,9 @@ import java.util.*;
 import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.common.utils.StringUtils;
 import com.ymsw.system.domain.SysDept;
+import com.ymsw.system.domain.SysUser;
 import com.ymsw.system.service.ISysDeptService;
+import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,8 @@ public class QuotaManagerController extends BaseController
     private IQuotaManagerService quotaManagerService;
     @Autowired
     private ISysDeptService sysDeptService;
+    @Autowired
+    private ISysUserService sysUserService;
 
     @RequiresPermissions("quota:main:view")
     @GetMapping()
@@ -62,6 +66,16 @@ public class QuotaManagerController extends BaseController
         startPage();
         List<QuotaManager> list = quotaManagerService.selectQuotaManagerList(quotaManager);
         return getDataTable(list);
+    }
+
+    @RequiresPermissions("quota:limit:view")
+    @GetMapping("/limit")
+    public String limit(ModelMap mmap)
+    {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysDepts", sysDepts);
+        return prefix + "/limit";
     }
 
     /**
@@ -177,5 +191,25 @@ public class QuotaManagerController extends BaseController
         params.put("quotaIds", quotaIds);
         params.put("allowTodayCount", allowTodayCount);
         return toAjax(quotaManagerService.batchEdit(params));
+    }
+
+    /**
+     * 根据门店（用户标识）修改总限额数
+     */
+    @RequiresPermissions("quota:limit:edit")
+    @Log(title = "配额管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/editAllowTotalCount")
+    @ResponseBody
+    public AjaxResult editAllowTotalCount(SysUser sysUser, String allowTotalCount)
+    {
+        List<SysUser> sysUsers = sysUserService.selectUserList(sysUser);
+        List<Long> userIds = new ArrayList<>();
+        for (SysUser user : sysUsers) {
+            userIds.add(user.getUserId());
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("userIds", userIds);
+        params.put("allowTotalCount", allowTotalCount);
+        return toAjax(quotaManagerService.editAllowTotalCount(params));
     }
 }

@@ -76,4 +76,6 @@ public interface QuotaManagerMapper
      * 批量配额设置
      */
     int batchEdit(Map<String, Object> params);
+
+    int editAllowTotalCount(Map<String, Object> params);
 }

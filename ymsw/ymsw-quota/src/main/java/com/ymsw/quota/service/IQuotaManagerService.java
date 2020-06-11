@@ -76,4 +76,9 @@ public interface IQuotaManagerService
      * 批量配额设置
      */
     int batchEdit(Map<String, Object> params);
+
+    /**
+     * 根据门店（用户标识）修改总限额数
+     */
+    int editAllowTotalCount(Map<String, Object> params);
 }
