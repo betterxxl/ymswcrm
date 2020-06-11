@@ -55,7 +55,7 @@
 
             <div class="btn-group-md" id="toolbar" role="group">
                 <a class="btn btn-warning multiple disabled" shiro:hasPermission="quota:main:edit" data-toggle="modal" data-target="#myModal">
-                    <i class="fa fa-gear"></i> 限额设置
+                    <i class="fa fa-cogs"></i> 限额设置
                 </a>
                 <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
@@ -185,16 +185,7 @@
         function editAllowTodayCount (field, row, oldValue, $el) {
             var allowTodayCount = row[field];
             var quotaId = row.quotaId;
-            $.ajax({
-                type: "POST",
-                url: prefix + "/editTotalCount",
-                data: {"allowTotalCount":allowTodayCount,"ids":quotaId},
-                dataType:"json",
-                success: function(data){
-                    $.modal.msgSuccess(data.msg);
-                    $.table.refresh();//修改完成后刷新表格
-                }
-            });
+            $.operate.submit(prefix + "/editTotalCount", "post", "json", {"allowTotalCount":allowTodayCount,"ids":quotaId});
         }
 
         //批量配额设置
