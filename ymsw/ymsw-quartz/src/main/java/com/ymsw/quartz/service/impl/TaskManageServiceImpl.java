@@ -96,4 +96,21 @@ public class TaskManageServiceImpl implements ITaskManageService
     {
         return taskManageMapper.deleteTaskManageById(taskId);
     }
+
+    /**
+     * 定时提醒(提前2分钟提醒)
+     * 在sql语句查询时当前时间加2分钟，如果大于task_time，且task_status是0（未提醒）的记录查询出来
+     * 同时将查询出来的结果集的task_status改为1（已提醒）
+     */
+    @Override
+    public List<TaskManage> selectTaskManage() {
+        // 获取当前的用户名称
+        Long userId = (Long) PermissionUtils.getPrincipalProperty("userId");
+        List<TaskManage> taskManageList = taskManageMapper.selectTaskManages(userId);
+        for (TaskManage taskManage : taskManageList) {
+            taskManage.setTaskStatus("1");
+            taskManageMapper.updateTaskManage(taskManage);//设置是否已提醒 0否 1是
+        }
+        return taskManageList;
+    }
 }

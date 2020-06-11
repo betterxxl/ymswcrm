@@ -1,3 +1,23 @@
+$(function () {
+    setInterval(taskManage, 1000 * 60 * 2); //每隔2分钟执行一次  1000 * 60 * 2
+})
+
+/**
+ *定时提醒
+ */
+function taskManage() {
+    $.post(ctx+'task/main/selectTaskManage',null,function (result) {
+        var taskList = result.data;
+        var msg = '';
+        if (taskList.length != 0 ){
+            for (i=0;i<taskList.length;i++){
+                msg += taskList[i].taskTime + "<br>" + taskList[i].taskContent + "<br>";
+            }
+            $.modal.alert(msg,"warning");
+        }
+    });
+}
+
 /**
  * 首页方法封装处理
  * Copyright (c) 2019 ymsw
