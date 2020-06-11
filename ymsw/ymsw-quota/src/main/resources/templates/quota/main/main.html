@@ -232,15 +232,8 @@
         function editAllowTodayCount (field, row, oldValue, $el) {
             var allowTodayCount = row[field];
             var quotaId = row.quotaId;
-            $.ajax({
-                type: "POST",
-                url: prefix + "/edit",
-                data: {"allowTodayCount":allowTodayCount,"quotaId":quotaId},
-                dataType:"json",
-                success: function(data){
-                    $.modal.msgSuccess(data.msg);
-                    countTotal();
-                }
+            $.operate.submit(prefix + "/edit", "post", "json", {"allowTodayCount":allowTodayCount,"quotaId":quotaId},function () {
+                countTotal();   //回显配额总数
             });
         }
 

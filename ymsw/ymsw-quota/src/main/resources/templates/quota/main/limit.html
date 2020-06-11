@@ -54,7 +54,7 @@
             </div>
 
             <div class="btn-group-md" id="toolbar" role="group">
-                <a class="btn btn-warning multiple disabled" shiro:hasPermission="quota:main:edit" data-toggle="modal" data-target="#myModal">
+                <a class="btn btn-warning multiple disabled" shiro:hasPermission="quota:limit:edit" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-cogs"></i> 限额设置
                 </a>
                 <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -84,8 +84,6 @@
     <th:block th:include="include :: bootstrap-table-editable-js" />
      <th:block th:include="include :: select2-js" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('quota:main:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('quota:main:remove')}]];
         var prefix = ctx + "quota/main";
 
         $(function() {

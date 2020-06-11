@@ -8,6 +8,7 @@ import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
 import com.ymsw.system.service.ISysDeptService;
 import com.ymsw.system.service.ISysUserService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,7 @@ public class QuotaManagerController extends BaseController
     /**
      * 查询配额管理列表
      */
-    @RequiresPermissions("quota:main:list")
+    @RequiresPermissions(value={"quota:main:list", "quota:limit:list"}, logical= Logical.OR)
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(QuotaManager quotaManager)
