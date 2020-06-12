@@ -119,5 +119,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			sysdate()
  		)
 	</insert>
+
+	<!--保存数据开关状态-->
+	<update id="saveDataStatus" parameterType="SysDictData">
+ 		update sys_dict_data set dict_value = #{dictValue} where dict_type = #{dictType} and dict_label = #{dictLabel}
+	</update>
 	
 </mapper> 

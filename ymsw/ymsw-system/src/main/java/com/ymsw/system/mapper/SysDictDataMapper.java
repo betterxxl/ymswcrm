@@ -92,4 +92,9 @@ public interface SysDictDataMapper
      * @return 结果
      */
     public int updateDictDataType(@Param("oldDictType") String oldDictType, @Param("newDictType") String newDictType);
+
+    /**
+     * 保存数据开关状态
+     */
+    int saveDataStatus(SysDictData sysDictData);
 }

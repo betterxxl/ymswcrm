@@ -115,4 +115,12 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     {
         return dictDataMapper.updateDictData(dictData);
     }
+
+    /**
+     * 保存数据开关状态
+     */
+    @Override
+    public int saveDataStatus(SysDictData sysDictData) {
+        return dictDataMapper.saveDataStatus(sysDictData);
+    }
 }

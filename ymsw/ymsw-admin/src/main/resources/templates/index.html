@@ -16,6 +16,10 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/skins.css}" rel="stylesheet"/>
     <link th:href="@{/ymsw/css/ry-ui.css?v=4.0.0}" rel="stylesheet"/>
+    <style>
+        .switchstatus{display: inline-block;vertical-align: middle}
+        .margintop{margin-top: 40px}
+    </style>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden;font-size: 15px" th:classappend="|${@config.getKey('sys.index.sideTheme')} ${@config.getKey('sys.index.skinName')}|">
 <div id="wrapper">
@@ -71,14 +75,15 @@
                             </marquee>
                         </div>
                     </div>
-                    <div class="col-md-1 text-center">
-                        <p style="margin-top: 40px"><i class="fa fa-toggle-on text-info fa-2x" onclick="changeStatus(1)" style="display: inline-block;vertical-align: middle;"></i> 数据开关</p>
+                    <div class="col-md-1 text-center" shiro:hasPermission="data:main:edit">
+                        <p class="margintop" id="dataStatus">
+                        </p>
                     </div>
                     <div class="col-md-3 text-center">
-                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>
-                        <button type="button" class="btn btn-success" style="margin-top: 40px">公告 <span class="badge">14</span></button>
+                        <button type="button" class="btn btn-danger margintop">优秀榜单</button>
+                        <button type="button" class="btn btn-success margintop">公告 <span class="badge">14</span></button>
 <!--                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>-->
-                        <button type="button" class="btn btn-danger" style="margin-top: 40px">优秀榜单</button>
+                        <button type="button" class="btn btn-danger margintop">优秀榜单</button>
                     </div>
 
                 </div>
@@ -121,6 +126,62 @@
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript"> 
 var ctx = [[@{/}]];
+
+    //当有数据开关权限时发送ajax请求查询开关状态，回显数据开关状态
+    $(function () {
+        var editFlag = [[${@permission.hasPermi('data:main:edit')}]];
+        if (editFlag != "hidden") {
+            $.ajax({
+                type: "post",
+                url: ctx + "system/dict/data/selectDataStatus",
+                dataType:"json",
+                success: function(result){
+                    var value = result.data.dictValue;
+                    if (value == 1){
+                        $("#dataStatus").html("<i class='fa fa-toggle-on text-info fa-2x switchstatus' onclick='changeDataStatus(0)'></i> 数据开关")
+                    }else if (value == 0){
+                        $("#dataStatus").html("<i class='fa fa-toggle-off text-info fa-2x switchstatus' onclick='changeDataStatus(1)'></i> 数据开关")
+                    }
+                }
+            });
+        }
+    })
+
+    //修改数据开关状态
+    function changeDataStatus(value){
+        if (value == 1){
+            $.modal.confirm("确定要开启数据吗？",function () {
+                $.ajax({
+                    type: "post",
+                    url: ctx + "system/dict/data/saveDataStatus",
+                    data: {"dictValue":value},
+                    dataType:"json",
+                    success: function(result){
+                        if (result.code == 0){
+                            $.modal.msgSuccess(result.msg);
+                            $("#dataStatus").html("<i class='fa fa-toggle-on text-info fa-2x switchstatus' onclick='changeDataStatus(0)'></i> 数据开关")
+                        }
+                    }
+                });
+            })
+        }else if (value == 0) {
+            $.modal.confirm("确定要关闭数据吗？",function () {
+                $.ajax({
+                    type: "post",
+                    url: ctx + "system/dict/data/saveDataStatus",
+                    data: {"dictValue":value},
+                    dataType:"json",
+                    success: function(result){
+                        if (result.code == 0){
+                            $.modal.msgSuccess(result.msg);
+                            $("#dataStatus").html("<i class='fa fa-toggle-off text-info fa-2x switchstatus' onclick='changeDataStatus(1)'></i> 数据开关")
+                        }
+                    }
+                });
+            })
+        }
+    }
+
 </script>
 </body>
 </html>

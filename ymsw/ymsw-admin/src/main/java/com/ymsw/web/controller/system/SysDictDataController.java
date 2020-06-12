@@ -114,4 +114,34 @@ public class SysDictDataController extends BaseController
     {
         return toAjax(dictDataService.deleteDictDataByIds(ids));
     }
+
+    /**
+     * 查询数据开关状态
+     */
+    @RequiresPermissions("data:main:edit")
+    @PostMapping("/selectDataStatus")
+    @ResponseBody
+    public AjaxResult selectDataStatus()
+    {
+        SysDictData sysDictData = new SysDictData();
+        sysDictData.setDictLabel("incoming_data_status");
+        sysDictData.setDictType("ymsw_config");
+        List<SysDictData> sysDictDataList = dictDataService.selectDictDataList(sysDictData);
+        sysDictData = sysDictDataList.get(0);
+        return AjaxResult.success(sysDictData);
+    }
+
+    /**
+     * 保存数据开关状态
+     */
+    @RequiresPermissions("data:main:edit")
+    @PostMapping("/saveDataStatus")
+    @ResponseBody
+    public AjaxResult saveDataStatus(SysDictData sysDictData)
+    {
+        sysDictData.setDictLabel("incoming_data_status");
+        sysDictData.setDictType("ymsw_config");
+        return toAjax(dictDataService.saveDataStatus(sysDictData));
+    }
+
 }

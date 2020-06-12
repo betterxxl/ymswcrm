@@ -75,4 +75,9 @@ public interface ISysDictDataService
      * @return 结果
      */
     public int updateDictData(SysDictData dictData);
+
+    /**
+     * 保存数据开关状态
+     */
+    int saveDataStatus(SysDictData sysDictData);
 }
