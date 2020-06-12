@@ -8,11 +8,11 @@
 <body style="background-color: #efefef;">
 <div class="container-div">
     <div class="row search-collapse" style="padding-left: 30px">
-        <div>
-            <strong style="font-size: 20px;">门店客户未跟进自动抽回设置 </strong>
+        <div style="margin-top: 15px;">
+            <strong>门店客户未跟进自动抽回设置 </strong>
             <span th:switch="${sysConfig.configKey}">
-                <span th:case="0"><i class="fa fa-toggle-off text-info fa-2x" onclick="changeStatus(1)"></i></span>
-                <span th:case="1"><i class="fa fa-toggle-on text-info fa-2x" onclick="changeStatus(0)"></i></span>
+                <span th:case="0"><i class="fa fa-toggle-off text-info fa-2x" onclick="changeStatus(1)" style="display: inline-block;vertical-align: middle;"></i></span>
+                <span th:case="1"><i class="fa fa-toggle-on text-info fa-2x" onclick="changeStatus(0)" style="display: inline-block;vertical-align: middle;"></i></span>
             </span>
         </div>
         <div class="hr-line-dashed"></div>
