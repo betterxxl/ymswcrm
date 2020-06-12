@@ -2,10 +2,14 @@ package com.ymsw.web.controller.system;
 
 import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.json.JSONObject;
 import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.framework.config.AccessPhoneConfig;
+import com.ymsw.framework.web.service.DictService;
+import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.service.ISysDictDataService;
 import com.ymsw.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +33,23 @@ public class SysIncomingDataController extends BaseController {
     AccessPhoneConfig accessPhoneConfig;
     @Autowired
     ISysUserService iSysUserService;
+    @Autowired
+    ISysDictDataService sysDictDataService;
     @RequestMapping("addData")
     public AjaxResult incomingFromOther(HttpServletRequest request){
+        SysDictData sysDictData = new SysDictData();
+        sysDictData.setDictLabel("incoming_data_status");
+        sysDictData.setDictType("ymsw_config");
+        List<SysDictData> sysDictDataList = sysDictDataService.selectDictDataList(sysDictData);
+        sysDictData = sysDictDataList.get(0);
+
+        JSONObject resInfo = new JSONObject();
+        resInfo.put("resStatus","0");
+        resInfo.put("resMsg", "数据引流接口已暂停");
+        if("0".equals(sysDictData.getDictValue()) ){
+
+            return  AjaxResult.error("接口数据已暂停，暂不引入数据",resInfo);
+        }
         String customerName = request.getParameter("customerName");
         String customerSex = request.getParameter("customerSex");
         String customerPhone = request.getParameter("customerPhone");
