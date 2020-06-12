@@ -115,4 +115,13 @@ public class SysConfigServiceImpl implements ISysConfigService
         }
         return UserConstants.CONFIG_KEY_UNIQUE;
     }
+
+    /**
+     * 根据configId查询值（当configId为4时查询的是自动抽回状态）
+     */
+    @Override
+    public SysConfig autoReallocConfig(SysConfig sysConfig) {
+
+        return configMapper.selectConfig(sysConfig);
+    }
 }

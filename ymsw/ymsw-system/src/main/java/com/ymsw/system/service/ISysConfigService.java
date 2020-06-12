@@ -66,4 +66,9 @@ public interface ISysConfigService
      * @return 结果
      */
     public String checkConfigKeyUnique(SysConfig config);
+
+    /**
+     * 根据configId查询值（当configId为4时查询的是自动抽回状态）
+     */
+    SysConfig autoReallocConfig(SysConfig sysConfig);
 }

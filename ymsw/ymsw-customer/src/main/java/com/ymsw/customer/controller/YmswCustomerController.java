@@ -5,14 +5,15 @@ import java.util.List;
 
 import com.ymsw.common.annotation.RepeatSubmit;
 import com.ymsw.common.core.domain.BaseEntity;
-import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.customer.service.IYmswRemarkService;
 import com.ymsw.customer.vo.YmswReallocationVo;
+import com.ymsw.system.domain.SysConfig;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.service.ISysConfigService;
 import com.ymsw.system.service.ISysDeptService;
 import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,8 +31,6 @@ import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 客户信息表Controller
@@ -55,6 +54,8 @@ public class YmswCustomerController extends BaseController
     private ISysDeptService sysDeptService;
     @Autowired
     private IYmswCollectionPoolService ymswCollectionPoolService;
+    @Autowired
+    private ISysConfigService configService;
 
     /**
      * 跳转到 所有客户 -→ 我的客户页面
@@ -114,6 +115,20 @@ public class YmswCustomerController extends BaseController
             list = ymswCustomerService.selectManageList(ymswCustomer);
         }
         return getDataTable(list);
+    }
+
+    /**
+     * 跳转到 客户管理 -→ 自动抽回设置页面
+     */
+    @RequiresPermissions("customer:autorealloc:view")
+    @GetMapping("/autorealloc")
+    public String autorealloc(ModelMap mmap)
+    {
+        SysConfig config = new SysConfig();
+        config.setConfigId(4L);// 4 为自动抽回设置的configId，固定不变，注意：不能修改。
+        SysConfig sysConfig = configService.autoReallocConfig(config);//查询自动抽回设置
+        mmap.put("sysConfig",sysConfig);
+        return prefix + "/autorealloc";
     }
 
     /**

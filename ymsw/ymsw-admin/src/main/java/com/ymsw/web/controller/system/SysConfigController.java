@@ -138,4 +138,17 @@ public class SysConfigController extends BaseController
     {
         return configService.checkConfigKeyUnique(config);
     }
+
+    /**
+     * 修改自动抽回配置
+     */
+    @RequiresPermissions("customer:autorealloc:edit")
+    @Log(title = "参数管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/editConfig")
+    @ResponseBody
+    public AjaxResult editConfig(SysConfig config)
+    {
+        config.setUpdateBy(ShiroUtils.getLoginName());
+        return toAjax(configService.updateConfig(config));
+    }
 }
