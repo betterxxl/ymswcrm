@@ -5,6 +5,7 @@ import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.core.page.TableDataInfo;
 import com.ymsw.common.enums.BusinessType;
+import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.system.domain.SysDictData;
@@ -137,10 +138,13 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("data:main:edit")
     @PostMapping("/saveDataStatus")
     @ResponseBody
+    @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     public AjaxResult saveDataStatus(SysDictData sysDictData)
     {
         sysDictData.setDictLabel("incoming_data_status");
         sysDictData.setDictType("ymsw_config");
+        sysDictData.setUpdateBy(ShiroUtils.getLoginName());
+        sysDictData.setUpdateTime(DateUtils.getNowDate());
         return toAjax(dictDataService.saveDataStatus(sysDictData));
     }
 
