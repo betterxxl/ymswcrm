@@ -252,7 +252,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where customer_phone = #{customerPhone} order by apply_time desc limit 1
 </select>
 
-<!--查询出需要自动抽回的客户ids-->
+<!--查询出需要自动抽回的客户ids（查询出不在公共池和收藏夹里，且最后备注天数与当前时间的差大于days时的客户id）-->
 <select id="selectAutoReallocIds" parameterType="String" resultType="String">
     select yc.customer_id
     from ymsw_customer yc
