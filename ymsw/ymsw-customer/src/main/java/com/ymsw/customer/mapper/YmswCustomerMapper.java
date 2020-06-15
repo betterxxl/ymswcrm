@@ -82,4 +82,9 @@ public interface YmswCustomerMapper
      * 根据客户电话号码查询客户信息（客户表里可能存在多条相同的电话号码，取最后一次添加的客户信息【即申请时间是最大的】）
      */
     public YmswCustomer getCustomerInfo(String customerPhone);
+
+    /**
+     * 查询出需要自动抽回的客户ids
+     */
+    List<String> selectAutoReallocIds(String days);
 }

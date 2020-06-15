@@ -160,7 +160,7 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     }
 
     //    返回需要批量添加到收藏夹公共池的数据集合
-    private ArrayList<YmswCollectionPool> getAddList(List<String> customerIds, String type, Long userId) {
+    public static ArrayList<YmswCollectionPool> getAddList(List<String> customerIds, String type, Long userId) {
         ArrayList<YmswCollectionPool> list = new ArrayList<>();
         Date addTime = DateUtils.getNowDate();//当前时间
         for (String customerId : customerIds) {

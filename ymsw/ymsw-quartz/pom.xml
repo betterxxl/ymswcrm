@@ -33,6 +33,14 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-system</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-customer</artifactId>
+        </dependency>
 
     </dependencies>
 

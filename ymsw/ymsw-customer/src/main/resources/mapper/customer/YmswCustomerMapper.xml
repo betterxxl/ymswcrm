@@ -251,4 +251,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     left join sys_dept d on d.dept_id = u.dept_id
     where customer_phone = #{customerPhone} order by apply_time desc limit 1
 </select>
+
+<!--查询出需要自动抽回的客户ids-->
+<select id="selectAutoReallocIds" parameterType="String" resultType="String">
+    select yc.customer_id
+    from ymsw_customer yc
+    left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id
+    where ycp.customer_id is null
+    and datediff(NOW(),yc.remark_time) >= #{days}
+</select>
+
 </mapper>

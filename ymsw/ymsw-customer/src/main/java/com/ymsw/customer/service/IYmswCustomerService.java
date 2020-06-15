@@ -79,4 +79,9 @@ public interface IYmswCustomerService
      */
     YmswCustomer getCustomerInfo(String customerPhone);
 
+    /**
+     * 查询出需要自动抽回的客户ids
+     */
+    List<String> selectAutoReallocIds(String days);
+
 }

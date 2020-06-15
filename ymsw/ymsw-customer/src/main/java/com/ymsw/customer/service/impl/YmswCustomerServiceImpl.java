@@ -278,4 +278,12 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         return ymswCustomer;
     }
 
+    /**
+     * 查询出需要自动抽回的客户ids
+     */
+    @Override
+    public List<String> selectAutoReallocIds(String days) {
+        return ymswCustomerMapper.selectAutoReallocIds(days);
+    }
+
 }
