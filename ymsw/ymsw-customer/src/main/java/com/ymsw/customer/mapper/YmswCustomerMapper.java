@@ -4,6 +4,7 @@ import com.ymsw.customer.domain.YmswCustomer;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户信息表Mapper接口
@@ -91,4 +92,9 @@ public interface YmswCustomerMapper
     List<String> selectAutoReallocIds(String days);
 
     int batchUpdateUserId(@Param("userId") Long userId, @Param("customerIds") List<Long> customerIds);
+
+    /**
+     * 按userId分组查询客户数（查询每个业务经理的客户数量）
+     */
+    List<Map<String, Long>> selectCount();
 }

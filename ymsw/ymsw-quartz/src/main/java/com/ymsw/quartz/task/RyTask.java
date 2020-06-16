@@ -4,6 +4,8 @@ import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
 import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.customer.service.impl.YmswCollectionPoolServiceImpl;
+import com.ymsw.quota.domain.QuotaManager;
+import com.ymsw.quota.mapper.QuotaManagerMapper;
 import com.ymsw.system.domain.SysConfig;
 import com.ymsw.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.ymsw.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 定时任务调度测试
@@ -29,6 +32,9 @@ public class RyTask
 
     @Autowired
     private YmswCollectionPoolMapper ymswCollectionPoolMapper;
+
+    @Autowired
+    private QuotaManagerMapper quotaManagerMapper;
 
     public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i)
     {
@@ -63,6 +69,27 @@ public class RyTask
                     //2、同时批量添加到公共池  参数“2”是公共池，操作人id设置为null
                     ymswCollectionPoolMapper.batchInsertYmswCollectionPool(YmswCollectionPoolServiceImpl.getAddList(customerIds,"2",null));
                 }
+            }
+        }
+        //自动抽回完成后更新当前客户数
+        List<Map<String, Long>> list = ymswCustomerMapper.selectCount();//按userId分组查询客户数（查询每个业务经理的客户数量）
+        for (Map<String, Long> map : list) {
+            Long userId = map.get("userId");//获取userId
+            Long totalCount = map.get("totalCount");//获取该userId的客户数量
+            QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);//查询该userId的配额信息
+            //配额信息如果存在，就修改当前客户数，如果不存在，就添加一条配额信息
+            if (StringUtils.isNotNull(quotaManager)){
+                quotaManager.setNowTotalCount(totalCount.intValue());
+                quotaManagerMapper.updateQuotaManager(quotaManager);
+            }else {
+                quotaManager = new QuotaManager();
+                quotaManager.setUserId(userId.intValue());
+                quotaManager.setNowTotalCount(totalCount.intValue());//当前客户数
+                quotaManager.setAllowTotalCount(500);   //总限额数
+                quotaManager.setAllowTodayCount(0); //今日配额数
+                quotaManager.setNowTodayCount(0);//今日已分配客户数
+                quotaManager.setQuotaStatus("1");   //配额状态 0 关闭 1开启
+                quotaManagerMapper.insertQuotaManager(quotaManager);
             }
         }
     }
