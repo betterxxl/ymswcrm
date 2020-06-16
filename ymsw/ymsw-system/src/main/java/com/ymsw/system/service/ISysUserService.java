@@ -195,4 +195,6 @@ public interface ISysUserService
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUsers(BaseEntity baseEntity);
+
+    List<SysUser> selectIsDistributeUsers();
 }

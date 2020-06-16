@@ -505,4 +505,9 @@ public class SysUserServiceImpl implements ISysUserService
     {
         return userMapper.selectUsers(baseEntity);
     }
+
+    @Override
+    public List<SysUser> selectIsDistributeUsers() {
+        return userMapper.selectIsDistributeUsers();
+    }
 }

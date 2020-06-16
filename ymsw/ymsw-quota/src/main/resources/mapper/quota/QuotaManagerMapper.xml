@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectQuotaManagerList" parameterType="QuotaManager" resultMap="QuotaManagerResult">
         <include refid="selectQuotaManager"/>
         <where>
-            u.status = '0'  /*在职的员工*/
+            u.status = '0' and u.is_distribute = 'Y'  /*在职的员工*/
             <if test="params.userName != null and params.userName !=''"> and u.user_name like concat('%',#{params.userName},'%')</if>
             <if test="params.phonenumber != null and params.phonenumber !=''"> and u.phonenumber like concat('%',#{params.phonenumber},'%')</if>
             <if test="params.deptId != null and params.deptId !=''">

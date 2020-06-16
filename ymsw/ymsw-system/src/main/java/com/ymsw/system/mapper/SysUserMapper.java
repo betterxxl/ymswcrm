@@ -143,4 +143,10 @@ public interface SysUserMapper
      * @return 员工id
      */
     public Long selectUserByUserName(String userName);
+
+    /**
+     * 查询所有可分配客户的员工列表，在修改签约进件页面用到。
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectIsDistributeUsers();
 }
