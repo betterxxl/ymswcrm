@@ -311,11 +311,11 @@ public class YmswCustomerController extends BaseController
                 Integer nowTotalCount = quotaManager.getNowTotalCount();    //当前客户数
                 //当配置状态是开启，且当前客户数+分配数<=总限额数，且今日已分配客户数+分配数<=今日配额数时才进行分配。
                 if ("0".equals(quotaStatus)){
-                    msg.append("请检查"+ userName +"的配额状态；");
+                    msg.append("请检查"+ userName +"的配额状态；<br>");
                     continue;
                 }
                 if ((nowTotalCount + count) > allowTotalCount){
-                    msg.append("请检查" + userName +"的总限额数；");
+                    msg.append("请检查" + userName +"的总限额数；<br>");
                     continue;
                 }
                 for (int i = 0; i < count; i++) {
@@ -336,9 +336,9 @@ public class YmswCustomerController extends BaseController
                 quotaManager.setNowTotalCount(nowTotalCount+count);//设置当前客户数
                 quotaManagerService.updateQuotaManager(quotaManager);// 3、修改该业务经理对应当前客户数
                 customerIds.clear();//清空集合，用于下次循环
-                msg.append(userName + "分配成功；");
+                msg.append(userName + "分配成功；<br>");
             }else {
-                msg.append(userName + "无配额信息");
+                msg.append(userName + "无配额信息；<br>");
             }
         }
         //所有业务经理都分配完成后，修改被分配业务经理对应的当前客户数
