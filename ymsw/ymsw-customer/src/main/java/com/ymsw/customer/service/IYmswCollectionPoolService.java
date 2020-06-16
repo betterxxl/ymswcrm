@@ -3,6 +3,7 @@ package com.ymsw.customer.service;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.customer.domain.YmswCollectionPool;
 import com.ymsw.customer.domain.YmswCustomer;
+import com.ymsw.customer.vo.YmswReallocationVo;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public interface IYmswCollectionPoolService
     /**
      * 批量加入收藏夹-公共池
      */
-    AjaxResult addToCollectionPool (String ids, String type);
+    AjaxResult addToCollectionPool (YmswReallocationVo reallocationVo);
 
     /**
      * 查询公共池列表(不做数据范围限制，查询所有公共池数据)

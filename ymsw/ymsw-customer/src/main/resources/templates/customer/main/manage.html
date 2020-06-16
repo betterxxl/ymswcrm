@@ -285,19 +285,34 @@
         // 批量加入公共池
         function addTOPool() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var userIds = $.table.selectAllColumns("userId");
+            var data = [];
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
                 return;
             }
+            for (i = 0;i < rows.length;i ++){
+                data.push({"customerId":rows[i],"userId":userIds[i]});
+            }
             $.modal.confirm("确定要将选中的" + rows.length + "条数据加入公共池吗?", function() {
                 var url = ctx + "customer/pool/addToCollectionPoll";
-                var data = { "ids": rows.join(), "type":2 };
-                $.operate.submit(url, "post", "json", data);
+                var reallocationVo = { "ymswCustomers": data, "type":2 };
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(reallocationVo),
+                    traditional: true,
+                    dataType: "json",
+                    success: function (result) {
+                        $.table.refresh();//刷新父表格
+                    }
+                })
             });
         }
 
         // 批量加入收藏夹
-        function addTOCollection() {
+       /* function addTOCollection() {
             var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
@@ -308,7 +323,7 @@
                 var data = { "ids": rows.join(), "type":1 };
                 $.operate.submit(url, "post", "json", data);
             });
-        }
+        }*/
 
         // 抽回重分配
         function reallocation(){

@@ -10,17 +10,17 @@ import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
+import com.ymsw.customer.vo.YmswReallocationVo;
 import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.quota.domain.QuotaManager;
+import com.ymsw.quota.mapper.QuotaManagerMapper;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 收藏夹-公共池Service业务层处理
@@ -36,6 +36,8 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     private YmswCustomerMapper ymswCustomerMapper;
     @Autowired
     private SysDictDataMapper sysDictDataMapper;
+    @Autowired
+    private QuotaManagerMapper quotaManagerMapper;
 
     /**
      * 查询收藏夹-公共池
@@ -104,26 +106,37 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
         return ymswCollectionPoolMapper.deleteYmswCollectionPoolById(cpId);
     }
 
+    /**
+     * 加入公共池，放入收藏夹
+     * @return 结果
+     */
     @Override
     @Transactional
-    public AjaxResult addToCollectionPool(String ids, String type) {
-        List<String> customerIds = Arrays.asList(ids.split(","));
+    public AjaxResult addToCollectionPool(YmswReallocationVo reallocationVo) {
+        String type = reallocationVo.getType();//类型  1 加入收藏夹  2 加入公共池
+        List<YmswCustomer> ymswCustomers = reallocationVo.getYmswCustomers();//将被加入的客户集合
         Long userId = ShiroUtils.getUserId();//当前userId
-        List<String> addids = new ArrayList<>();    //需要到公共池收藏夹表的ids
+        List<YmswCustomer> addCustomerList = new ArrayList<>();    //实际将被加入公共池收藏夹表的客户集合
+        List<String> ids = new ArrayList<>();   //实际将被加入公共池收藏夹表的客户ids
+        Map<Long,Integer> maps = new HashMap<>();   //存放原业务经理和其被加入公共池的客户条数  key是userId，value是被公共池的客户条数
         StringBuffer msg = new StringBuffer();  //返回的消息
         int errCollectCount = 0;
         int errPoolCount = 0;
-        for (String customerId : customerIds) {
+        //过滤客户，不在公共池也不再收藏夹的客户放入addCustomerList 和 ids里
+        for (YmswCustomer ymswCustomer : ymswCustomers) {
+            Long customerId = ymswCustomer.getCustomerId();
             if (isInCollectionPool(Long.valueOf(customerId),"1")){//是否在收藏夹，如果在，就errCollectCount++
                 errCollectCount ++;
             }else if (isInCollectionPool(Long.valueOf(customerId),"2")){//是否在公共池，如果在就errPoolCount++
                 errPoolCount ++;
             }else {
-                addids.add(customerId); //如果既不在收藏夹，也不在公共池，就add到addids，准备添加到公共池收藏夹表
+                addCustomerList.add(ymswCustomer); //如果既不在收藏夹，也不在公共池，就add到addCustomerList，用于加入公共池时计算当前客户数
+                ids.add(customerId.toString()); //如果既不在收藏夹，也不在公共池，就add到ids，用于添加到公共池收藏夹表
             }
         }
-        if (StringUtils.isNotEmpty(addids)){
-            if ("1".equals(type)) {  //批量添加到收藏夹
+        //如果ids不为空，就进行加入收藏夹或公共池
+        if (StringUtils.isNotEmpty(ids)){
+            if ("1".equals(type)) {  // 1是批量添加到收藏夹
                 SysDictData sysDictData = new SysDictData();
                 sysDictData.setDictType("ymsw_config");
                 sysDictData.setDictLabel("collection_count");
@@ -133,14 +146,35 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                     int count = ymswCollectionPoolMapper.selectCountByUserId(userId);//查询该用户已经收藏的条数
                     if (Integer.valueOf(collectionCount) <= count) { //如果已经收藏的条数大于等于允许收藏的条数，就不能收藏。
                         return AjaxResult.error("收藏的客户数量不能超过" + collectionCount + "条！");
-                    } else if (count + addids.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
+                    } else if (count + ids.size() > Integer.valueOf(collectionCount)) { //如果已经收藏的条数+将要收藏的条数大于允许收藏的条数，就不能收藏。
                         return AjaxResult.error("还可收藏" + (Integer.valueOf(collectionCount) - count) + "条！");
                     }
                 }
-            } else if ("2".equals(type)) {    //批量添加到公共池
-                ymswCustomerMapper.updateUseridToNull(addids);//批量修改客户的归属顾问为空
+            } else if ("2".equals(type)) {    // 2是批量添加到公共池
+                ymswCustomerMapper.updateUseridToNull(ids);//批量修改客户的归属顾问为空
+                //处理maps
+                for (YmswCustomer ymswCustomer : addCustomerList) {
+                    Long oldUserId = ymswCustomer.getUserId();
+                    if (!maps.containsKey(oldUserId)){
+                        maps.put(oldUserId,0);  //如果maps里未存放该业务经理id，就put进去，并设置被分配条数为0
+                    }
+                    Integer integer = maps.get(oldUserId);
+                    integer++;
+                    maps.put(oldUserId,integer);
+                }
+                //加入公共池后修改配额表里对应业务经理的当前客户数
+                for(Map.Entry<Long, Integer> entry : maps.entrySet()){
+                    Long oldUserId = entry.getKey();
+                    Integer mapValue = entry.getValue();
+                    QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(oldUserId); //通过userId查询改业务经理的配额信息
+                    if (StringUtils.isNotNull(quotaManager)) {
+                        Integer nowTotalCount = quotaManager.getNowTotalCount();    //当前客户数
+                        quotaManager.setNowTotalCount(nowTotalCount - mapValue);
+                        quotaManagerMapper.updateQuotaManager(quotaManager);//修改该客户对应当前客户数
+                    }
+                }
             }
-            ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(addids,type,userId));    //批量添加到收藏夹公共池表
+            ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(ids,type,userId));    //批量添加到收藏夹公共池表
         }
         if (errCollectCount > 0){
             msg.append(errCollectCount+"条已在收藏夹，");
@@ -155,7 +189,7 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                 msg.append("不可放入公共池！");
             }
         }
-        msg.append(addids.size()+"条操作成功！");
+        msg.append(ids.size()+"条操作成功！");
         return AjaxResult.success(msg.toString());
     }
 
