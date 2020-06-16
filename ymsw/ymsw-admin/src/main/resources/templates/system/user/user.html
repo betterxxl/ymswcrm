@@ -153,16 +153,22 @@
 					align: 'center'
 				},
 		        {
-		            field: 'email',
-		            title: '邮箱',
-		            visible: false
-		        },
-		        {
 		            field: 'phonenumber',
 		            title: '业务手机',
 		            halign: 'center',
 		            align: 'center'
 		        },
+				{
+					field: 'isDistribute',
+					title: '是否分配客户',
+					halign: 'center',
+					align: 'center',
+					visible: false,
+					formatter: function (value, row, index) {
+						if (value == "N"){return "否"}
+						else if (value == "Y"){return "是"}
+					}
+				},
 		        {
 		        	visible: editFlag == 'hidden' ? false : true,
 		        	title: '员工状态',

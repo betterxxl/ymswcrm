@@ -18,7 +18,6 @@ import com.ymsw.system.service.ISysConfigService;
 import com.ymsw.system.service.ISysDeptService;
 import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,8 +32,6 @@ import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.Size;
 
 /**
  * 客户信息表Controller

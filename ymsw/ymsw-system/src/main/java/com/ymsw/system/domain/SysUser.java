@@ -79,6 +79,9 @@ public class SysUser extends BaseEntity
     /** 用户标识 */
     private String userFlag;
 
+    /** 是否分配客户 N否  Y是*/
+    private String isDistribute;
+
     /** 最后登陆时间 */
     @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
@@ -88,6 +91,14 @@ public class SysUser extends BaseEntity
 
     /** 岗位名称     */
     private String postName;
+
+    public String getIsDistribute() {
+        return isDistribute;
+    }
+
+    public void setIsDistribute(String isDistribute) {
+        this.isDistribute = isDistribute;
+    }
 
     public String getUserFlag() {
         return userFlag;

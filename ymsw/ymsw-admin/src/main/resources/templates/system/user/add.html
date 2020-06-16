@@ -77,6 +77,18 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>是否分配客户：</label>
+                        <div class="col-sm-8">
+                            <select name="isDistribute" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
             	<div class="col-sm-12">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">角色：</label>
