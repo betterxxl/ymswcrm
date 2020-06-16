@@ -24,14 +24,4 @@ public class AccessPhoneConfig {
     public void setAccessphones(List<String> accessphones) {
         this.accessphones = accessphones;
     }
-
-    private  List<Integer> userIds = new ArrayList<>();
-
-    public List<Integer> getUserIds() {
-        return userIds;
-    }
-
-    public void setUserIds(List<Integer> userIds) {
-        this.userIds = userIds;
-    }
 }

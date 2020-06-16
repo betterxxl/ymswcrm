@@ -488,12 +488,6 @@ public class SysUserServiceImpl implements ISysUserService
         }
         return userMapper.updateUserTwo(user);
     }
-
-    @Override
-    public List<SysUser> selectUsersForIncomingData(List<Integer> userIds) {
-        return userMapper.selectUsersForIncomingData(userIds);
-    }
-
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
      * @param baseEntity 超级父类

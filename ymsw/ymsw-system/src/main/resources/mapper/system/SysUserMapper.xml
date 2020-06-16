@@ -241,15 +241,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</set>
 		where user_id = #{userId}
 	</update>
-
-	<!--查询为引流客户分配的客户经理名单-->
-	<select id="selectUsersForIncomingData" resultMap="SysUserResult" parameterType="java.lang.Integer">
-	 	select * FROM sys_user where  user_id not in
-	  	<foreach collection="list" item="userId" open="(" separator="," close=")">
-		  	#{userId}
-	  	</foreach>
-	</select>
-
 	<!--根据数据范围查询所有在职员工列表，且可分配客户为Y，除了超级管理员-->
 	<select id="selectUsers" parameterType="BaseEntity" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.login_name, u.user_name, u.is_distribute, u.user_flag, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, u.leave_time, d.dept_name, d.leader, p.post_name from sys_user u

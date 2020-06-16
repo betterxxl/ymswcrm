@@ -181,14 +181,6 @@ public interface ISysUserService
      * @return 结果
      */
     public int changeStatus(SysUser user);
-
-    /**
-     * 查询为引流客户分配的客户经理名单
-     * @param userIds 排除的用户id
-     * @return
-     */
-    public List<SysUser> selectUsersForIncomingData(List<Integer> userIds);
-
     /**
      * 根据数据范围查询所有在职员工列表，除了超级管理员
      * @param baseEntity 超级父类

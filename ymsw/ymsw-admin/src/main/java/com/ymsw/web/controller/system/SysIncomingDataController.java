@@ -56,7 +56,7 @@ public class SysIncomingDataController extends BaseController {
         String customerQuota = request.getParameter("customerQuota");
         YmswCustomer ymswCustomer =new YmswCustomer();
         //获取能分配的用户列表
-        List<SysUser> sysUserList = iSysUserService.selectUsersForIncomingData(accessPhoneConfig.getUserIds());
+        List<SysUser> sysUserList = iSysUserService.selectIsDistributeUsers();
         //随机进行分配
         int i = (int)(Math.random()*42)+1;
         System.out.println("i = " + i);
