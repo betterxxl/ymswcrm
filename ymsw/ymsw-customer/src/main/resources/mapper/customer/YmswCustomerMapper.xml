@@ -261,4 +261,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     and datediff(NOW(),yc.remark_time) >= #{days}
 </select>
 
+<update id="batchUpdateUserId">
+    update ymsw_customer set user_id = #{userId},distribute_time = CURRENT_TIMESTAMP where customer_id in
+    <foreach item="customerId" collection="customerIds" open="(" separator="," close=")">
+        #{customerId}
+    </foreach>
+</update>
+
 </mapper>

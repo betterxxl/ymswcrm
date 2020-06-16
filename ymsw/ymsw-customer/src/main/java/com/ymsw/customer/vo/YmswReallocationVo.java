@@ -1,5 +1,6 @@
 package com.ymsw.customer.vo;
 
+import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.system.domain.SysUser;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class YmswReallocationVo {
 
     private List<SysUser> userList;
 
-    private List<Long> ids;
+    private List<YmswCustomer> ymswCustomers;
 
     public List<SysUser> getUserList() {
         return userList;
@@ -19,11 +20,11 @@ public class YmswReallocationVo {
         this.userList = userList;
     }
 
-    public List<Long> getIds() {
-        return ids;
+    public List<YmswCustomer> getYmswCustomers() {
+        return ymswCustomers;
     }
 
-    public void setIds(List<Long> ids) {
-        this.ids = ids;
+    public void setIds(List<YmswCustomer> ymswCustomers) {
+        this.ymswCustomers = ymswCustomers;
     }
 }

@@ -192,4 +192,10 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     public List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer) {
         return ymswCollectionPoolMapper.selectYmswPoolList(ymswCustomer);
     }
+
+    //抽回重分配时，批量从公共池里删除数据
+    @Override
+    public int batchDeleteByCustomerIds(List<Long> customerIds) {
+        return ymswCollectionPoolMapper.batchDeleteByCustomerIds(customerIds);
+    }
 }

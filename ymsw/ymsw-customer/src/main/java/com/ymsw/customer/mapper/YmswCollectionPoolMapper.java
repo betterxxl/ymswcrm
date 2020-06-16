@@ -86,4 +86,7 @@ public interface YmswCollectionPoolMapper
     List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
 
     int selectIsInCollectionPool(@Param("customerId") Long customerId, @Param("cpType")String cpType);
+
+    //抽回重分配时，批量从公共池里删除数据
+    int batchDeleteByCustomerIds(List<Long> customerIds);
 }

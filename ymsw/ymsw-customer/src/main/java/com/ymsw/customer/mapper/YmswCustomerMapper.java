@@ -1,6 +1,8 @@
 package com.ymsw.customer.mapper;
 
 import com.ymsw.customer.domain.YmswCustomer;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -87,4 +89,6 @@ public interface YmswCustomerMapper
      * 查询出需要自动抽回的客户ids
      */
     List<String> selectAutoReallocIds(String days);
+
+    int batchUpdateUserId(@Param("userId") Long userId, @Param("customerIds") List<Long> customerIds);
 }

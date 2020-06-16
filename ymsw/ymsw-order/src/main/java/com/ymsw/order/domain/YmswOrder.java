@@ -172,7 +172,7 @@ public class YmswOrder extends BaseEntity
     {
         this.contractId = contractId;
     }
-
+    @Range(min=0,max=9999999,message = "合同编号错误")
     public Long getContractId() 
     {
         return contractId;

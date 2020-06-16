@@ -1,7 +1,6 @@
 package com.ymsw.customer.controller;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import com.ymsw.common.annotation.RepeatSubmit;
 import com.ymsw.common.core.domain.BaseEntity;
@@ -10,6 +9,8 @@ import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.service.IYmswCollectionPoolService;
 import com.ymsw.customer.service.IYmswRemarkService;
 import com.ymsw.customer.vo.YmswReallocationVo;
+import com.ymsw.quota.domain.QuotaManager;
+import com.ymsw.quota.service.IQuotaManagerService;
 import com.ymsw.system.domain.SysConfig;
 import com.ymsw.system.domain.SysDept;
 import com.ymsw.system.domain.SysUser;
@@ -17,6 +18,7 @@ import com.ymsw.system.service.ISysConfigService;
 import com.ymsw.system.service.ISysDeptService;
 import com.ymsw.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +33,8 @@ import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.Size;
 
 /**
  * 客户信息表Controller
@@ -56,6 +60,8 @@ public class YmswCustomerController extends BaseController
     private IYmswCollectionPoolService ymswCollectionPoolService;
     @Autowired
     private ISysConfigService configService;
+    @Autowired
+    private IQuotaManagerService quotaManagerService;
 
     /**
      * 跳转到 所有客户 -→ 我的客户页面
@@ -272,14 +278,14 @@ public class YmswCustomerController extends BaseController
      */
     @RequiresPermissions("customer:manage:reallocation")
     @GetMapping("/reallocation")
-    public String reallocation(ModelMap mmap,String ids)
+    public String reallocation()
     {
-        mmap.put("ids",ids);//需要重分配的customerIds，再传到reallocation.html页面
+        //mmap.put("ids",ids);//需要重分配的customerIds，再传到reallocation.html页面
         return prefix + "/reallocation";
     }
 
     /**
-     *重回重分配业务
+     *抽回重分配业务
      */
     @Log(title = "客户信息表", businessType = BusinessType.UPDATE)
     @RequiresPermissions("customer:manage:reallocation")
@@ -287,15 +293,65 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult saveReallocation(@RequestBody YmswReallocationVo ymswReallocationVo)
     {
+        //存储了将要分配给的userId和对应的count
         List<SysUser> userList = ymswReallocationVo.getUserList();
-        for (SysUser ymswCustomer : userList) {
-            System.out.println(ymswCustomer.getUserId());
-            System.out.println(ymswCustomer.getParams().get("count"));
+        //存储了被分配的customerId和对应的业务经理userId，业务经理userId用来计算当前客户数。
+        List<YmswCustomer> ymswCustomers = ymswReallocationVo.getYmswCustomers();
+        List<Long> customerIds = new ArrayList<>(); //存放分配给新业务经理的customerId
+        Map<Long,Integer> maps = new HashMap<>();   //存放原业务经理和其被分配的客户条数  key是userId，value是被分配的客户条数
+        StringBuffer msg = new StringBuffer();
+        for (SysUser user : userList) {
+            Integer count = Integer.valueOf((String) user.getParams().get("count"));//分配数
+            Long userId = user.getUserId(); //业务经理userId
+            String userName = user.getUserName();
+            QuotaManager quotaManager = quotaManagerService.selectQuotaManagerByUserId(userId); //通过userId查询改业务经理的配额信息
+            if (StringUtils.isNotNull(quotaManager)){
+                String quotaStatus = quotaManager.getQuotaStatus(); //配额状态 0 关闭 1开启
+                Integer allowTotalCount = quotaManager.getAllowTotalCount();    //总限额数
+                Integer nowTotalCount = quotaManager.getNowTotalCount();    //当前客户数
+                //当配置状态是开启，且当前客户数+分配数<=总限额数，且今日已分配客户数+分配数<=今日配额数时才进行分配。
+                if ("0".equals(quotaStatus)){
+                    msg.append("请检查"+ userName +"的配额状态；");
+                    continue;
+                }
+                if ((nowTotalCount + count) > allowTotalCount){
+                    msg.append("请检查" + userName +"的总限额数；");
+                    continue;
+                }
+                for (int i = 0; i < count; i++) {
+                    YmswCustomer ymswCustomer = ymswCustomers.get(0);//每次循环从ymswCustomers里获取第一条数据进行分配
+                    Long oldUserId = ymswCustomer.getUserId();//获取原业务经理id
+                    if (!maps.containsKey(oldUserId)){
+                        maps.put(oldUserId,0);  //如果maps里未存放该业务经理id，就put进去，并设置被分配条数为0
+                    }
+                    Integer bfpCount = maps.get(oldUserId); //获取该业务经理被分配的条数
+                    bfpCount++;
+                    maps.put(oldUserId,bfpCount);   // 条数加1后再放入maps
+                    customerIds.add(ymswCustomer.getCustomerId());  //被分配的customerId放入customerIds
+                    ymswCustomers.remove(0);//清除ymswCustomers里的第一条数据
+                }
+                //以上循环分配完成后
+                ymswCustomerService.batchUpdateUserId(userId, customerIds);  // 1、批量修改客户的对应的user_id为userId
+                ymswCollectionPoolService.batchDeleteByCustomerIds(customerIds);    // 2、从公共池删除。不管customerId是否在公共池收藏夹表，都进行删除操作。
+                quotaManager.setNowTotalCount(nowTotalCount+count);//设置当前客户数
+                quotaManagerService.updateQuotaManager(quotaManager);// 3、修改该业务经理对应当前客户数
+                customerIds.clear();//清空集合，用于下次循环
+                msg.append(userName + "分配成功；");
+            }else {
+                msg.append(userName + "无配额信息");
+            }
         }
-        List<Long> ids = ymswReallocationVo.getIds();
-        for (Long id : ids) {
-            System.out.println(id);
+        //所有业务经理都分配完成后，修改被分配业务经理对应的当前客户数
+        for(Map.Entry<Long, Integer> entry : maps.entrySet()){
+            Long userId = entry.getKey();
+            Integer mapValue = entry.getValue();
+            QuotaManager quotaManager = quotaManagerService.selectQuotaManagerByUserId(userId); //通过userId查询改业务经理的配额信息
+            if (StringUtils.isNotNull(quotaManager)) {
+                Integer nowTotalCount = quotaManager.getNowTotalCount();    //当前客户数
+                quotaManager.setNowTotalCount(nowTotalCount - mapValue);
+                quotaManagerService.updateQuotaManager(quotaManager);//修改该客户对应当前客户数
+            }
         }
-        return AjaxResult.success();
+        return AjaxResult.success(msg.toString());
     }
 }

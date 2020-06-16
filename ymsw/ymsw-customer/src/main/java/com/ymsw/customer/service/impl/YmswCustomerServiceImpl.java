@@ -286,4 +286,9 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         return ymswCustomerMapper.selectAutoReallocIds(days);
     }
 
+    @Override
+    public int batchUpdateUserId(Long userId, List<Long> customerIds) {
+        return ymswCustomerMapper.batchUpdateUserId(userId,customerIds);
+    }
+
 }

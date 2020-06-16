@@ -135,4 +135,12 @@ public class QuotaManagerServiceImpl implements IQuotaManagerService
     public int editTotalCount(Map<String, Object> params) {
         return quotaManagerMapper.editTotalCount(params);
     }
+
+    /**
+     * 根据userId查询配额信息
+     */
+    @Override
+    public QuotaManager selectQuotaManagerByUserId(Long userId) {
+        return quotaManagerMapper.selectQuotaManagerByUserId(userId);
+    }
 }

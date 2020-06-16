@@ -73,4 +73,7 @@ public interface IYmswCollectionPoolService
      * @return 公共池集合
      */
     List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
+
+    //抽回重分配时，批量从公共池里删除数据
+    int batchDeleteByCustomerIds(List<Long> customerIds);
 }

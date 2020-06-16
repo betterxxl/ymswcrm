@@ -192,4 +192,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectIsInCollectionPool"  resultType="int">
         select count(1) from ymsw_collection_pool where customer_id = #{customerId} and cp_type = #{cpType}
     </select>
+
+    <!--抽回重分配时，批量从公共池里删除数据-->
+    <delete id="batchDeleteByCustomerIds" parameterType="List">
+        delete from ymsw_collection_pool where customer_id in
+        <foreach item="cutstomerId" collection="list" open="(" separator="," close=")">
+            #{cutstomerId}
+        </foreach>
+    </delete>
 </mapper>

@@ -25,6 +25,10 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-framework</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-quota</artifactId>
+        </dependency>
     </dependencies>
 
 

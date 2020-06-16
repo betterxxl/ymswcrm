@@ -372,6 +372,18 @@
             	}
             	return $.common.uniqueFn(rows);
             },
+			// 查询表格指定列值
+			selectAllColumns: function(column) {
+				var rows = $.map($.btTable.bootstrapTable('getSelections'), function (row) {
+					return row[column];
+				});
+				if ($.common.isNotEmpty($.table._option.rememberSelected) && $.table._option.rememberSelected) {
+					rows = $.map(selectionRows, function (row) {
+						return row[column];
+					});
+				}
+				return rows;
+			},
             // 获取当前页选中或者取消的行ID
             affectedRowIds: function(rows) {
             	var column = $.common.isEmpty($.table._option.uniqueId) ? $.table._option.columns[1].field : $.table._option.uniqueId;
@@ -615,6 +627,17 @@
         	        callBack(true);
         	    });
             },
+			// 确认窗体
+			confirm2: function (content, callBack) {
+				layer.confirm(content, {
+					icon: 1,
+					title: "系统提示",
+					btn: ['确认']
+				}, function (index) {
+					layer.close(index);
+					callBack(true);
+				});
+			},
             // 弹出层指定宽度
             open: function (title, url, width, height, callback) {
             	//如果是移动端，就使用自适应大小弹窗

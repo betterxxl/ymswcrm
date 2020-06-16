@@ -84,4 +84,5 @@ public interface IYmswCustomerService
      */
     List<String> selectAutoReallocIds(String days);
 
+    int batchUpdateUserId(Long userId, List<Long> customerIds);
 }

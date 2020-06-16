@@ -86,4 +86,9 @@ public interface IQuotaManagerService
      * 根据quotaIds批量修改总限额数
      */
     int editTotalCount(Map<String, Object> params);
+
+    /**
+     * 根据userId查询配额信息
+     */
+    QuotaManager selectQuotaManagerByUserId(Long userId);
 }

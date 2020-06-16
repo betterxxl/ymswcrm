@@ -65,8 +65,8 @@
                                         "<div class='form-group'>" +
                                             "<label class='col-sm-2 control-label col-sm-offset-3' style='text-align:left'>" +
                                                 "<div class='checkbox check-box'>" +
-                                                    "<input type='checkbox' value='" + userList[i].userId + "' name='" + userList[i].userId+"'>" + userList[i].userName +
-                                                "</div>" +
+                                                    "<input type='checkbox' value='" + userList[i].userId + "' name='" + userList[i].userId+"'><span id='userName"+userList[i].userId+"'>" + userList[i].userName +
+                                                "</span></div>" +
                                             "</label>" +
                                             "<div class='col-sm-6'>" +
                                                 "<div class='input-group'>" +
@@ -88,9 +88,7 @@
         });
     }
 
-    //从mmap里取到需要重分配的customerIds
-    var ids=new Array([[${ids}]]);
-
+    var ymswCustomers = JSON.parse(sessionStorage.getItem('ymswCustomers'));
     //点击确定时提交，可参考修改密码user/resetPwd.html
     function submitHandler() {
         var userList = [];  //需要提交的数据
@@ -99,17 +97,18 @@
         $("input:checkbox:checked").each(function () {
             var userId = $(this).val();
             var count = $("input[name=count"+userId+"]").val();
-            if ($.common.isEmpty(count)){
+            var userName = $("#userName"+userId).text();
+            if ($.common.isEmpty(count) || count <= 0){
                 submit = false;
             }else {
                 totolCount += parseInt(count,10);
             }
-            userList.push({"userId":userId,"params":{"count":count}});
+            userList.push({"userId":userId,"params":{"count":count},"userName":userName});
         })
-        var data = {"userList":userList,"ids":ids}
+        var data = {"userList":userList,"ymswCustomers":ymswCustomers}
         //如果勾选下了客户经理而没有设置对应的数目，就禁止提交。如果带分配的客户数量和总数目不相等，也禁止提交。
         if (submit) {
-            if (totolCount != ids.length) {
+            if (totolCount != ymswCustomers.length) {
                 $.modal.msgError("待分配的客户总数与总数目不一致！");
             }else {
                 $.ajax({
@@ -119,7 +118,11 @@
                     data: JSON.stringify(data),
                     traditional:true,
                     dataType:"json",
-                    success: function(data){
+                    success: function(result){
+                        $.modal.confirm2(result.msg,function () {
+                            $.modal.close();//关闭当前窗体
+                            window.parent.$.table.refresh();//刷新父表格
+                        });
                     },
                     error: function(){
                     }
