@@ -284,7 +284,9 @@
 
         // 批量加入公共池
         function addTOPool() {
-            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var uniqueId = table.options.uniqueId;
+            // 工具栏按钮控制
+            var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
             var userIds = $.table.selectAllColumns("userId");
             var data = [];
             if (rows.length == 0) {
@@ -329,7 +331,9 @@
 
         // 抽回重分配
         function reallocation(){
-            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var uniqueId = table.options.uniqueId;
+            // 工具栏按钮控制
+            var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
             var userIds = $.table.selectAllColumns("userId");
             var data = [];
             if (rows.length == 0) {
