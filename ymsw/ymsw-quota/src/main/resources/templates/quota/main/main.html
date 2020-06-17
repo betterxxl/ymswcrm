@@ -180,7 +180,9 @@
 
         // 批量暂停
         function batchDisable() {
-            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var uniqueId = table.options.uniqueId;
+            // 工具栏按钮控制
+            var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
             var quotaStatusList = $.table.selectColumns("quotaStatus");
             var submitFlag = false;
             if (rows.length == 0) {
@@ -205,7 +207,9 @@
 
         // 批量恢复
         function batchEnable() {
-            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var uniqueId = table.options.uniqueId;
+            // 工具栏按钮控制
+            var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
             var quotaStatusList = $.table.selectColumns("quotaStatus");
             var submitFlag = false;
             if (rows.length == 0) {
@@ -262,7 +266,9 @@
             if (!r.test(allowTodayCount)){
                 $.modal.msgError("请输入正整数！");
             }else {
-                var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+                var uniqueId = table.options.uniqueId;
+                // 工具栏按钮控制
+                var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
                 if (rows.length == 0) {
                     $.modal.confirm("确定设置所有配额？",function () {
                         data = { "ids":null, "allowTodayCount":allowTodayCount};

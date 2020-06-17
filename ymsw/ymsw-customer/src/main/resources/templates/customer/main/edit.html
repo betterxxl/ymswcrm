@@ -118,7 +118,7 @@
         <div class="search-collapse" shiro:hasPermission="customer:main:chargeRemark" id="chargeRemark">
             <div style="margin: 10px;">
                 <label for="exampleInputName2">主管点评：</label>
-                <textarea class="form-control" rows="2" id="chargeRemark"></textarea>
+                <textarea class="form-control" rows="2" id="chargeRemark2"></textarea>
             </div>
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-offset-5 col-sm-10">
@@ -180,8 +180,9 @@
 
     //保存点评
     function submitRemark() {
-        var remarkContent = $("#chargeRemark").val();
+        var remarkContent = $("#chargeRemark2").val();
         var customerId = $("#customerId").val();
+        console.log(remarkContent)
         if ($.common.isNotEmpty(remarkContent)) {
             var data={"remarkContent":remarkContent,"customerId":customerId};
             $.operate.ajax(ctx + "customer/remark/add","post","json",data);

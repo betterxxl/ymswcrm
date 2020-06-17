@@ -161,7 +161,9 @@
 
         // 批量设置限额
         function submit2() {
-            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            var uniqueId = table.options.uniqueId;
+            // 工具栏按钮控制
+            var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
             if (rows.length == 0) {
                 $.modal.alertWarning("请至少选择一条记录");
                 return;

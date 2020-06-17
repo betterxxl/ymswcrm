@@ -81,7 +81,7 @@ public class YmswRemarkController extends BaseController
     /**
      * 新增保存备注
      */
-    @RequiresPermissions("customer:remark:add")
+    @RequiresPermissions("customer:main:chargeRemark")
     @Log(title = "备注", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
