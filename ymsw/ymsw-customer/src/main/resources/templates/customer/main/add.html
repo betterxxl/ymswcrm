@@ -97,7 +97,8 @@
         });
 
         function submitHandler() {
-            var formData = $.param({'type': "platform"}) + '&'+$('#form-main-add').serialize();
+            // var formData = $.param({'type': "platform"}) + '&'+$('#form-main-add').serialize();
+            var formData = $('#form-main-add').serialize();
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add",formData);
             }
