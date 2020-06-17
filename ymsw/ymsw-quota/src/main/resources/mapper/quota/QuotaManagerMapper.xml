@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--回显配额总数-->
     <select id="countTotal" resultType="int">
-        select sum(allow_today_count) from quota_manager qm left join sys_user u on u.user_id = qm.user_id where u.status = 0
+        select sum(allow_today_count) from quota_manager qm left join sys_user u on u.user_id = qm.user_id where u.status = 0 and u.is_distribute= 'Y'
     </select>
 
     <!--批量配额设置-->
