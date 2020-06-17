@@ -280,7 +280,9 @@
                     traditional: true,
                     dataType: "json",
                     success: function (result) {
-                        $.table.refresh();//刷新父表格
+                        $.modal.confirm2(result.msg,function () {
+                            $.table.refresh();//刷新父表格
+                        });
                     }
                 })
             });
@@ -309,7 +311,9 @@
                     traditional: true,
                     dataType: "json",
                     success: function (result) {
-                        $.table.refresh();//刷新父表格
+                        $.modal.confirm2(result.msg,function () {
+                            $.table.refresh();//刷新父表格
+                        });
                     }
                 })
             });
