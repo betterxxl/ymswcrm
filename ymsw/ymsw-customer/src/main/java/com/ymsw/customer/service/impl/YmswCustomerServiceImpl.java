@@ -12,6 +12,8 @@ import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswRemark;
 import com.ymsw.customer.mapper.YmswRemarkMapper;
 import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.quota.domain.QuotaManager;
+import com.ymsw.quota.mapper.QuotaManagerMapper;
 import com.ymsw.system.domain.SysDictData;
 import com.ymsw.system.mapper.SysDictDataMapper;
 import com.ymsw.system.mapper.SysUserMapper;
@@ -46,6 +48,8 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     private YmswRemarkMapper ymswRemarkMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private QuotaManagerMapper quotaManagerMapper;
 
     /**
      * 查询客户信息表
@@ -83,13 +87,45 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     }
 
     /**
-     * 新增客户信息表
+     * 点击新增客户按钮时新增客户
      *
      * @param ymswCustomer 客户信息表
      * @return 结果
      */
     @Override
-    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer,String type) {
+    @Transactional
+    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer) {
+        Long userId = ShiroUtils.getUserId();
+        //如果当前客户数+1后大于限额数，就不允许添加
+        QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);
+        if (StringUtils.isNotNull(quotaManager)){
+            Integer allowTotalCount = quotaManager.getAllowTotalCount();    //总限额数
+            Integer nowTotalCount = quotaManager.getNowTotalCount();//当前客户数
+            boolean notAllow = nowTotalCount + 1 > allowTotalCount ? true : false;
+            if (notAllow){
+                return AjaxResult.error("客户数已到上限（" + allowTotalCount + "），无法添加新客户！");
+            }
+        }else {
+            quotaManager = new QuotaManager();
+            quotaManager.setUserId(userId.intValue());
+            quotaManager.setAllowTotalCount(500);//总限额数
+            quotaManager.setNowTotalCount(0);//当前客户数
+            quotaManager.setAllowTodayCount(5);//今日配额数
+            quotaManager.setNowTodayCount(0);//今日已分配客户数
+            quotaManager.setQuotaStatus("1");//配额状态0 关闭 1开启
+            quotaManagerMapper.insertQuotaManager(quotaManager);
+        }
+        ymswCustomer.setUserId(userId);//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
+        return insertCustomer(ymswCustomer,quotaManager);//新增客户
+    }
+
+    /**
+     * 新增客户，并修改当前客户数
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public AjaxResult insertCustomer(YmswCustomer ymswCustomer,QuotaManager quotaManager){
         //通过手机号查询该手机号的最后一次申请时间
         YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(ymswCustomer.getCustomerPhone());
         //如果存在，就查询字典表里允许天数
@@ -113,12 +149,11 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         ymswCustomer.setApplyTime(DateUtils.getNowDate());  //设置申请时间为当前时间
         ymswCustomer.setCustomerType("1");      //设置客户类型为“新客户”  1新客户  2再分配
         ymswCustomer.setCustomerStatus("0");    //设置客户状态为“新申请”
-        //1 引流数据新增客户   随机分配客户    2   系统新增客户分配当前添加人
-        if("platform".equals(type)){
-            ymswCustomer.setUserId(ShiroUtils.getUserId());//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
-        }
         ymswCustomer.setDistributeTime(DateUtils.getNowDate()); //设置分配时间
         int i = ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
+        //修改当前客户数
+        quotaManager.setNowTotalCount(quotaManager.getNowTotalCount()+1);
+        quotaManagerMapper.updateQuotaManager(quotaManager);
         if (i > 0) {
             return AjaxResult.success();
         } else {

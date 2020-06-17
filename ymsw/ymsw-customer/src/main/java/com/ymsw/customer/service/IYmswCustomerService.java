@@ -2,6 +2,8 @@ package com.ymsw.customer.service;
 
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.customer.domain.YmswCustomer;
+import com.ymsw.quota.domain.QuotaManager;
+
 import java.util.List;
 
 /**
@@ -35,12 +37,18 @@ public interface IYmswCustomerService
     public List<YmswCustomer> selectManageList(YmswCustomer ymswCustomer);
 
     /**
-     * 新增客户信息表
+     * 点击新增客户按钮时新增客户
      * 
      * @param ymswCustomer 客户信息表
      * @return 结果
      */
-    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer,String type);
+    public AjaxResult insertYmswCustomer(YmswCustomer ymswCustomer);
+
+    /**
+     * 新增客户，并修改当前客户数
+     * @return 结果
+     */
+    public AjaxResult insertCustomer(YmswCustomer ymswCustomer, QuotaManager quotaManager);
 
     /**
      * 修改客户信息表

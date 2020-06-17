@@ -86,7 +86,7 @@ public class RyTask
                 quotaManager.setUserId(userId.intValue());
                 quotaManager.setNowTotalCount(totalCount.intValue());//当前客户数
                 quotaManager.setAllowTotalCount(500);   //总限额数
-                quotaManager.setAllowTodayCount(0); //今日配额数
+                quotaManager.setAllowTodayCount(5); //今日配额数
                 quotaManager.setNowTodayCount(0);//今日已分配客户数
                 quotaManager.setQuotaStatus("1");   //配额状态 0 关闭 1开启
                 quotaManagerMapper.insertQuotaManager(quotaManager);
