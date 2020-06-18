@@ -1,5 +1,6 @@
 package com.ymsw.quartz.task;
 
+import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
 import com.ymsw.customer.service.IYmswCustomerService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.ymsw.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,11 +65,15 @@ public class RyTask
             String days = sysConfig.getConfigValue();//获取自动抽回的天数
             //如果开启了自动抽回，就进行抽回
             if ("1".equals(status)){    //状态 0 关闭  1  开启
-                List<String> customerIds = ymswCustomerMapper.selectAutoReallocIds(days);   //查询出需要自动抽回的客户ids
-                if (StringUtils.isNotEmpty(customerIds)){
+                List<YmswCustomer> customerList = ymswCustomerMapper.selectAutoReallocIds(days);   //查询出需要自动抽回的客户ids
+                if (StringUtils.isNotEmpty(customerList)){
+                    List<String> customerIds = new ArrayList<>();
+                    for (YmswCustomer ymswCustomer : customerList) {
+                        customerIds.add(String.valueOf(ymswCustomer.getCustomerId()));
+                    }
                     ymswCustomerMapper.updateUseridToNull(customerIds); //1、将客户ids对应的user_id批量设置为null
                     //2、同时批量添加到公共池  参数“2”是公共池，操作人id设置为null
-                    ymswCollectionPoolMapper.batchInsertYmswCollectionPool(YmswCollectionPoolServiceImpl.getAddList(customerIds,"2",null));
+                    ymswCollectionPoolMapper.batchInsertYmswCollectionPool(YmswCollectionPoolServiceImpl.getAddList(customerList,"2",null));
                 }
             }
         }

@@ -104,9 +104,9 @@
             </form>
         </div>
         <div class="btn-group-md" id="toolbar" role="group">
-            <!--<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="customer:pool:remove">
-                <i class="fa fa-remove"></i> 删除
-            </a>-->
+            <a class="btn btn-warning multiple disabled" onclick="reallocation()" shiro:hasPermission="customer:manage:reallocation">
+                <i class="fa fa-plus"></i> 抽回重分配
+            </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table"></table>
@@ -134,7 +134,7 @@
             rememberSelected: true,
             showToggle: false,
             modalName: "客户详情",
-            uniqueId: "cpId",
+            uniqueId: "customerId",
             onClickCell: function (field,value,row,$element) {  //点击姓名进入编辑页面
                 if (field == 'customerName' && editFlag != "hidden") {
                     $.operate.editTab(row.customerId);
@@ -155,10 +155,7 @@
                     title : '客户姓名',
                     halign: 'center',
                     align: 'center',
-                    class:"finger",
-                    formatter: function(value, row, index) {
-                        return "<strong style='color: rgb(237,85,101);'>"+value+"</strong>";
-                    }
+                    class:"finger"
                 },
                 {
                     field : 'customerSex',
@@ -207,7 +204,10 @@
                     field : 'userName',
                     title : '归属顾问',
                     halign: 'center',
-                    align: 'center'
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return "-";//公共池客户不属于某个业务经理，故不展示归属顾问名字
+                    }
                 },
                 {
                     field : 'remark',
@@ -240,6 +240,26 @@
         };
         $.table.init(options);
     });
+
+    // 抽回重分配
+    function reallocation(){
+        var uniqueId = table.options.uniqueId;
+        // 工具栏按钮控制
+        var rows = $.common.isEmpty(uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(uniqueId);
+        //var userIds = $.table.selectAllColumns("userId");
+        var data = [];
+        if (rows.length == 0) {
+            $.modal.alertWarning("请至少选择一条记录");
+            return;
+        }
+        for (i = 0;i < rows.length;i ++){
+            // data.push({"customerId":rows[i],"userId":userIds[i]});
+            data.push({"customerId":rows[i]});
+        }
+        sessionStorage.setItem('ymswCustomers', JSON.stringify(data));   //要分配的数据放入sessionStorage，在reallocation.html页面里取出来
+        $.modal.open('重分配配置', ctx + 'customer/main/reallocation');
+
+    }
 </script>
 </body>
 </html>

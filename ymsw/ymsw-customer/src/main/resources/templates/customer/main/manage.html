@@ -90,9 +90,9 @@
                     </div><br>
                     <div class="row">
                         <div class="input-group col-xs-6">
-                            <div class="checkbox check-box">
+                            <!--<div class="checkbox check-box">
                                 <input type="checkbox" name="params[cpType]" value="2"> <i></i><strong style="color: red">是否公共池</strong>
-                            </div>
+                            </div>-->
                             <div class="checkbox check-box">
                                 <input type="checkbox" name="hasCar" value="1"> <i></i>房
                             </div>
@@ -160,9 +160,14 @@
         var customerStarDatas = [[${@dict.getType('customer_star')}]];
         var prefix = ctx + "customer/main";
 
+        var userId = [[${@permission.getPrincipalProperty('userId')}]]; //当前登陆用户id
+        var pageList2 = [10, 25, 50];
+        if (userId == 2){   //userId为2时是王文浩，分页项就给300
+            pageList2 = [10, 25, 50, 300];
+        }
         $(function() {
             var options = {
-                url: prefix + "/manamelist",
+                url: prefix + "/managelist",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/removeaa",
@@ -173,6 +178,7 @@
                 sortName: "userId",
                 sortOrder: "desc",
                 rememberSelected: true,
+                pageList: pageList2,
                 showToggle: false,
                 modalName: "客户详情",
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
@@ -196,10 +202,7 @@
                     title : '客户姓名',
                     halign: 'center',
                     align: 'center',
-                    class:"finger",
-                    formatter: function(value, row, index) {
-                        return "<strong style='color: rgb(237,85,101);'>"+value+"</strong>";
-                    }
+                    class:"finger"
                 },
                 {
                     field : 'customerSex',

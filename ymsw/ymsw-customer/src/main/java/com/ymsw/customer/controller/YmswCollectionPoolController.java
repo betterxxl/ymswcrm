@@ -67,7 +67,7 @@ public class YmswCollectionPoolController extends BaseController
     }
 
     /**
-     * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
+     * 查询公共池列表(做数据范围限制，查询所有公共池数据)
      */
     @RequiresPermissions("customer:pool:poolList")
     @PostMapping("/poolList")

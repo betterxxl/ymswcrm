@@ -151,14 +151,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <sql id="selectYmswPools">
+<!--    <sql id="selectYmswPools">
         select ycp.cp_id, yr.remark_content, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, ycp.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_collection_pool ycp
         left join  ymsw_customer yc on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
+        left join sys_user u on ycp.user_id = u.user_id
+        left join sys_dept d on u.dept_id = d.dept_id
     </sql>
 
-   <!-- 查询公共池列表(不做数据范围限制，查询所有公共池数据)-->
+   &lt;!&ndash; 查询公共池列表(做数据范围限制，查询所有公共池数据)&ndash;&gt;
     <select id="selectYmswPoolList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
         <include refid="selectYmswPools"/>
         <where>
@@ -178,16 +180,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerType != null  and customerType != ''"> and customer_type = #{customerType}</if>
             <if test="userId != null "> and yc.user_id = #{userId}</if>
             <if test="customerSalary != null  and customerSalary != ''"> and customer_salary = #{customerSalary}</if>
-            <!-- 未跟进天数，当前时间减去最后备注时间得到天数 -->
+            &lt;!&ndash; 未跟进天数，当前时间减去最后备注时间得到天数 &ndash;&gt;
             <if test="params.noDays != null and params.noDays != ''"> and datediff(NOW(),yc.remark_time)>= #{params.noDays}</if>
-            <if test="params.beginRemarkTime != null and params.beginRemarkTime != ''"><!-- 备注开始时间检索 -->
+            <if test="params.beginRemarkTime != null and params.beginRemarkTime != ''">&lt;!&ndash; 备注开始时间检索 &ndash;&gt;
                 AND date_format(yc.remark_time,'%y%m%d') &gt;= date_format(#{params.beginRemarkTime},'%y%m%d')
             </if>
-            <if test="params.endRemarkTime != null and params.endRemarkTime != ''"><!-- 备注结束时间检索 -->
+            <if test="params.endRemarkTime != null and params.endRemarkTime != ''">&lt;!&ndash; 备注结束时间检索 &ndash;&gt;
                 AND date_format(yc.remark_time,'%y%m%d') &lt;= date_format(#{params.endRemarkTime},'%y%m%d')
             </if>
         </where>
-    </select>
+        &lt;!&ndash; 数据范围过滤 &ndash;&gt;
+        ${params.dataScope}
+    </select>-->
 
     <select id="selectIsInCollectionPool"  resultType="int">
         select count(1) from ymsw_collection_pool where customer_id = #{customerId} and cp_type = #{cpType}

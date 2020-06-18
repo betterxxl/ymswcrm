@@ -82,8 +82,7 @@ public interface YmswCollectionPoolMapper
      * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
      * @param ymswCustomer 查询条件
      * @return 结果
-     */
-    List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
+    List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);*/
 
     int selectIsInCollectionPool(@Param("customerId") Long customerId, @Param("cpType")String cpType);
 

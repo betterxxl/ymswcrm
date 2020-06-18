@@ -104,19 +104,13 @@ public class YmswCustomerController extends BaseController
      * 数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
      */
     @RequiresPermissions("customer:manage:list")
-    @PostMapping("/manamelist")
+    @PostMapping("/managelist")
     @ResponseBody
     public TableDataInfo managelist(YmswCustomer ymswCustomer)
     {
-        List<YmswCustomer> list;
         startPage();
-        Object cpType = ymswCustomer.getParams().get("cpType");
-        //勾选是否公共池复选框后传入cpType=2，就查询公共池里的客户列表，否则就查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
-        if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
-            list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
-        }else {
-            list = ymswCustomerService.selectManageList(ymswCustomer);
-        }
+        //查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
+        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
         return getDataTable(list);
     }
 
@@ -142,16 +136,10 @@ public class YmswCustomerController extends BaseController
     @ResponseBody
     public AjaxResult export(YmswCustomer ymswCustomer)
     {
-        List<YmswCustomer> list;
-        Object cpType = ymswCustomer.getParams().get("cpType");
-        //勾选是否公共池复选框后传入cpType=2，就查询公共池里的客户列表，否则就查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
-        if (StringUtils.isNotNull(cpType) && "2".equals(cpType)){
-            list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
-        }else {
-            list = ymswCustomerService.selectManageList(ymswCustomer);
-        }
+        //查询公共池里的客户列表，否则就查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
+        List<YmswCustomer> list = ymswCustomerService.selectManageList(ymswCustomer);
         ExcelUtil<YmswCustomer> util = new ExcelUtil<YmswCustomer>(YmswCustomer.class);
-        return util.exportExcel(list, "main");
+        return util.exportExcel(list, "客户数据");
     }
 
     /**

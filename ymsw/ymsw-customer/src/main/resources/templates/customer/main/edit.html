@@ -111,7 +111,7 @@
             <div th:each="ymswRemark:${ymswRemarks}" style="margin: 10px">
                 <span class="glyphicon glyphicon-edit" style="color: rgb(26,179,148)" aria-hidden="true"></span>&nbsp;
                 <span style="color: rgb(237,85,101);font-weight: bold" th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;提交于&nbsp;&nbsp;
-                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
                 <span th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>
@@ -131,7 +131,7 @@
             <div th:each="ymswRemark:${remarkList}" style="margin: 10px">
                 <span class="glyphicon glyphicon-edit" style="color: rgb(26,179,148)" aria-hidden="true"></span>&nbsp;
                 <span style="color: rgb(237,85,101);font-weight: bold" th:text="${ymswRemark.userName}"></span>&nbsp;&nbsp;点评于&nbsp;&nbsp;
-                <span style="color: rgb(237,85,101);font-weight: bold" th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
+                <span th:text="${#dates.format(ymswRemark.remarkTime, 'yyyy-MM-dd HH:mm:ss')}"></span>&nbsp;&nbsp;
                 <span th:text="${ymswRemark.remarkContent}"></span>
             </div>
         </div>

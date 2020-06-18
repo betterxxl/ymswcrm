@@ -174,7 +174,7 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
                     }
                 }
             }
-            ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(ids,type,userId));    //批量添加到收藏夹公共池表
+            ymswCollectionPoolMapper.batchInsertYmswCollectionPool(getAddList(addCustomerList,type,userId));    //批量添加到收藏夹公共池表
         }
         if (errCollectCount > 0){
             msg.append(errCollectCount+"条已在收藏夹，");
@@ -194,17 +194,19 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     }
 
     //    返回需要批量添加到收藏夹公共池的数据集合
-    public static ArrayList<YmswCollectionPool> getAddList(List<String> customerIds, String type, Long userId) {
+    public static ArrayList<YmswCollectionPool> getAddList(List<YmswCustomer> addCustomerList, String type, Long userId) {
         ArrayList<YmswCollectionPool> list = new ArrayList<>();
         Date addTime = DateUtils.getNowDate();//当前时间
-        for (String customerId : customerIds) {
+        for (YmswCustomer customer : addCustomerList) {
             YmswCollectionPool ymswCollectionPool = new YmswCollectionPool();
-            ymswCollectionPool.setCustomerId(Long.valueOf(customerId));//设置客户id
+            ymswCollectionPool.setCustomerId(Long.valueOf(customer.getCustomerId()));//设置客户id
             ymswCollectionPool.setAddTime(addTime);//设置添加时间
             ymswCollectionPool.setCpType(type);//设置类型为收藏夹
             ymswCollectionPool.setOperUserId(userId);//设置操作人
             if ("1".equals(type)) {
                 ymswCollectionPool.setUserId(userId);//如果添加到收藏夹就设置收藏人
+            }else if ("2".equals(type)){
+                ymswCollectionPool.setUserId(customer.getUserId());
             }
             list.add(ymswCollectionPool);
         }
@@ -218,13 +220,14 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     }
 
     /**
-     * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
+     * 查询公共池列表(做数据范围限制，查询所有公共池数据)
      * @param ymswCustomer 查询条件
      * @return 结果
      */
     @Override
     public List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer) {
-        return ymswCollectionPoolMapper.selectYmswPoolList(ymswCustomer);
+//        return ymswCollectionPoolMapper.selectYmswPoolList(ymswCustomer);
+        return ymswCollectionPoolMapper.selectYmswCollectionPoolList(ymswCustomer);
     }
 
     //抽回重分配时，批量从公共池里删除数据

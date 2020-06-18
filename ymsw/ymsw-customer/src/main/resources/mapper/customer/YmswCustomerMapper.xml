@@ -86,12 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <!--${params.dataScope}-->
 </select>
 
-    <!--    客户管理菜单里的客户列表查询，不包括收藏夹里的客户，但包含公共池里的客户（通过ycp.customer_id is null和ycp.cp_type = 1 来过滤）-->
-    <!--数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）-->
+    <!--    客户管理菜单里的客户列表查询，不包括收藏夹里的客户，也不包含公共池里的客户（通过ycp.customer_id is null）-->
+    <!--数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，也不包括公共池里的客户）-->
     <select id="selectManageList" parameterType="YmswCustomer" resultMap="YmswCustomerResult">
         select u.user_name, yr.remark_content, yc.phone_status, yc.customer_id, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, yc.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_customer yc
-        left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id and ycp.cp_type = 1
+        left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
         left join sys_user u on yc.user_id = u.user_id
         left join sys_dept d on u.dept_id = d.dept_id
@@ -253,8 +253,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <!--查询出需要自动抽回的客户ids（查询出不在公共池和收藏夹里，且最后备注天数与当前时间的差大于days时的客户id）-->
-<select id="selectAutoReallocIds" parameterType="String" resultType="String">
-    select yc.customer_id
+<select id="selectAutoReallocIds" parameterType="String" resultMap="YmswCustomerResult">
+    select yc.customer_id, yc.user_id
     from ymsw_customer yc
     left join ymsw_collection_pool ycp on yc.customer_id =ycp.customer_id
     where ycp.customer_id is null

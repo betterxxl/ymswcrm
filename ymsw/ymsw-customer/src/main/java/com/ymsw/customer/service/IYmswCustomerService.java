@@ -90,7 +90,7 @@ public interface IYmswCustomerService
     /**
      * 查询出需要自动抽回的客户ids
      */
-    List<String> selectAutoReallocIds(String days);
+    List<YmswCustomer> selectAutoReallocIds(String days);
 
     int batchUpdateUserId(Long userId, List<Long> customerIds);
 }

@@ -89,7 +89,7 @@ public interface YmswCustomerMapper
     /**
      * 查询出需要自动抽回的客户ids
      */
-    List<String> selectAutoReallocIds(String days);
+    List<YmswCustomer> selectAutoReallocIds(String days);
 
     int batchUpdateUserId(@Param("userId") Long userId, @Param("customerIds") List<Long> customerIds);
 
