@@ -282,6 +282,8 @@ public class YmswCustomerController extends BaseController
         List<SysUser> userList = ymswReallocationVo.getUserList();
         //存储了被分配的customerId和对应的业务经理userId，业务经理userId用来计算当前客户数。
         List<YmswCustomer> ymswCustomers = ymswReallocationVo.getYmswCustomers();
+        int oldTotalCount = ymswCustomers.size();   //要被分配的总条数
+        int totalcount = 0; //分配成功的条数
         List<Long> customerIds = new ArrayList<>(); //存放分配给新业务经理的customerId
         Map<Long,Integer> maps = new HashMap<>();   //存放原业务经理和其被分配的客户条数  key是userId，value是被分配的客户条数
         StringBuffer msg = new StringBuffer();
@@ -296,11 +298,11 @@ public class YmswCustomerController extends BaseController
                 Integer nowTotalCount = quotaManager.getNowTotalCount();    //当前客户数
                 //当配置状态是开启，且当前客户数+分配数<=总限额数，且今日已分配客户数+分配数<=今日配额数时才进行分配。
                 if ("0".equals(quotaStatus)){
-                    msg.append("请检查"+ userName +"的配额状态；<br>");
+                    msg.append(userName +"分配失败，请检查配额状态；<br>");
                     continue;
                 }
                 if ((nowTotalCount + count) > allowTotalCount){
-                    msg.append("请检查" + userName +"的总限额数；<br>");
+                    msg.append(userName +"分配失败，请检查总限额数；<br>");
                     continue;
                 }
                 for (int i = 0; i < count; i++) {
@@ -314,6 +316,7 @@ public class YmswCustomerController extends BaseController
                     maps.put(oldUserId,bfpCount);   // 条数加1后再放入maps
                     customerIds.add(ymswCustomer.getCustomerId());  //被分配的customerId放入customerIds
                     ymswCustomers.remove(0);//清除ymswCustomers里的第一条数据
+                    totalcount++;//分配后，将成功分配的条数 +1
                 }
                 //以上循环分配完成后
                 ymswCustomerService.batchUpdateUserId(userId, customerIds);  // 1、批量修改客户的对应的user_id为userId
@@ -337,6 +340,12 @@ public class YmswCustomerController extends BaseController
                 quotaManagerService.updateQuotaManager(quotaManager);//修改该客户对应当前客户数
             }
         }
-        return AjaxResult.success(msg.toString());
+        //如果成功分配的条数等于要被分配的总条数，返回码为0，否则返回码为500，用于页面提示不同的图标
+        if (totalcount == oldTotalCount){
+            return AjaxResult.success(msg.toString());
+        }else {
+            return AjaxResult.error(msg.toString());
+        }
+
     }
 }

@@ -119,7 +119,11 @@
                     traditional:true,
                     dataType:"json",
                     success: function(result){
-                        $.modal.confirm2(1,result.msg,function () {
+                        var type = 1;
+                        if (result.code == 500){
+                            type = 0;
+                        }
+                        $.modal.confirm2(type,result.msg,function () {
                             $.modal.close();//关闭当前窗体
                             window.parent.$.table.refresh();//刷新父表格
                         });
