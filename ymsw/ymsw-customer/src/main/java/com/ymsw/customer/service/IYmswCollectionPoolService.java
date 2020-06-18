@@ -24,7 +24,7 @@ public interface IYmswCollectionPoolService
     public YmswCollectionPool selectYmswCollectionPoolById(Long cpId);
 
     /**
-     * 查询收藏夹列表(根据数据范围查询)
+     * 查询收藏夹或公共池列表(根据数据范围查询)
      * 
      * @param ymswCustomer 查询条件
      * @return 收藏夹集合
@@ -67,13 +67,6 @@ public interface IYmswCollectionPoolService
      * 批量加入收藏夹-公共池
      */
     AjaxResult addToCollectionPool (YmswReallocationVo reallocationVo);
-
-    /**
-     * 查询公共池列表(不做数据范围限制，查询所有公共池数据)
-     * @param ymswCustomer 查询条件
-     * @return 公共池集合
-     */
-    List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer);
 
     //抽回重分配时，批量从公共池里删除数据
     int batchDeleteByCustomerIds(List<Long> customerIds);

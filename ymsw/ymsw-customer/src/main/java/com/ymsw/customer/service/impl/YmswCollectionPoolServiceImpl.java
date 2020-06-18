@@ -51,7 +51,7 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     }
 
     /**
-     * 查询收藏夹列表(根据数据范围查询)
+     * 查询收藏夹或公共池列表(根据数据范围查询)
      *
      * @param ymswCustomer 查询条件
      * @return 收藏夹集合
@@ -217,17 +217,6 @@ public class YmswCollectionPoolServiceImpl implements IYmswCollectionPoolService
     private boolean isInCollectionPool(Long customerId,String cpType){
         int i = ymswCollectionPoolMapper.selectIsInCollectionPool(customerId, cpType);
         return i > 0 ? true : false;
-    }
-
-    /**
-     * 查询公共池列表(做数据范围限制，查询所有公共池数据)
-     * @param ymswCustomer 查询条件
-     * @return 结果
-     */
-    @Override
-    public List<YmswCustomer> selectYmswPoolList(YmswCustomer ymswCustomer) {
-//        return ymswCollectionPoolMapper.selectYmswPoolList(ymswCustomer);
-        return ymswCollectionPoolMapper.selectYmswCollectionPoolList(ymswCustomer);
     }
 
     //抽回重分配时，批量从公共池里删除数据

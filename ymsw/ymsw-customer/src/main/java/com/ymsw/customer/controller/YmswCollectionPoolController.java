@@ -67,7 +67,7 @@ public class YmswCollectionPoolController extends BaseController
     }
 
     /**
-     * 查询公共池列表(做数据范围限制，查询所有公共池数据)
+     * 查询公共池列表(做数据范围限制)
      */
     @RequiresPermissions("customer:pool:poolList")
     @PostMapping("/poolList")
@@ -75,7 +75,7 @@ public class YmswCollectionPoolController extends BaseController
     public TableDataInfo poolList(YmswCustomer ymswCustomer)
     {
         startPage();
-        List<YmswCustomer> list = ymswCollectionPoolService.selectYmswPoolList(ymswCustomer);
+        List<YmswCustomer> list = ymswCollectionPoolService.selectYmswCollectionPoolList(ymswCustomer);
         return getDataTable(list);
     }
 
