@@ -202,12 +202,16 @@
                 },
                 {
                     field : 'userName',
-                    title : '归属顾问',
+                    title : '原归属顾问',
+                    halign: 'center',
+                    align: 'center'
+                },
+                {
+                    field : 'deptName',
+                    title : '部门',
                     halign: 'center',
                     align: 'center',
-                    formatter: function(value, row, index) {
-                        return "-";//公共池客户不属于某个业务经理，故不展示归属顾问名字
-                    }
+                    visible: false,
                 },
                 {
                     field : 'remark',

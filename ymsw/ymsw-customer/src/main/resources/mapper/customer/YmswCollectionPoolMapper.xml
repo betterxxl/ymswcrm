@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectYmswCollectionPoolList">
-        select ycp.cp_id, u.user_name, yr.remark_content, yc.customer_id,yc.phone_status, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, ycp.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
+        select ycp.cp_id, u.user_name, d.dept_name, yr.remark_content, yc.customer_id,yc.phone_status, customer_name, customer_sex, customer_phone, customer_star, customer_status, customer_birth, customer_quota, apply_time, has_house, has_car, has_warranty, has_weilidai, has_credit_card, has_accumulation, is_overdue, customer_type, yc.dept_id, ycp.user_id, customer_occupation, customer_salary, channel, yc.remark_time, distribute_time
         from ymsw_collection_pool ycp
         left join  ymsw_customer yc on yc.customer_id =ycp.customer_id
         left join ymsw_remark yr on yr.customer_id = yc.customer_id and yc.remark_time = yr.remark_time
