@@ -1070,6 +1070,11 @@ var table = {
             	table.set();
             	$.modal.openTab("修改" + table.options.modalName, $.operate.editUrl(id));
             },
+			// 修改信息，以tab页展现
+			editTab2: function(id,name) {
+				table.set();
+				$.modal.openTab(name, $.operate.editUrl(id));
+			},
             // 修改信息 全屏
             editFull: function(id) {
             	table.set();

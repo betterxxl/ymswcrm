@@ -137,7 +137,7 @@
             uniqueId: "customerId",
             onClickCell: function (field,value,row,$element) {  //点击姓名进入编辑页面
                 if (field == 'customerName' && editFlag != "hidden") {
-                    $.operate.editTab(row.customerId);
+                    $.operate.editTab2(row.customerId,row.customerName);
                 }
             },
             columns: [{
