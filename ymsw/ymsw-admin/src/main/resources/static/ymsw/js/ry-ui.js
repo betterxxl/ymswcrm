@@ -746,9 +746,9 @@ var table = {
         	    });
             },
 			// 确认窗体
-			confirm2: function (content, callBack) {
+			confirm2: function (type, content, callBack) {
 				layer.confirm(content, {
-					icon: 1,
+					icon: type,
 					title: "系统提示",
 					btn: ['确认']
 				}, function (index) {

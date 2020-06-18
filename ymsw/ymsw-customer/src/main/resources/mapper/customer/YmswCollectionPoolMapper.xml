@@ -147,7 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <select id="selectCountByUserId" parameterType="Long" resultType="int">
-        select count(1) from ymsw_collection_pool where user_id = #{userId}
+        select count(1) from ymsw_collection_pool where user_id = #{userId} and cp_type = '1'
     </select>
 
 

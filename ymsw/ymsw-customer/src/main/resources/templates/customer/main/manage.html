@@ -310,7 +310,11 @@
                     traditional: true,
                     dataType: "json",
                     success: function (result) {
-                        $.modal.confirm2(result.msg,function () {
+                        var type = 1;
+                        if (result.code == 500){
+                            type = 0;
+                        }
+                        $.modal.confirm2(type,result.msg,function () {
                             $.table.refresh();//刷新父表格
                         });
                     }
