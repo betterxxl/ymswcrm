@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymsw.ranking.mapper.YmswPerformanceRankingMapper">
+    
+    <resultMap type="YmswPerformanceRanking" id="YmswPerformanceRankingResult">
+        <result property="rankingId"    column="ranking_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="totalGeneration"    column="total_generation"    />
+        <result property="todayGeneration"    column="today_generation"    />
+        <result property="totalIncomingCount"    column="total_incoming_count"    />
+        <result property="todayIncomingCount"    column="today_incoming_count"    />
+        <result property="totalCollectionCount"    column="total_collection_count"    />
+        <result property="todayCollectionCount"    column="today_collection_count"    />
+        <result property="totalAllowAmount"    column="total_allow_amount"    />
+        <result property="avgOrderRate"    column="avg_order_rate"    />
+        <result property="dataYearMonth"    column="data_year_month"    />
+        <result property="userName"    column="user_name"    />
+        <result property="deptName"    column="dept_name"    />
+    </resultMap>
+
+    <sql id="selectYmswPerformanceRankingVo">
+        select u.user_name,d.dept_name, ranking_id, u.user_id, total_generation, today_generation, total_incoming_count, today_incoming_count, total_collection_count, today_collection_count, total_allow_amount, avg_order_rate, data_year_month
+        from ymsw_performance_ranking ypr
+        left join sys_user u on u.user_id = ypr.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+    </sql>
+
+    <select id="selectYmswPerformanceRankingList" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
+        <include refid="selectYmswPerformanceRankingVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="totalGeneration != null "> and total_generation = #{totalGeneration}</if>
+            <if test="todayGeneration != null "> and today_generation = #{todayGeneration}</if>
+            <if test="totalIncomingCount != null "> and total_incoming_count = #{totalIncomingCount}</if>
+            <if test="todayIncomingCount != null "> and today_incoming_count = #{todayIncomingCount}</if>
+            <if test="totalCollectionCount != null "> and total_collection_count = #{totalCollectionCount}</if>
+            <if test="todayCollectionCount != null "> and today_collection_count = #{todayCollectionCount}</if>
+            <if test="totalAllowAmount != null "> and total_allow_amount = #{totalAllowAmount}</if>
+            <if test="avgOrderRate != null "> and avg_order_rate = #{avgOrderRate}</if>
+            <if test="dataYearMonth != null  and dataYearMonth != ''"> and data_year_month = #{dataYearMonth}</if>
+        </where>
+    </select>
+    
+    <select id="selectYmswPerformanceRankingById" parameterType="Long" resultMap="YmswPerformanceRankingResult">
+        <include refid="selectYmswPerformanceRankingVo"/>
+        where ranking_id = #{rankingId}
+    </select>
+        
+    <insert id="insertYmswPerformanceRanking" parameterType="YmswPerformanceRanking" useGeneratedKeys="true" keyProperty="rankingId">
+        insert into ymsw_performance_ranking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">user_id,</if>
+            <if test="totalGeneration != null ">total_generation,</if>
+            <if test="todayGeneration != null ">today_generation,</if>
+            <if test="totalIncomingCount != null ">total_incoming_count,</if>
+            <if test="todayIncomingCount != null ">today_incoming_count,</if>
+            <if test="totalCollectionCount != null ">total_collection_count,</if>
+            <if test="todayCollectionCount != null ">today_collection_count,</if>
+            <if test="totalAllowAmount != null ">total_allow_amount,</if>
+            <if test="avgOrderRate != null ">avg_order_rate,</if>
+            <if test="dataYearMonth != null  and dataYearMonth != ''">data_year_month,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null ">#{userId},</if>
+            <if test="totalGeneration != null ">#{totalGeneration},</if>
+            <if test="todayGeneration != null ">#{todayGeneration},</if>
+            <if test="totalIncomingCount != null ">#{totalIncomingCount},</if>
+            <if test="todayIncomingCount != null ">#{todayIncomingCount},</if>
+            <if test="totalCollectionCount != null ">#{totalCollectionCount},</if>
+            <if test="todayCollectionCount != null ">#{todayCollectionCount},</if>
+            <if test="totalAllowAmount != null ">#{totalAllowAmount},</if>
+            <if test="avgOrderRate != null ">#{avgOrderRate},</if>
+            <if test="dataYearMonth != null  and dataYearMonth != ''">#{dataYearMonth},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYmswPerformanceRanking" parameterType="YmswPerformanceRanking">
+        update ymsw_performance_ranking
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="totalGeneration != null ">total_generation = #{totalGeneration},</if>
+            <if test="todayGeneration != null ">today_generation = #{todayGeneration},</if>
+            <if test="totalIncomingCount != null ">total_incoming_count = #{totalIncomingCount},</if>
+            <if test="todayIncomingCount != null ">today_incoming_count = #{todayIncomingCount},</if>
+            <if test="totalCollectionCount != null ">total_collection_count = #{totalCollectionCount},</if>
+            <if test="todayCollectionCount != null ">today_collection_count = #{todayCollectionCount},</if>
+            <if test="totalAllowAmount != null ">total_allow_amount = #{totalAllowAmount},</if>
+            <if test="avgOrderRate != null ">avg_order_rate = #{avgOrderRate},</if>
+            <if test="dataYearMonth != null  and dataYearMonth != ''">data_year_month = #{dataYearMonth},</if>
+        </trim>
+        where ranking_id = #{rankingId}
+    </update>
+
+    <delete id="deleteYmswPerformanceRankingById" parameterType="Long">
+        delete from ymsw_performance_ranking where ranking_id = #{rankingId}
+    </delete>
+
+    <delete id="deleteYmswPerformanceRankingByIds" parameterType="String">
+        delete from ymsw_performance_ranking where ranking_id in 
+        <foreach item="rankingId" collection="array" open="(" separator="," close=")">
+            #{rankingId}
+        </foreach>
+    </delete>
+    
+</mapper>

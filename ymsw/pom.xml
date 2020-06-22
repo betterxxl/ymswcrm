@@ -224,6 +224,13 @@
                 <version>${ymsw.version}</version>
             </dependency>
 
+            <!-- 报表模块-->
+            <dependency>
+                <groupId>com.ymsw</groupId>
+                <artifactId>ymsw-report</artifactId>
+                <version>${ymsw.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -237,6 +244,7 @@
         <module>ymsw-customer</module>
         <module>ymsw-order</module>
         <module>ymsw-quota</module>
+        <module>ymsw-report</module>
     </modules>
     <build>
     <plugins>

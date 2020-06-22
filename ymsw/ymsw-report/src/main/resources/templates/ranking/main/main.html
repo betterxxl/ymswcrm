@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('业绩排行列表')" />
+    <style>
+        #bootstrap-table>thead>tr {background-color: rgb(237,85,101);color: white;}
+        #bootstrap-table>thead>tr>th {border: 1px solid white;font-size: 15px}
+        #bootstrap-table>tbody>tr:nth-child(odd) {background: rgba(237, 255, 245, 0.68);}
+        .finger{ cursor: pointer;}
+        body{font-size: 15px}
+    </style>
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('ranking:main:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('ranking:main:remove')}]];
+        var prefix = ctx + "ranking/main";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "业绩排行",
+                sortName: "totalGeneration",
+                sortOrder: "desc",
+                showToggle: false,
+                columns: [
+                {
+                    title : '排名',
+                    halign: 'center',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var pageSize=$('#bootstrap-table').bootstrapTable('getOptions').pageSize;
+                        var pageNumber=$('#bootstrap-table').bootstrapTable('getOptions').pageNumber;
+                        return pageSize * (pageNumber - 1) + index + 1;
+                    }
+                },
+                {
+                    field : 'userId', 
+                    title : '业务员id',
+                    visible: false
+                },
+                {
+                    field : 'userName',
+                    title : '姓名',
+                    halign: 'center',
+                    align: 'center'
+                },
+                {
+                    field : 'deptName',
+                    title : '部门',
+                    halign: 'center',
+                    align: 'center'
+                },
+                {
+                    field : 'totalGeneration', 
+                    title : '创收（元）',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'todayGeneration', 
+                    title : '今日创收（元）',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'totalIncomingCount', 
+                    title : '进件数',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'todayIncomingCount', 
+                    title : '今日进件数',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'totalCollectionCount', 
+                    title : '收款笔数',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'todayCollectionCount', 
+                    title : '今日收款笔数',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'totalAllowAmount', 
+                    title : '批款总金额（万元）',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field : 'avgOrderRate', 
+                    title : '平均费率',
+                    halign: 'center',
+                    align: 'center',
+                    sortable: true
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

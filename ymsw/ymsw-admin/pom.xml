@@ -82,6 +82,12 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-quota</artifactId>
         </dependency>
+        <!--报表模块-->
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-report</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
