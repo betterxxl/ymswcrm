@@ -28,7 +28,18 @@
         var incomingChannel = [[${@dict.getType('incoming_channel')}]];
         var prefix = ctx + "order/main";
 
-        var queryParams = JSON.parse(sessionStorage.getItem('queryParams'));
+        //var queryParams = JSON.parse(sessionStorage.getItem('queryParams'));
+        function queryParams0(params) {
+            var queryParams = JSON.parse(sessionStorage.getItem('queryParams'));
+            var search = $.table.queryParams(params);
+            search.userId = queryParams.userId;
+            search.deptId = queryParams.deptId;
+            search.dataYearMonth = queryParams.dataYearMonth;
+            search.totalOrToday = queryParams.totalOrToday;
+            search.type = queryParams.type;
+            return search;
+        }
+
         $(function() {
             var options = {
                 url: prefix + "/reportOrderList",
@@ -37,7 +48,7 @@
                 striped: true,
                 showToggle: false,
                 modalName: "签约进件",
-                queryParams: queryParams,
+                queryParams: queryParams0,
                 onClickCell: function (field,value,row,$element) {  //点击姓名、性别、额度、年龄、状态单元格时进入编辑页面
                     if (field == 'customerName' && editFlag != "hidden") {
                         $.operate.editTab(row.orderId);
