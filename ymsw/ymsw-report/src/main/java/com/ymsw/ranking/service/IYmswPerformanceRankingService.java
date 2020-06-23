@@ -58,4 +58,13 @@ public interface IYmswPerformanceRankingService
      * @return 结果
      */
     public int deleteYmswPerformanceRankingById(Long rankingId);
+
+    //业绩排行里，团队排名查询
+    List<YmswPerformanceRanking> selectYmswPerformanceRankingListByMinister(YmswPerformanceRanking ymswPerformanceRanking);
+
+    //业绩排行里，区部排名查询
+    List<YmswPerformanceRanking> selectYmswPerformanceRankingListByDistrict(YmswPerformanceRanking ymswPerformanceRanking);
+
+    //业绩排行里，门店排名查询
+    List<YmswPerformanceRanking> selectYmswPerformanceRankingListByPrincipal(YmswPerformanceRanking ymswPerformanceRanking);
 }

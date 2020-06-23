@@ -91,4 +91,22 @@ public class YmswPerformanceRankingServiceImpl implements IYmswPerformanceRankin
     {
         return ymswPerformanceRankingMapper.deleteYmswPerformanceRankingById(rankingId);
     }
+
+    //业绩排行里，团队排名查询
+    @Override
+    public List<YmswPerformanceRanking> selectYmswPerformanceRankingListByMinister(YmswPerformanceRanking ymswPerformanceRanking) {
+        return ymswPerformanceRankingMapper.selectYmswPerformanceRankingListByMinister(ymswPerformanceRanking);
+    }
+
+    //业绩排行里，区部排名查询
+    @Override
+    public List<YmswPerformanceRanking> selectYmswPerformanceRankingListByDistrict(YmswPerformanceRanking ymswPerformanceRanking) {
+        return ymswPerformanceRankingMapper.selectYmswPerformanceRankingListByDistrict(ymswPerformanceRanking);
+    }
+
+    //业绩排行里，门店排名查询
+    @Override
+    public List<YmswPerformanceRanking> selectYmswPerformanceRankingListByPrincipal(YmswPerformanceRanking ymswPerformanceRanking) {
+        return ymswPerformanceRankingMapper.selectYmswPerformanceRankingListByPrincipal(ymswPerformanceRanking);
+    }
 }

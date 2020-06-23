@@ -1,6 +1,13 @@
 package com.ymsw.ranking.controller;
 
 import java.util.List;
+
+import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
+import com.ymsw.framework.util.ShiroUtils;
+import com.ymsw.system.domain.SysDept;
+import com.ymsw.system.service.ISysDeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +40,16 @@ public class YmswPerformanceRankingController extends BaseController
 
     @Autowired
     private IYmswPerformanceRankingService ymswPerformanceRankingService;
+    @Autowired
+    private ISysDeptService sysDeptService;
 
     @RequiresPermissions("ranking:main:view")
     @GetMapping()
-    public String main()
+    public String main(ModelMap mmap)
     {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysDepts", sysDepts);
         return prefix + "/main";
     }
 
@@ -47,10 +59,24 @@ public class YmswPerformanceRankingController extends BaseController
     @RequiresPermissions("ranking:main:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(YmswPerformanceRanking ymswPerformanceRanking)
+    public TableDataInfo list(YmswPerformanceRanking ymswPerformanceRanking,String type)
     {
         startPage();
-        List<YmswPerformanceRanking> list = ymswPerformanceRankingService.selectYmswPerformanceRankingList(ymswPerformanceRanking);
+        String dataYearMonth = ymswPerformanceRanking.getDataYearMonth();
+        if (StringUtils.isEmpty(dataYearMonth)){
+            dataYearMonth = DateUtils.parseDateToStr("yyyy-MM", DateUtils.getNowDate());
+            ymswPerformanceRanking.setDataYearMonth(dataYearMonth);
+        }
+        List<YmswPerformanceRanking> list = null;
+        if ("0".equals(type)){
+            list = ymswPerformanceRankingService.selectYmswPerformanceRankingList(ymswPerformanceRanking);//业绩排行里，个人排名查询
+        }else if ("1".equals(type)){
+            list = ymswPerformanceRankingService.selectYmswPerformanceRankingListByMinister(ymswPerformanceRanking);//业绩排行里，团队排名查询
+        }else if ("2".equals(type)){
+            list = ymswPerformanceRankingService.selectYmswPerformanceRankingListByDistrict(ymswPerformanceRanking);//业绩排行里，区部排名查询
+        }else if ("3".equals(type)){
+            list = ymswPerformanceRankingService.selectYmswPerformanceRankingListByPrincipal(ymswPerformanceRanking);//业绩排行里，门店排名查询
+        }
         return getDataTable(list);
     }
 

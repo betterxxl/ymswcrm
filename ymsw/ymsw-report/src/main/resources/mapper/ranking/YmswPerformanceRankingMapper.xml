@@ -40,6 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalAllowAmount != null "> and total_allow_amount = #{totalAllowAmount}</if>
             <if test="avgOrderRate != null "> and avg_order_rate = #{avgOrderRate}</if>
             <if test="dataYearMonth != null  and dataYearMonth != ''"> and data_year_month = #{dataYearMonth}</if>
+            <if test="params.userName != null  and params.userName != ''"> and u.user_name like concat('%', #{params.userName}, '%')</if>
+            <if test="params.deptId != null and params.deptId !=''">
+                and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+            </if>
         </where>
     </select>
     
@@ -103,5 +107,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{rankingId}
         </foreach>
     </delete>
-    
+
+
+    <sql id="selectYmswPerformanceRankingListByMinisterVo">
+        select d.dept_name,d.leader as user_name, sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+            sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
+            sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
+        from ymsw_performance_ranking ypr
+        left join sys_user u on u.user_id = ypr.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+    </sql>
+
+    <!--业绩排行里，团队排名查询-->
+    <select id="selectYmswPerformanceRankingListByMinister" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
+        <include refid="selectYmswPerformanceRankingListByMinisterVo"/>
+        <where>
+            <if test="dataYearMonth != null  and dataYearMonth != ''"> and data_year_month = #{dataYearMonth}</if>
+        </where>
+        GROUP BY d.dept_id
+    </select>
+
+    <sql id="selectYmswPerformanceRankingListByDistrictVo">
+        select aa.leader as user_name,aa.dept_name,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+            sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
+            sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
+        from ymsw_performance_ranking ypr
+        left join sys_user u on u.user_id = ypr.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+		left join (select sd.dept_name,sd.dept_id,sd.leader from sys_dept sd ) as aa on aa.dept_id = d.parent_id
+    </sql>
+
+    <!--业绩排行里，区部排名查询-->
+    <select id="selectYmswPerformanceRankingListByDistrict" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
+        <include refid="selectYmswPerformanceRankingListByDistrictVo"/>
+        <where>
+            <if test="dataYearMonth != null  and dataYearMonth != ''"> and data_year_month = #{dataYearMonth}</if>
+        </where>
+        GROUP BY d.parent_id
+    </select>
+
+    <!--业绩排行里，门店排名查询-->
+    <select id="selectYmswPerformanceRankingListByPrincipal" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
+        select sum(bb.total_generation) as total_generation,sum(bb.today_generation) as today_generation,sum(bb.total_incoming_count) as total_incoming_count,
+            sum(bb.today_incoming_count) as today_incoming_count,sum(bb.total_collection_count) as total_collection_count,sum(bb.today_collection_count) as today_collection_count,
+            sum(bb.total_allow_amount) as total_allow_amount,ROUND(avg(bb.avg_order_rate),2) as avg_order_rate,sysd.dept_name,sysd.leader as user_name
+        from (select aa.leader,aa.dept_name,aa.parent_id,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+            sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
+            sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
+            from ymsw_performance_ranking ypr
+            left join sys_user u on u.user_id = ypr.user_id
+            left join sys_dept d on d.dept_id = u.dept_id
+            left join (select sd.dept_name,sd.dept_id,sd.leader,sd.parent_id from sys_dept sd ) as aa on aa.dept_id = d.parent_id
+            where data_year_month = #{dataYearMonth}
+            GROUP BY d.parent_id ) as bb
+        left join sys_dept sysd on sysd.dept_id = bb.parent_id
+        GROUP BY bb.parent_id
+    </select>
 </mapper>
