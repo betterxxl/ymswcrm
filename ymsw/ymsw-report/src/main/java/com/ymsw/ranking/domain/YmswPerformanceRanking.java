@@ -64,6 +64,17 @@ public class YmswPerformanceRanking extends BaseEntity
     /** 部门名字 */
     private String deptName;
 
+    /** 部门id */
+    private String deptId;
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
     public String getUserName() {
         return userName;
     }

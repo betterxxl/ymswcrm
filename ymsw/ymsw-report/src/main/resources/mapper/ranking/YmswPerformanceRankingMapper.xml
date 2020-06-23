@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="dataYearMonth"    column="data_year_month"    />
         <result property="userName"    column="user_name"    />
         <result property="deptName"    column="dept_name"    />
+        <result property="deptId"    column="dept_id"    />
     </resultMap>
 
     <sql id="selectYmswPerformanceRankingVo">
@@ -110,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <sql id="selectYmswPerformanceRankingListByMinisterVo">
-        select d.dept_name,d.leader as user_name, sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+        select d.dept_id,data_year_month,d.dept_name,d.leader as user_name, sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
             sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
             sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
         from ymsw_performance_ranking ypr
@@ -128,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <sql id="selectYmswPerformanceRankingListByDistrictVo">
-        select aa.leader as user_name,aa.dept_name,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+        select d.parent_id as dept_id,data_year_month,aa.leader as user_name,aa.dept_name,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
             sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
             sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
         from ymsw_performance_ranking ypr
@@ -148,10 +149,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--业绩排行里，门店排名查询-->
     <select id="selectYmswPerformanceRankingListByPrincipal" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
-        select sum(bb.total_generation) as total_generation,sum(bb.today_generation) as today_generation,sum(bb.total_incoming_count) as total_incoming_count,
+        select bb.parent_id as dept_id,bb.data_year_month,sum(bb.total_generation) as total_generation,sum(bb.today_generation) as today_generation,sum(bb.total_incoming_count) as total_incoming_count,
             sum(bb.today_incoming_count) as today_incoming_count,sum(bb.total_collection_count) as total_collection_count,sum(bb.today_collection_count) as today_collection_count,
             sum(bb.total_allow_amount) as total_allow_amount,ROUND(avg(bb.avg_order_rate),2) as avg_order_rate,sysd.dept_name,sysd.leader as user_name
-        from (select aa.leader,aa.dept_name,aa.parent_id,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
+        from (select aa.leader,aa.dept_name,data_year_month,aa.parent_id,sum(total_generation) as total_generation,sum(today_generation) as today_generation,sum(total_incoming_count) as total_incoming_count,
             sum(today_incoming_count) as today_incoming_count,sum(total_collection_count) as total_collection_count,sum(today_collection_count) as today_collection_count,
             sum(total_allow_amount) as total_allow_amount,ROUND(avg(avg_order_rate),2) as avg_order_rate
             from ymsw_performance_ranking ypr

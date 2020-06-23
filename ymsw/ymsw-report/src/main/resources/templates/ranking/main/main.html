@@ -121,19 +121,24 @@
                 onClickCell: function (field,value,row,$element) {
                     var userId = row.userId;
                     var dataYearMonth = row.dataYearMonth;
+                    var title;
                     if (field == 'totalIncomingCount') {    //点击进件数
+                        title = dataYearMonth + "进件列表";
                         sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"incomingCount"}));
                     }else if (field == 'todayIncomingCount') {    //点击今日进件数
+                        title = "今日进件列表";
                         sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"incomingCount"}));
                     }else if (field == 'totalCollectionCount'){ //点击收款笔数
+                        title = dataYearMonth + "收款列表";
                         sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"collectionCount"}));
                     } else if (field =='todayCollectionCount') {    //今日收款笔数
+                        title = "今日收款列表";
                         sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"collectionCount"}));
                     }
                     if (value != 0) {   //为0时不进行查询
                         if (field == 'totalIncomingCount' || field == 'todayIncomingCount' || field == 'totalCollectionCount' || field =='todayCollectionCount') {
                             $.modal.closeTab(ctx + 'order/main/reportlist');//先关闭选项卡，否则直接切换到已打开的窗口上
-                            $.modal.openTab("签约进件",ctx + 'order/main/reportlist');
+                            $.modal.openTab(title,ctx + 'order/main/reportlist');
                         }
                     }
                 },
@@ -249,6 +254,7 @@
                  sortOrder: "desc",
                  showToggle: false,
                  queryParams: queryParams1,
+                 onClickCell: selectByDeptId,
                  columns: [
                      {
                          title : '排名',
@@ -356,6 +362,7 @@
                  sortOrder: "desc",
                  showToggle: false,
                  queryParams: queryParams2,
+                 onClickCell: selectByDeptId,
                  columns: [
                      {
                          title : '排名',
@@ -463,6 +470,7 @@
                  sortOrder: "desc",
                  showToggle: false,
                  queryParams: queryParams3,
+                 onClickCell: selectByDeptId,
                  columns: [
                      {
                          title : '排名',
@@ -549,6 +557,31 @@
              };
              $.table.init(options);
          });
+
+         function selectByDeptId(field,value,row,$element) {
+             var deptId = row.deptId;
+             var dataYearMonth = row.dataYearMonth;
+             var title;
+             if (field == 'totalIncomingCount') {    //点击进件数
+                 title = dataYearMonth + "进件列表";
+                 sessionStorage.setItem('queryParams', JSON.stringify({"deptId":deptId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"incomingCount"}));
+             }else if (field == 'todayIncomingCount') {    //点击今日进件数
+                 title = "今日进件列表";
+                 sessionStorage.setItem('queryParams', JSON.stringify({"deptId":deptId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"incomingCount"}));
+             }else if (field == 'totalCollectionCount'){ //点击收款笔数
+                 title = dataYearMonth + "收款列表";
+                 sessionStorage.setItem('queryParams', JSON.stringify({"deptId":deptId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"collectionCount"}));
+             } else if (field =='todayCollectionCount') {    //今日收款笔数
+                 title = "今日收款列表";
+                 sessionStorage.setItem('queryParams', JSON.stringify({"deptId":deptId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"collectionCount"}));
+             }
+             if (value != 0) {   //为0时不进行查询
+                 if (field == 'totalIncomingCount' || field == 'todayIncomingCount' || field == 'totalCollectionCount' || field =='todayCollectionCount') {
+                     $.modal.closeTab(ctx + 'order/main/reportlist');//先关闭选项卡，否则直接切换到已打开的窗口上
+                     $.modal.openTab(title,ctx + 'order/main/reportlist');
+                 }
+             }
+         }
 
     </script>
 </body>

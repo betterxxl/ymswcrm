@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
 import com.ymsw.framework.config.AccessPhoneConfig;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.framework.web.domain.server.Sys;
@@ -165,19 +166,25 @@ public class YmswOrderController extends BaseController
     @ResponseBody
     public TableDataInfo reportOrderList(HttpServletRequest request)
     {
-        String type = request.getParameter("type");
+        String type = request.getParameter("type");//订单状态对应的字符串
         String userId = request.getParameter("userId");
         String dataYearMonth = request.getParameter("dataYearMonth");
         String totalOrToday = request.getParameter("totalOrToday");
+        String deptId = request.getParameter("deptId");
         String[] split = dataYearMonth.split("-");
         Map<String, Object> params = new HashMap<>();
         String startTime = null;
         String endTime = null;
         YmswOrder ymswOrder = new YmswOrder();
-        ymswOrder.setUserId(Long.valueOf(userId));
+        if (StringUtils.isNotEmpty(userId)) {
+            ymswOrder.setUserId(Long.valueOf(userId));
+        }
+        if (StringUtils.isNotEmpty(deptId)) {
+            params.put("deptId",deptId);
+        }
         if ("total".equals(totalOrToday)){
-            startTime = DateUtils.getFirstDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
-            endTime = DateUtils.getLastDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+            startTime = DateUtils.getFirstDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));//获取该月份的第一天
+            endTime = DateUtils.getLastDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));//获取该月份的最后一天
         }else if ("today".equals(totalOrToday)){
             startTime = DateUtils.getDate();
             endTime = DateUtils.getDate();
