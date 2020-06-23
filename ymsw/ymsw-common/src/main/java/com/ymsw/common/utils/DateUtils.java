@@ -5,6 +5,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -168,4 +169,46 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         long day = diff / nd;
         return day;
     }
+
+    /**
+     * 传入年月，获取该月的第一天
+     */
+    public static String getFirstDayOfMonth(int year, int month)
+    {
+        Calendar cal = Calendar.getInstance();
+        //设置年份
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, month-1);
+        //获取某月最小天数
+        int firstDay = cal.getMinimum(Calendar.DATE);
+        //设置日历中月份的最小天数
+        cal.set(Calendar.DAY_OF_MONTH,firstDay);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(cal.getTime());
+    }
+
+
+    /**
+     * 获取指定年月的最后一天
+     * @param year
+     * @param month
+     * @return
+     */
+    public static String getLastDayOfMonth(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        //设置年份
+        cal.set(Calendar.YEAR, year);
+        //设置月份
+        cal.set(Calendar.MONTH, month-1);
+        //获取某月最大天数
+        int lastDay = cal.getActualMaximum(Calendar.DATE);
+        //设置日历中月份的最大天数
+        cal.set(Calendar.DAY_OF_MONTH, lastDay);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(cal.getTime());
+    }
+
 }

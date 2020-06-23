@@ -1,8 +1,9 @@
 package com.ymsw.order.controller;
 
-import java.util.List;
+import java.util.*;
 
 import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.DateUtils;
 import com.ymsw.framework.config.AccessPhoneConfig;
 import com.ymsw.framework.util.ShiroUtils;
 import com.ymsw.framework.web.domain.server.Sys;
@@ -28,6 +29,8 @@ import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.utils.poi.ExcelUtil;
 import com.ymsw.common.core.page.TableDataInfo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 订单信息表Controller
@@ -144,5 +147,51 @@ public class YmswOrderController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(ymswOrderService.deleteYmswOrderByIds(ids));
+    }
+
+    //业绩排行里点击 进件数、今日进件数、收款笔数、今日收款笔数调整到reportlist.html页面
+    @RequiresPermissions("order:main:view")
+    @GetMapping("/reportlist")
+    public String reportlist()
+    {
+        return prefix + "/reportlist";
+    }
+
+    /**
+     * 查询订单信息表列表
+     */
+    @RequiresPermissions("order:main:list")
+    @PostMapping("/reportOrderList")
+    @ResponseBody
+    public TableDataInfo reportOrderList(HttpServletRequest request)
+    {
+        String type = request.getParameter("type");
+        String userId = request.getParameter("userId");
+        String dataYearMonth = request.getParameter("dataYearMonth");
+        String totalOrToday = request.getParameter("totalOrToday");
+        String[] split = dataYearMonth.split("-");
+        Map<String, Object> params = new HashMap<>();
+        String startTime = null;
+        String endTime = null;
+        YmswOrder ymswOrder = new YmswOrder();
+        ymswOrder.setUserId(Long.valueOf(userId));
+        if ("total".equals(totalOrToday)){
+            startTime = DateUtils.getFirstDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+            endTime = DateUtils.getLastDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+        }else if ("today".equals(totalOrToday)){
+            startTime = DateUtils.getDate();
+            endTime = DateUtils.getDate();
+        }
+        params.put("beginincomingTime",startTime);
+        params.put("endincomingTime",endTime);
+        ymswOrder.setParams(params);
+        if ("incomingCount".equals(type)){
+            ymswOrder.setOrderStatus("2");//订单状态 1 已签约 2 已进件 3 已批款 4 已收款 5 已拒绝
+        }else if ("collectionCount".equals(type)){
+            ymswOrder.setOrderStatus("4");//订单状态 1 已签约 2 已进件 3 已批款 4 已收款 5 已拒绝
+        }
+        startPage();
+        List<YmswOrder> list = ymswOrderService.selectYmswOrderList(ymswOrder);
+        return getDataTable(list);
     }
 }

@@ -118,6 +118,25 @@
                 sortOrder: "desc",
                 showToggle: false,
                 queryParams: queryParams0,
+                onClickCell: function (field,value,row,$element) {
+                    var userId = row.userId;
+                    var dataYearMonth = row.dataYearMonth;
+                    if (field == 'totalIncomingCount') {    //点击进件数
+                        sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"incomingCount"}));
+                    }else if (field == 'todayIncomingCount') {    //点击今日进件数
+                        sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"incomingCount"}));
+                    }else if (field == 'totalCollectionCount'){ //点击收款笔数
+                        sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"total","type":"collectionCount"}));
+                    } else if (field =='todayCollectionCount') {    //今日收款笔数
+                        sessionStorage.setItem('queryParams', JSON.stringify({"userId":userId,"dataYearMonth":dataYearMonth,"totalOrToday":"today","type":"collectionCount"}));
+                    }
+                    if (value != 0) {   //为0时不进行查询
+                        if (field == 'totalIncomingCount' || field == 'todayIncomingCount' || field == 'totalCollectionCount' || field =='todayCollectionCount') {
+                            $.modal.closeTab(ctx + 'order/main/reportlist');//先关闭选项卡，否则直接切换到已打开的窗口上
+                            $.modal.openTab("签约进件",ctx + 'order/main/reportlist');
+                        }
+                    }
+                },
                 columns: [
                 {
                     title : '排名',
