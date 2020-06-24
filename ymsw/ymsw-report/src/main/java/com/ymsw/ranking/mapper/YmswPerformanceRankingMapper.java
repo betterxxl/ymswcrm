@@ -67,4 +67,7 @@ public interface YmswPerformanceRankingMapper
 
     //业绩排行里，门店排名查询
     List<YmswPerformanceRanking> selectYmswPerformanceRankingListByPrincipal(YmswPerformanceRanking ymswPerformanceRanking);
+
+    //通过userId和dataYearMonth查询该业务经理该月份的统计信息
+    YmswPerformanceRanking selectYmswPerformanceRanking(YmswPerformanceRanking ymswPerformanceRanking);
 }

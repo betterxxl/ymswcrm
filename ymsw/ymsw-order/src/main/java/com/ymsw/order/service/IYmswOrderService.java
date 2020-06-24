@@ -1,5 +1,6 @@
 package com.ymsw.order.service;
 
+import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.order.domain.YmswOrder;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public interface IYmswOrderService
      * @param ymswOrder 订单信息表
      * @return 结果
      */
-    public int updateYmswOrder(YmswOrder ymswOrder);
+    public AjaxResult updateYmswOrder(YmswOrder ymswOrder);
 
     /**
      * 批量删除订单信息表

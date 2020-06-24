@@ -110,6 +110,18 @@ public class YmswOrder extends BaseEntity
     @Excel(name = "进件日期")
     private Date incomingTime;
 
+    /** 收款日期 */
+    @Excel(name = "收款日期")
+    private Date collectionTime;
+
+    public Date getCollectionTime() {
+        return collectionTime;
+    }
+
+    public void setCollectionTime(Date collectionTime) {
+        this.collectionTime = collectionTime;
+    }
+
     public Date getIncomingTime() {
         return incomingTime;
     }

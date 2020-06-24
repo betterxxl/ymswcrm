@@ -120,9 +120,9 @@ public class YmswOrderController extends BaseController
     public String edit(@PathVariable("orderId") Long orderId, ModelMap mmap)
     {
         YmswOrder ymswOrder = ymswOrderService.selectYmswOrderById(orderId);//通过订单id查询该订单的详情
-        List<SysUser> sysUsers = sysUserService.selectIsDistributeUsers();//查询可分配客户的业务经理列表
+        //List<SysUser> sysUsers = sysUserService.selectIsDistributeUsers();//查询可分配客户的业务经理列表
         mmap.put("ymswOrder", ymswOrder);
-        mmap.put("sysUsers", sysUsers);
+        //mmap.put("sysUsers", sysUsers);
         return prefix + "/edit";
     }
 
@@ -135,7 +135,7 @@ public class YmswOrderController extends BaseController
     @ResponseBody
     public AjaxResult editSave(YmswOrder ymswOrder)
     {
-        return toAjax(ymswOrderService.updateYmswOrder(ymswOrder));
+        return ymswOrderService.updateYmswOrder(ymswOrder);
     }
 
     /**

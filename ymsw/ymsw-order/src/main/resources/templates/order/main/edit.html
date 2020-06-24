@@ -12,8 +12,8 @@
 <div class="ibox-content" style="background-color: #efefef;height: 100%">
     <div class="form-inline search-collapse" style="padding:10px 10px;margin-top: -8px">
         <div class="form-group">
-            <label for="exampleInputName2">合同编号：</label>
-            <input type="text" class="form-control" id="exampleInputName2" readonly th:value="${ymswOrder.contractId}">
+            <label for="exampleInputName1">合同编号：</label>
+            <input type="text" class="form-control" id="exampleInputName1" readonly th:value="${ymswOrder.contractId}">
         </div>
         <div class="form-group" style="margin-left: 20px">
             <label for="exampleInputEmail2">客户姓名：</label>
@@ -21,14 +21,20 @@
         </div>
 
         <div class="form-group" style="margin-left: 20px">
-            <label for="exampleInputEmail2">进件日期：</label>
-            <input type="text" class="form-control" id="exampleInputEmail2" readonly
+            <label for="exampleInputEmail3">进件日期：</label>
+            <input type="text" class="form-control" id="exampleInputEmail3" readonly
                    th:value="${#dates.format(ymswOrder.incomingTime, 'yyyy-MM-dd HH:mm')}">
         </div>
         <div class="form-group" style="margin-left: 20px">
-            <label for="exampleInputEmail2">诚意金：</label>
+            <label for="exampleInputEmail4">客户经理：</label>
             <div class="input-group">
-                <input type="text" class="form-control" id="exampleInputEmail2" readonly th:value="${ymswOrder.sincerityMoney}">
+                <input type="text" class="form-control" id="exampleInputEmail4" readonly th:value="${ymswOrder.userName}">
+            </div>
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+            <label for="exampleInputEmail5">诚意金：</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="exampleInputEmail5" readonly th:value="${ymswOrder.sincerityMoney}">
                 <div class="input-group-addon">元</div>
             </div>
         </div>
@@ -68,26 +74,24 @@
                     <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">订单状态</div>
                     <select name="orderStatus" class="form-control"
                             th:with="type=${@dict.getType('order_status')}">
-                        <option value="">-请选择-</option>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"
                                 th:field="*{orderStatus}"></option>
                     </select>
                 </div>
                 <div class="input-group col-xs-2" style="margin-left: 20px">
+                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">银行经理</div>
+                    <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text" maxlength="10">
+                </div>
+                <!--<div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">客户经理</div>
                     <select name="userId" class="form-control" >
-                        <option value="">-请选择-</option>
                         <option th:each="user,sysUsers:${sysUsers}" th:value="${user.userId}" th:text="${user.userName}" th:selected="*{userId} eq ${user.userId}"></option>
                     </select>
-                </div>
+                </div>-->
             </div>
 
             <div style="margin-top: 20px">
                 <div class="input-group col-xs-2">
-                    <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">银行经理</div>
-                    <input name="bankManager" th:field="*{bankManager}" class="form-control" type="text" maxlength="10">
-                </div>
-                <div class="input-group col-xs-2" style="margin-left: 20px">
                     <div class="input-group-addon" style="background-color: #efefef;width: 50%;font-size: 15px">点数</div>
                     <input name="orderRate" th:field="*{orderRate}" class="form-control" type="number" min="0">
                     <div class="input-group-addon"style="font-size: 15px">%</div>
@@ -151,7 +155,9 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize());
+            $.modal.confirm("确定要保存吗?",function () {
+                $.operate.saveTab(prefix + "/edit", $('#form-main-edit').serialize())
+            });
         }
     }
 </script>

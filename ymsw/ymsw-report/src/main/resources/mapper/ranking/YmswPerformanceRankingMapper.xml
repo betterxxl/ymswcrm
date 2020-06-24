@@ -164,4 +164,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dept sysd on sysd.dept_id = bb.parent_id
         GROUP BY bb.parent_id
     </select>
+
+    <!--通过userId和dataYearMonth查询该业务经理该月份的统计信息-->
+    <select id="selectYmswPerformanceRanking" parameterType="YmswPerformanceRanking" resultMap="YmswPerformanceRankingResult">
+        select * from ymsw_performance_ranking where user_id = #{userId} and data_year_month = #{dataYearMonth}
+    </select>
 </mapper>

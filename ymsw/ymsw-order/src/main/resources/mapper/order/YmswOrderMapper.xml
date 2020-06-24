@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="customerName"    column="customer_name"    />
         <result property="incomingTime"    column="incoming_time"    />
+        <result property="collectionTime"    column="collection_time"    />
     </resultMap>
 
     <sql id="selectYmswOrderVo">
@@ -35,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="queryYmswOrderVo">
-        select yc.customer_name, u.user_name, d.dept_name, order_id, yo.customer_id, contract_id, contract_path, add_time, yo.update_time, order_status, allow_amount, income_generation, order_rate, sincerity_money, sincerity_pay_method, incoming_channel, channel_fee, incoming_type, incoming_assistant, bank_manager, order_remark, yo.user_id, yo.incoming_time
+        select yc.customer_name, u.user_name, d.dept_name, order_id, yo.customer_id, contract_id, contract_path, add_time, yo.update_time, order_status, allow_amount, income_generation, order_rate, sincerity_money, sincerity_pay_method, incoming_channel, channel_fee, incoming_type, incoming_assistant, bank_manager, order_remark, yo.user_id, yo.incoming_time,yo.collection_time
         from ymsw_order yo
         left join ymsw_customer yc on yc.customer_id = yo.customer_id
         left join sys_user u on u.user_id = yo.user_id
@@ -146,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bankManager != null  and bankManager != ''">bank_manager = #{bankManager},</if>
             <if test="orderRemark != null  and orderRemark != ''">order_remark = #{orderRemark},</if>
             <if test="incomingTime != null">incoming_time = #{incomingTime},</if>
+            <if test="collectionTime != null">collection_time = #{collectionTime},</if>
             <if test="userId != null  and userId != ''">user_id = #{userId},</if>
         </trim>
         where order_id = #{orderId}

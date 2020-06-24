@@ -228,6 +228,19 @@
                             return value.substring(0,16);
                         }
                     }
+                },
+                {
+                    field : 'collectionTime',
+                    title : '收款时间',
+                    sortable: true,
+                    halign: 'center',
+                    align: 'center',
+                    visible: false,
+                    formatter: function(value, row, index) {
+                        if(value != null){
+                            return value.substring(0,16);
+                        }
+                    }
                 }
                 /*{
                     title: '操作',
