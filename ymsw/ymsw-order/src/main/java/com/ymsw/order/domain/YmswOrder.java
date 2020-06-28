@@ -114,6 +114,18 @@ public class YmswOrder extends BaseEntity
     @Excel(name = "收款日期")
     private Date collectionTime;
 
+    /** 收款日期 */
+    @Excel(name = "批款日期")
+    private Date allowTime;
+
+    public Date getAllowTime() {
+        return allowTime;
+    }
+
+    public void setAllowTime(Date allowTime) {
+        this.allowTime = allowTime;
+    }
+
     public Date getCollectionTime() {
         return collectionTime;
     }

@@ -211,4 +211,43 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         return sdf.format(cal.getTime());
     }
 
+    /**
+     * 获取上月的第一天
+     */
+    public static String getFirstDayOfLastMonth()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(calendar.getTime());
+    }
+
+    /**
+     * 获取上月最后一天
+     */
+    public static String getLastDayOfLastMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, -1);
+        //格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(calendar.getTime());
+    }
+
+    /**
+     * 获取上月的年月份
+     */
+    public static String getLastMonth() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date); // 设置为当前时间
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1); // 设置为上一个月
+        date = calendar.getTime();
+        String accDate = format.format(date);
+        return accDate;
+    }
+
 }

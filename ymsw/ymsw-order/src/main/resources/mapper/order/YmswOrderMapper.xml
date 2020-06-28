@@ -148,6 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderRemark != null  and orderRemark != ''">order_remark = #{orderRemark},</if>
             <if test="incomingTime != null">incoming_time = #{incomingTime},</if>
             <if test="collectionTime != null">collection_time = #{collectionTime},</if>
+            <if test="allowTime != null">allow_time = #{allowTime},</if>
             <if test="userId != null  and userId != ''">user_id = #{userId},</if>
         </trim>
         where order_id = #{orderId}

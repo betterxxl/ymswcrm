@@ -1,22 +1,24 @@
 package com.ymsw.quartz.task;
 
+import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
 import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.mapper.YmswCollectionPoolMapper;
 import com.ymsw.customer.mapper.YmswCustomerMapper;
-import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.customer.service.impl.YmswCollectionPoolServiceImpl;
 import com.ymsw.quota.domain.QuotaManager;
 import com.ymsw.quota.mapper.QuotaManagerMapper;
+import com.ymsw.ranking.domain.YmswPerformanceRanking;
+import com.ymsw.ranking.mapper.YmswPerformanceRankingMapper;
 import com.ymsw.system.domain.SysConfig;
+import com.ymsw.system.domain.SysUser;
+import com.ymsw.system.mapper.SysUserMapper;
 import com.ymsw.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.ymsw.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 定时任务调度测试
@@ -37,6 +39,12 @@ public class RyTask
 
     @Autowired
     private QuotaManagerMapper quotaManagerMapper;
+
+    @Autowired
+    private YmswPerformanceRankingMapper ymswPerFormanceRankingMapper;
+
+    @Autowired
+    private SysUserMapper userMapper;
 
     public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i)
     {
@@ -98,5 +106,130 @@ public class RyTask
                 quotaManagerMapper.insertQuotaManager(quotaManager);
             }
         }
+    }
+
+    /**
+     * 每日统计
+     * 1、当月累计创收 2、当月累计进件数 3、当月累计收款笔数 4、当月累计批款总金额(万元) 5、平均费率
+     * 如果当前日期是本月第一天，就就查询出在职且分配客户的所有员工，在业绩排行表里添加一天员工记录
+     */
+    @Transactional
+    public void performanceRanking()
+    {
+        Date nowDate = DateUtils.getNowDate();//当前时间
+        String today = DateUtils.parseDateToStr("yyyy-MM-dd", nowDate);
+        String[] split = today.split("-");
+        String firstDay;
+        String lastDay;
+        String dataYearMonth;
+        //如果当前日期是本月第一天，firstDay为上月第一天，lastDay就为上月最后一天。否则firstDay为本月第一天，lastDay为本月最后一天
+        if ("01".equals(split[2])){
+            firstDay = DateUtils.getFirstDayOfLastMonth();//获取上月的第一天
+            lastDay = DateUtils.getLastDayOfLastMonth();//获取上月的最后一天
+            dataYearMonth = DateUtils.getLastMonth();//获取上月的年月（yyyy-MM）
+            //如果当前日期是本月第一天，就查询出在职且分配客户的所有员工，添加到业绩排行表里
+            List<SysUser> sysUsers = userMapper.selectIsDistributeUsers();//查询在职的且分配客户的所有员工
+            for (SysUser sysUser : sysUsers) {
+                //在业绩排行表里添加员工排行记录
+                insertYmswPerformanceRanking(sysUser.getUserId(),DateUtils.parseDateToStr("yyyy-MM",nowDate));
+            }
+        }else {
+            firstDay = DateUtils.getFirstDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));//获取本月份的第一天
+            lastDay = DateUtils.getLastDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));//获取本月份的最后一天
+            dataYearMonth = DateUtils.parseDateToStr("yyyy-MM", nowDate);//获取本月分的年月（yyyy-MM）
+        }
+        System.out.println(firstDay);
+        System.out.println(lastDay);
+        //存放需要更新的业绩排行记录  key是userId
+        Map<Long,YmswPerformanceRanking> map = new HashMap<>();
+        //1、统计月总进件笔数
+        List<YmswPerformanceRanking> incomingRankings = ymswPerFormanceRankingMapper.selectTotalIncomingCount(firstDay,lastDay);//查询月总进件笔数
+        for (YmswPerformanceRanking ymswPerformanceRanking : incomingRankings) {
+            Long userId = ymswPerformanceRanking.getUserId();
+            doMap(map,userId,dataYearMonth);//查询该userId的排行记录并put到map里
+            YmswPerformanceRanking ranking = map.get(userId);//从map里取出该userId的排行记录
+            ranking.setTotalIncomingCount(ymswPerformanceRanking.getTotalIncomingCount());//设置月累计进件数
+            ranking.setTodayIncomingCount(0L);//设置今日进件数为0
+            map.put(userId,ranking);
+        }
+
+        //2、统计月总收款笔数
+        List<YmswPerformanceRanking> collectionRankings = ymswPerFormanceRankingMapper.selectTotalCollectionCount(firstDay,lastDay);//查询月总收款笔数
+        for (YmswPerformanceRanking ymswPerformanceRanking : collectionRankings) {
+            Long userId = ymswPerformanceRanking.getUserId();
+            doMap(map,userId,dataYearMonth);//查询该userId的排行记录并put到map里
+            YmswPerformanceRanking ranking = map.get(userId);//从map里取出该userId的排行记录
+            ranking.setTotalCollectionCount(ymswPerformanceRanking.getTotalCollectionCount());//设置月累计收款数
+            ranking.setTodayCollectionCount(0L);//设置今日收款数为0
+            map.put(userId,ranking);
+        }
+
+        //3、统计月批款总金额
+        List<YmswPerformanceRanking> allowAmountRankings = ymswPerFormanceRankingMapper.selectTotalAllowAmount(firstDay,lastDay);//查询月总批款总金额
+        for (YmswPerformanceRanking ymswPerformanceRanking : allowAmountRankings) {
+            Long userId = ymswPerformanceRanking.getUserId();
+            doMap(map,userId,dataYearMonth);//查询该userId的排行记录并put到map里
+            YmswPerformanceRanking ranking = map.get(userId);//从map里取出该userId的排行记录
+            ranking.setTotalAllowAmount(ymswPerformanceRanking.getTotalAllowAmount());//设置月批款总金额
+            map.put(userId,ranking);
+        }
+
+        //4、统计月总创收
+        List<YmswPerformanceRanking> totalGenerationRankings = ymswPerFormanceRankingMapper.selectTotalGeneration(firstDay,lastDay);//查询月总创收
+        for (YmswPerformanceRanking ymswPerformanceRanking : totalGenerationRankings) {
+            Long userId = ymswPerformanceRanking.getUserId();
+            doMap(map,userId,dataYearMonth);//查询该userId的排行记录并put到map里
+            YmswPerformanceRanking ranking = map.get(userId);//从map里取出该userId的排行记录
+            ranking.setTotalGeneration(ymswPerformanceRanking.getTotalGeneration());//设置月总创收
+            ranking.setTodayGeneration(0D);//设置今日创收为0
+            map.put(userId,ranking);
+        }
+
+        //5、统计平均费率
+        List<YmswPerformanceRanking> orderRateRankings = ymswPerFormanceRankingMapper.selectOrderRate(firstDay,lastDay);//查询平均费率
+        for (YmswPerformanceRanking ymswPerformanceRanking : orderRateRankings) {
+            Long userId = ymswPerformanceRanking.getUserId();
+            doMap(map,userId,dataYearMonth);//查询该userId的排行记录并put到map里
+            YmswPerformanceRanking ranking = map.get(userId);//从map里取出该userId的排行记录
+            ranking.setAvgOrderRate(ymswPerformanceRanking.getAvgOrderRate());//设置平均费率
+            map.put(userId,ranking);
+        }
+
+        //6、更新业绩排行记录
+        for (YmswPerformanceRanking value : map.values()) {
+            ymswPerFormanceRankingMapper.updateYmswPerformanceRanking(value);
+        }
+
+    }
+
+    //查询map里是否存在该员工的业绩排行记录，如果不存在，就查询业绩排行表里该员工的记录，如果表里也不存在，就insert一条该员工的排行记录，最后将该排行记录put到map里
+    private void doMap(Map<Long,YmswPerformanceRanking> map,Long userId,String dataYearMonth){
+        if (!map.containsKey(userId)){
+            YmswPerformanceRanking ranking = new YmswPerformanceRanking();
+            ranking.setUserId(userId);
+            ranking.setDataYearMonth(dataYearMonth);
+            YmswPerformanceRanking dbRanking = ymswPerFormanceRankingMapper.selectYmswPerformanceRanking(ranking);//通过userId和dataYearMonth查询该业务经理该月份的统计信息
+            if (StringUtils.isNull(dbRanking)){
+                dbRanking = insertYmswPerformanceRanking(userId,dataYearMonth);//如果dbRanking不存在，就添加一条该员工的业绩排行记录
+            }
+            map.put(userId,dbRanking);
+        }
+    }
+
+    //添加员工业绩排行记录
+    private YmswPerformanceRanking insertYmswPerformanceRanking(Long UserId,String dataYearMonth){
+        YmswPerformanceRanking ranking = new YmswPerformanceRanking();
+        ranking.setUserId(UserId);
+        ranking.setDataYearMonth(dataYearMonth);
+        ranking.setTotalIncomingCount(0L);
+        ranking.setTodayIncomingCount(0L);
+        ranking.setTotalCollectionCount(0L);
+        ranking.setTodayCollectionCount(0L);
+        ranking.setTotalGeneration(0D);
+        ranking.setTodayGeneration(0D);
+        ranking.setTotalAllowAmount(0);
+        ranking.setAvgOrderRate(0D);
+        ymswPerFormanceRankingMapper.insertYmswPerformanceRanking(ranking);
+        return ranking;
     }
 }

@@ -41,6 +41,10 @@
             <groupId>com.ymsw</groupId>
             <artifactId>ymsw-customer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ymsw</groupId>
+            <artifactId>ymsw-report</artifactId>
+        </dependency>
 
     </dependencies>
 

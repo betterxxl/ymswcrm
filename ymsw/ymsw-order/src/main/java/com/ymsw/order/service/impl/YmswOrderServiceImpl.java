@@ -1,21 +1,21 @@
 package com.ymsw.order.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
 import com.ymsw.common.annotation.DataScope;
 import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.core.text.Convert;
 import com.ymsw.common.utils.DateUtils;
 import com.ymsw.common.utils.StringUtils;
+import com.ymsw.order.domain.YmswOrder;
+import com.ymsw.order.mapper.YmswOrderMapper;
+import com.ymsw.order.service.IYmswOrderService;
 import com.ymsw.ranking.domain.YmswPerformanceRanking;
 import com.ymsw.ranking.mapper.YmswPerformanceRankingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ymsw.order.mapper.YmswOrderMapper;
-import com.ymsw.order.domain.YmswOrder;
-import com.ymsw.order.service.IYmswOrderService;
-import com.ymsw.common.core.text.Convert;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 订单信息表Service业务层处理
@@ -123,6 +123,8 @@ public class YmswOrderServiceImpl implements IYmswOrderService
             ranking.setTodayCollectionCount(0L);
             ranking.setTotalGeneration(0D);
             ranking.setTodayGeneration(0D);
+            ranking.setTotalAllowAmount(0);
+            ranking.setAvgOrderRate(0D);
             ymswPerFormanceRankingMapper.insertYmswPerformanceRanking(ranking);
         }
 
@@ -133,7 +135,8 @@ public class YmswOrderServiceImpl implements IYmswOrderService
                 ranking.setTodayIncomingCount(ranking.getTodayIncomingCount() + 1);//当日进件笔数+1
             }
         }else if ("3".equals(orderStatus)){
-            if (StringUtils.isNull(dbYmswOrder.getAllowAmount())){//如果批款额度为空，就进行批款总额度累加
+            if (StringUtils.isNull(dbYmswOrder.getAllowTime())){//如果批款日期为空，就进行批款总额度累加
+                ymswOrder.setAllowTime(nowDate);//设置批款日期
                 ranking.setTotalAllowAmount(ranking.getTotalAllowAmount() + ymswOrder.getAllowAmount());
             }
         } else if ("4".equals(orderStatus)){

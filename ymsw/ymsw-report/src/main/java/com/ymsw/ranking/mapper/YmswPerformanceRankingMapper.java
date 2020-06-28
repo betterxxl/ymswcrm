@@ -1,6 +1,8 @@
 package com.ymsw.ranking.mapper;
 
 import com.ymsw.ranking.domain.YmswPerformanceRanking;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -70,4 +72,19 @@ public interface YmswPerformanceRankingMapper
 
     //通过userId和dataYearMonth查询该业务经理该月份的统计信息
     YmswPerformanceRanking selectYmswPerformanceRanking(YmswPerformanceRanking ymswPerformanceRanking);
+
+    //统计月总进件笔数
+    List<YmswPerformanceRanking> selectTotalIncomingCount(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
+
+    //统计月总收款笔数
+    List<YmswPerformanceRanking> selectTotalCollectionCount(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
+
+    //统计月批款总金额
+    List<YmswPerformanceRanking> selectTotalAllowAmount(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
+
+    //统计月总创收（参考收款时间）
+    List<YmswPerformanceRanking> selectTotalGeneration(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
+
+    //平均费率（参考收款时间）
+    List<YmswPerformanceRanking> selectOrderRate(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
 }
