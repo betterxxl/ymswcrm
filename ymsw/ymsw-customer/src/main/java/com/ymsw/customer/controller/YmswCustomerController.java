@@ -319,7 +319,7 @@ public class YmswCustomerController extends BaseController
                     totalcount++;//分配后，将成功分配的条数 +1
                 }
                 //以上循环分配完成后
-                ymswCustomerService.batchUpdateUserId(userId, customerIds);  // 1、批量修改客户的对应的user_id为userId
+                ymswCustomerService.batchUpdateUserId(userId, customerIds);  // 1、批量修改客户的对应的user_id为userId,同时修改客户状态为再分配
                 ymswCollectionPoolService.batchDeleteByCustomerIds(customerIds);    // 2、从公共池删除。不管customerId是否在公共池收藏夹表，都进行删除操作。
                 quotaManager.setNowTotalCount(nowTotalCount+count);//设置当前客户数
                 quotaManagerService.updateQuotaManager(quotaManager);// 3、修改该业务经理对应当前客户数

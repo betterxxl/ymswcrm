@@ -321,6 +321,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         return ymswCustomerMapper.selectAutoReallocIds(days);
     }
 
+    //批量修改客户的对应的user_id为userId,同时修改客户状态为再分配
     @Override
     public int batchUpdateUserId(Long userId, List<Long> customerIds) {
         return ymswCustomerMapper.batchUpdateUserId(userId,customerIds);

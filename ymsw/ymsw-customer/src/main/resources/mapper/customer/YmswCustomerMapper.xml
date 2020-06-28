@@ -261,8 +261,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     and datediff(NOW(),yc.remark_time) >= #{days}
 </select>
 
+    <!--批量修改客户的对应的user_id为userId,同时修改客户状态为再分配-->
 <update id="batchUpdateUserId">
-    update ymsw_customer set user_id = #{userId},distribute_time = CURRENT_TIMESTAMP where customer_id in
+    update ymsw_customer set user_id = #{userId},distribute_time = CURRENT_TIMESTAMP,customer_type = '2' where customer_id in
     <foreach item="customerId" collection="customerIds" open="(" separator="," close=")">
         #{customerId}
     </foreach>

@@ -92,5 +92,6 @@ public interface IYmswCustomerService
      */
     List<YmswCustomer> selectAutoReallocIds(String days);
 
+    //批量修改客户的对应的user_id为userId,同时修改客户状态为再分配
     int batchUpdateUserId(Long userId, List<Long> customerIds);
 }
