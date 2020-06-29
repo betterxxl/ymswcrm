@@ -141,12 +141,19 @@ public class YmswPerformanceRankingServiceImpl implements IYmswPerformanceRankin
         if ("allowAmount".equals(type)){
             pie = ymswPerformanceRankingMapper.allowAmount(baseEntity);//进件银行占比页面的批款金额查询
             text = "进件银行批款金额占比图";
+            subtext += " 单位（万元）";
         }else if ("incomeGeneration".equals(type)){
-
+            pie = ymswPerformanceRankingMapper.incomeGeneration(baseEntity);//进件银行占比页面的收款金额查询
+            text = "进件银行创收金额占比图";
+            subtext += " 单位（元）";
         } else if ("allowCount".equals(type)){
-
+            pie = ymswPerformanceRankingMapper.allowCount(baseEntity);//进件银行占比页面的批款件数查询
+            text = "进件银行批款件数占比图";
+            subtext += " 单位（件）";
         } else if ("generationCount".equals(type)){
-
+            pie = ymswPerformanceRankingMapper.generationCount(baseEntity);//进件银行占比页面的收款件数查询
+            text = "进件银行收款件数占比图";
+            subtext += " 单位（件）";
         }
         data.put("ajaxdata",pie);
         data.put("text",text);

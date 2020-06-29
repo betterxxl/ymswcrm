@@ -236,4 +236,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         group by yo.incoming_channel
     </select>
+
+    <!--  进件银行占比页面的创收金额查询  -->
+    <select id="incomeGeneration" parameterType="BaseEntity" resultType="map">
+        select sdd.dict_label as name,ifnull(sum(yo.income_generation),0) as value from ymsw_order yo
+        left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
+        left join sys_user u on u.user_id = yo.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+        where sdd.dict_type = 'incoming_channel'
+        <if test="params.deptId != null and params.deptId != ''">
+            and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''">
+            and date_format(yo.collection_time,'%y%m%d') >= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''">
+            <![CDATA[ and date_format(yo.collection_time,'%y%m%d') <= date_format(#{params.endTime},'%y%m%d') ]]>
+        </if>
+        group by yo.incoming_channel
+    </select>
+
+    <!--  进件银行占比页面的批款件数查询  -->
+    <select id="allowCount" parameterType="BaseEntity" resultType="map">
+        select sdd.dict_label as name,count(1) as value from ymsw_order yo
+        left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
+        left join sys_user u on u.user_id = yo.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+        where sdd.dict_type = 'incoming_channel' and yo.order_status = 3
+        <if test="params.deptId != null and params.deptId != ''">
+            and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''">
+            and date_format(yo.allow_time,'%y%m%d') >= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''">
+            <![CDATA[ and date_format(yo.allow_time,'%y%m%d') <= date_format(#{params.endTime},'%y%m%d') ]]>
+        </if>
+        group by yo.incoming_channel
+    </select>
+
+    <!--  进件银行占比页面的创收件数查询  -->
+    <select id="generationCount" parameterType="BaseEntity" resultType="map">
+        select sdd.dict_label as name,count(1) as value from ymsw_order yo
+        left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
+        left join sys_user u on u.user_id = yo.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+        where sdd.dict_type = 'incoming_channel' and yo.order_status = 4
+        <if test="params.deptId != null and params.deptId != ''">
+            and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''">
+            and date_format(yo.collection_time,'%y%m%d') >= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''">
+            <![CDATA[ and date_format(yo.collection_time,'%y%m%d') <= date_format(#{params.endTime},'%y%m%d') ]]>
+        </if>
+        group by yo.incoming_channel
+    </select>
 </mapper>

@@ -92,4 +92,13 @@ public interface YmswPerformanceRankingMapper
 
     //进件银行占比页面的批款金额查询
     List<Map<String,Double>> allowAmount(BaseEntity baseEntity);
+
+    //进件银行占比页面的创收金额查询
+    List<Map<String,Double>> incomeGeneration(BaseEntity baseEntity);
+
+    //进件银行占比页面的批款件数查询
+    List<Map<String,Double>> allowCount(BaseEntity baseEntity);
+
+    //进件银行占比页面的收款件数查询
+    List<Map<String,Double>> generationCount(BaseEntity baseEntity);
 }

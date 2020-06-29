@@ -58,17 +58,17 @@
             <div class="col-sm-12 select-table table-striped">
                 <form id="formId2">
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                        <input type="radio" name="type" id="option1" autocomplete="off" checked value="allowAmount"> 批款金额
+                    <label class="btn btn-primary active" value="allowAmount">
+                        <input type="radio" name="type" id="option1" autocomplete="off" checked > 批款金额
                     </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="type" id="option2" autocomplete="off" value="incomeGeneration"> 创收金额
+                    <label class="btn btn-primary" value="incomeGeneration">
+                        <input type="radio" name="type" id="option2" autocomplete="off"> 创收金额
                     </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="type" id="option3" autocomplete="off" value="allowCount"> 批款件数
+                    <label class="btn btn-primary" value="allowCount">
+                        <input type="radio" name="type" id="option3" autocomplete="off"> 批款件数
                     </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="type" id="option4" autocomplete="off" value="generationCount"> 创收件数
+                    <label class="btn btn-primary" value="generationCount">
+                        <input type="radio" name="type" id="option4" autocomplete="off"> 创收件数
                     </label>
                 </div>
                 </form>
@@ -129,11 +129,12 @@
             $(window).resize(pieChart.resize);
         }
 
+        var type = $("#formId2 label.active").attr("value");
+
         //发送ajax请求数据
         function searchPie() {
             var data = $.common.formToJSON("formId");
-            var formId2 = $.common.formToJSON("formId2");
-            data.type = formId2.type;
+            data.type = type;
             $.ajax({
                 type: "post",
                 url: ctx + "ranking/main/channel/list",
@@ -158,6 +159,12 @@
         $(function () {
             searchPie();
         });
+
+        //点击“批款金额”、“创收金额”、“批款件数”、“创收件数”时修改type的值，并发送ajax请求
+	    $("#formId2 label").click(function () {
+            type = $(this).attr("value");
+            searchPie();
+        })
     </script>
 
 
