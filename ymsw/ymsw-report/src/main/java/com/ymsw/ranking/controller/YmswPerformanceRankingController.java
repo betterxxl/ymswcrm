@@ -148,4 +148,15 @@ public class YmswPerformanceRankingController extends BaseController
     {
         return toAjax(ymswPerformanceRankingService.deleteYmswPerformanceRankingByIds(ids));
     }
+
+    //跳转到进件银行占比页面
+    @RequiresPermissions("channel:main:view")
+    @GetMapping("/channel")
+    public String channel(ModelMap mmap)
+    {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysDepts", sysDepts);
+        return prefix + "/channel";
+    }
 }

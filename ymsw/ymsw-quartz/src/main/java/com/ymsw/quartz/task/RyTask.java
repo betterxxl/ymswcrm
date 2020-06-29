@@ -138,8 +138,6 @@ public class RyTask
             lastDay = DateUtils.getLastDayOfMonth(Integer.parseInt(split[0]), Integer.parseInt(split[1]));//获取本月份的最后一天
             dataYearMonth = DateUtils.parseDateToStr("yyyy-MM", nowDate);//获取本月分的年月（yyyy-MM）
         }
-        System.out.println(firstDay);
-        System.out.println(lastDay);
         //存放需要更新的业绩排行记录  key是userId
         Map<Long,YmswPerformanceRanking> map = new HashMap<>();
         //1、统计月总进件笔数
