@@ -1,9 +1,11 @@
 package com.ymsw.ranking.mapper;
 
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.ranking.domain.YmswPerformanceRanking;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 业绩排行Mapper接口
@@ -87,4 +89,7 @@ public interface YmswPerformanceRankingMapper
 
     //平均费率（参考收款时间）
     List<YmswPerformanceRanking> selectOrderRate(@Param("firstDay")String firstDay, @Param("lastDay") String lastDay);
+
+    //进件银行占比页面的批款金额查询
+    List<Map<String,Double>> allowAmount(BaseEntity baseEntity);
 }

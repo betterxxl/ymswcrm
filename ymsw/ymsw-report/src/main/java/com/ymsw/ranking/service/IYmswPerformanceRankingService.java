@@ -1,5 +1,7 @@
 package com.ymsw.ranking.service;
 
+import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.core.domain.BaseEntity;
 import com.ymsw.ranking.domain.YmswPerformanceRanking;
 import java.util.List;
 
@@ -67,4 +69,9 @@ public interface IYmswPerformanceRankingService
 
     //业绩排行里，门店排名查询
     List<YmswPerformanceRanking> selectYmswPerformanceRankingListByPrincipal(YmswPerformanceRanking ymswPerformanceRanking);
+
+    /**
+     * 进件银行占比查询
+     */
+    AjaxResult channelList(BaseEntity baseEntity, String type);
 }

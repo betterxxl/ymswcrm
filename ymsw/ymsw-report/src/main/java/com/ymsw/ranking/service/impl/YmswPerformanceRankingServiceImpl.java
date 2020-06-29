@@ -1,6 +1,14 @@
 package com.ymsw.ranking.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.core.domain.BaseEntity;
+import com.ymsw.common.utils.DateUtils;
+import com.ymsw.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ymsw.ranking.mapper.YmswPerformanceRankingMapper;
@@ -108,5 +116,41 @@ public class YmswPerformanceRankingServiceImpl implements IYmswPerformanceRankin
     @Override
     public List<YmswPerformanceRanking> selectYmswPerformanceRankingListByPrincipal(YmswPerformanceRanking ymswPerformanceRanking) {
         return ymswPerformanceRankingMapper.selectYmswPerformanceRankingListByPrincipal(ymswPerformanceRanking);
+    }
+
+    /**
+     * 进件银行占比查询
+     */
+    @Override
+    public AjaxResult channelList(BaseEntity baseEntity, String type) {
+        Map<String, Object> params = baseEntity.getParams();
+        String beginTime = (String) params.get("beginTime");
+        String endTime = (String) params.get("endTime");
+        //如果开始时间和结束时间都为空，就设置开始时间为上月第一天，结束时间为上月最后一天，即默认查询上月的数据。
+        if (StringUtils.isEmpty(beginTime) && StringUtils.isEmpty(endTime)){
+            beginTime = DateUtils.getFirstDayOfLastMonth();//获取上月第一天
+            endTime = DateUtils.getLastDayOfLastMonth();//获取上月最后一天
+            params.put("beginTime",beginTime);
+            params.put("endTime",endTime);
+            baseEntity.setParams(params);
+        }
+        List<Map<String, Double>> pie = new ArrayList<>();//存储查询的数据
+        Map<String, Object> data = new HashMap<>();//返回到前端的数据
+        String text = "";
+        String subtext = "数据范围："+beginTime+" -- "+endTime;
+        if ("allowAmount".equals(type)){
+            pie = ymswPerformanceRankingMapper.allowAmount(baseEntity);//进件银行占比页面的批款金额查询
+            text = "进件银行批款金额占比图";
+        }else if ("incomeGeneration".equals(type)){
+
+        } else if ("allowCount".equals(type)){
+
+        } else if ("generationCount".equals(type)){
+
+        }
+        data.put("ajaxdata",pie);
+        data.put("text",text);
+        data.put("subtext",subtext);
+        return AjaxResult.success(data);
     }
 }

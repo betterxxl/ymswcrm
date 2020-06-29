@@ -159,4 +159,15 @@ public class YmswPerformanceRankingController extends BaseController
         mmap.put("sysDepts", sysDepts);
         return prefix + "/channel";
     }
+
+    /**
+     * 进件银行占比查询
+     */
+    @RequiresPermissions("channel:main:list")
+    @PostMapping("/channel/list")
+    @ResponseBody
+    public AjaxResult channelList(BaseEntity baseEntity,String type)
+    {
+        return ymswPerformanceRankingService.channelList(baseEntity,type);
+    }
 }

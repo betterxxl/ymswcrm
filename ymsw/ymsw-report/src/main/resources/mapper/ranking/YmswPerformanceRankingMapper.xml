@@ -217,4 +217,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and <![CDATA[ date_format(collection_time,'%y%m%d') <= date_format(#{lastDay},'%y%m%d') ]]>
         group by user_id;
     </select>
+
+    <!--  进件银行占比页面的批款金额查询  -->
+    <select id="allowAmount" parameterType="BaseEntity" resultType="map">
+        select sdd.dict_label as name,ifnull(sum(yo.allow_amount),0) as value from ymsw_order yo
+        left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
+        left join sys_user u on u.user_id = yo.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+        where sdd.dict_type = 'incoming_channel'
+        <if test="params.deptId != null and params.deptId != ''">
+            and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''">
+            and date_format(yo.allow_time,'%y%m%d') >= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''">
+            <![CDATA[ and date_format(yo.allow_time,'%y%m%d') <= date_format(#{params.endTime},'%y%m%d') ]]>
+        </if>
+        group by yo.incoming_channel
+    </select>
 </mapper>
