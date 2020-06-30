@@ -204,6 +204,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         cal.set(Calendar.MONTH, month-1);
         //获取某月最大天数
         int lastDay = cal.getActualMaximum(Calendar.DATE);
+        //如果是闰年，2月最大天数就是29，否则就是28
+        if (month == 2){
+            if(year%4==0&&year%100!=0||year%400==0){
+                lastDay = 29;
+            }else {
+                lastDay = 28;
+            }
+        }
         //设置日历中月份的最大天数
         cal.set(Calendar.DAY_OF_MONTH, lastDay);
         //格式化日期

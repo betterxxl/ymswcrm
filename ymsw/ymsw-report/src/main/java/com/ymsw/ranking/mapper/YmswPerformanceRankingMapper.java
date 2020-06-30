@@ -101,4 +101,7 @@ public interface YmswPerformanceRankingMapper
 
     //进件银行占比页面的收款件数查询
     List<Map<String,Double>> generationCount(BaseEntity baseEntity);
+
+    //月创收增长页面里查询从某某天到某某天的累计创收
+    Double totalGeneration(BaseEntity baseEntity);
 }

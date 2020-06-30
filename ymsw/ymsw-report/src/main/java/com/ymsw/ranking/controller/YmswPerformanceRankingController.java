@@ -170,4 +170,26 @@ public class YmswPerformanceRankingController extends BaseController
     {
         return ymswPerformanceRankingService.channelList(baseEntity,type);
     }
+
+    //跳转到月创收增长页面
+    @RequiresPermissions("generation:main:view")
+    @GetMapping("/generation")
+    public String generation(ModelMap mmap)
+    {
+        BaseEntity baseEntity = new BaseEntity();
+        List<SysDept> sysDepts = sysDeptService.selectDepts(baseEntity);//根据数据范围查询部门列表
+        mmap.put("sysDepts", sysDepts);
+        return prefix + "/generation";
+    }
+
+    /**
+     * 月创收增长查询
+     */
+    @RequiresPermissions("generation:main:list")
+    @PostMapping("/generation/list")
+    @ResponseBody
+    public AjaxResult generationList(BaseEntity baseEntity)
+    {
+        return ymswPerformanceRankingService.generationList(baseEntity);
+    }
 }

@@ -160,4 +160,41 @@ public class YmswPerformanceRankingServiceImpl implements IYmswPerformanceRankin
         data.put("subtext",subtext);
         return AjaxResult.success(data);
     }
+
+    /**
+     * 月创收增长查询
+     */
+    @Override
+    public AjaxResult generationList(BaseEntity baseEntity) {
+        Map<String, Object> params = baseEntity.getParams();
+        String dataYearMonth = (String) params.get("dataYearMonth");//查询的年月份 如2020-06
+        int lastday;
+        //如果前端未传年月，就将当前月份赋值给dataYearMonth，即默认查询当前月份的数据
+        if (StringUtils.isEmpty(dataYearMonth)){
+            dataYearMonth = DateUtils.parseDateToStr("yyyy-MM",DateUtils.getNowDate());
+        }
+        //如果查询的年月份是当月，那么截至日期是当前日期，否则截至日期是该月的最后一天
+        if (dataYearMonth.equals(DateUtils.parseDateToStr("yyyy-MM",DateUtils.getNowDate()))){
+            lastday = Integer.valueOf(DateUtils.parseDateToStr("yyyy-MM-dd",DateUtils.getNowDate()).split("-")[2]);//当前日期的号数
+        }else {
+            String[] split = dataYearMonth.split("-");
+            String lastDayOfMonth = DateUtils.getLastDayOfMonth(Integer.valueOf(split[0]), Integer.valueOf(split[1]));//获取该月份的最后一天，如2020-06-30
+            String[] split1 = lastDayOfMonth.split("-");
+            lastday = Integer.valueOf(split1[2]);//最后一天的号数
+        }
+        params.put("beginTime",dataYearMonth + "-01");
+        Map<String,Object> data = new HashMap<>();
+        List<String> days = new ArrayList<>();
+        List<Double> values = new ArrayList<>();
+        for (int i = 1; i <= lastday; i++){
+            params.put("endTime",dataYearMonth+"-"+i);//查询截至日期
+            baseEntity.setParams(params);
+            Double totalGeneration = ymswPerformanceRankingMapper.totalGeneration(baseEntity);//查询从yyyy-MM-01到yyyy-MM-i天的累计创收
+            days.add(dataYearMonth+"-"+i);
+            values.add(totalGeneration);
+        }
+        data.put("xaxisdata",days);
+        data.put("seriesfirstdata",values);
+        return AjaxResult.success(data);
+    }
 }

@@ -290,4 +290,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         group by yo.incoming_channel
     </select>
+
+    <!--  月创收增长页面里查询从某某天到某某天的累计创收  -->
+    <select id="totalGeneration" parameterType="BaseEntity" resultType="Double">
+        select ifnull(sum(yo.income_generation),0) from ymsw_order yo
+        left join sys_user u on u.user_id = yo.user_id
+        left join sys_dept d on d.dept_id = u.dept_id
+        <where>
+            date_format(yo.collection_time,'%y%m%d') >= date_format(#{params.beginTime},'%y%m%d')
+            <![CDATA[ and date_format(yo.collection_time,'%y%m%d') <= date_format(#{params.endTime},'%y%m%d') ]]>
+            <if test="params.deptId != null and params.deptId != ''">
+                and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -74,4 +74,9 @@ public interface IYmswPerformanceRankingService
      * 进件银行占比查询
      */
     AjaxResult channelList(BaseEntity baseEntity, String type);
+
+    /**
+     * 月创收增长查询
+     */
+    AjaxResult generationList(BaseEntity baseEntity);
 }
