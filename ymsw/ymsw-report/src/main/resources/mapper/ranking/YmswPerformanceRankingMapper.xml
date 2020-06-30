@@ -174,8 +174,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTotalIncomingCount" resultMap="YmswPerformanceRankingResult">
         SELECT user_id,count(1) as total_incoming_count
         from ymsw_order
-        where order_status = '2'
-        and date_format(incoming_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
+        where date_format(incoming_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
         and <![CDATA[ date_format(incoming_time,'%y%m%d') <= date_format(#{lastDay},'%y%m%d') ]]>
         group by user_id;
     </select>
@@ -184,8 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTotalCollectionCount" resultMap="YmswPerformanceRankingResult">
         SELECT user_id,count(1) as total_collection_count
         from ymsw_order
-        where order_status = '4'
-        and date_format(collection_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
+        where date_format(collection_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
         and <![CDATA[ date_format(collection_time,'%y%m%d') <= date_format(#{lastDay},'%y%m%d') ]]>
         group by user_id;
     </select>
@@ -194,8 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTotalAllowAmount" resultMap="YmswPerformanceRankingResult">
         SELECT user_id,sum(allow_amount) as total_allow_amount
         from ymsw_order
-        where order_status = '3'
-        and date_format(allow_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
+        where date_format(allow_time,'%y%m%d') >= date_format(#{firstDay},'%y%m%d')
         and <![CDATA[ date_format(allow_time,'%y%m%d') <= date_format(#{lastDay},'%y%m%d') ]]>
         group by user_id;
     </select>
@@ -262,7 +259,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
         left join sys_user u on u.user_id = yo.user_id
         left join sys_dept d on d.dept_id = u.dept_id
-        where sdd.dict_type = 'incoming_channel' and yo.order_status = 3
+        where sdd.dict_type = 'incoming_channel'
         <if test="params.deptId != null and params.deptId != ''">
             and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
         </if>
@@ -281,7 +278,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dict_data sdd on sdd.dict_value = yo.incoming_channel
         left join sys_user u on u.user_id = yo.user_id
         left join sys_dept d on d.dept_id = u.dept_id
-        where sdd.dict_type = 'incoming_channel' and yo.order_status = 4
+        where sdd.dict_type = 'incoming_channel'
         <if test="params.deptId != null and params.deptId != ''">
             and (u.dept_id = #{params.deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{params.deptId},ancestors) ))
         </if>
