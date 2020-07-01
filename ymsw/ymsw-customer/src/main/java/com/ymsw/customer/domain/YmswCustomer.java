@@ -39,7 +39,7 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知")
     private String customerSex;
     /** 通话状态 0未接 1已接通 */
-    @Excel(name = "通话状态", readConverterExp = "0=未接,1=已接通")
+    @Excel(name = "通话状态", readConverterExp = "0=未接,1=已接通",type = Excel.Type.EXPORT)
     private String phoneStatus;
 
     /** 出生日期 */

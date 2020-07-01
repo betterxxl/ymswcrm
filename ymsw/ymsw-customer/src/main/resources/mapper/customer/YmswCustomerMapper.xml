@@ -271,7 +271,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--按userId分组查询客户数（查询每个业务经理的客户数量）-->
 <select id="selectCount" resultType="Map">
-    select user_id as userId, count(1) as totalCount from ymsw_customer where user_id is not null GROUP BY user_id
+    select su.user_id as userId, count(yc.user_id)  as totalCount from sys_user su
+    left join  ymsw_customer yc on su.user_id=yc.user_id
+    where su.is_distribute = 'Y' and status = 0
+    GROUP BY su.user_id;
 </select>
 
 </mapper>
