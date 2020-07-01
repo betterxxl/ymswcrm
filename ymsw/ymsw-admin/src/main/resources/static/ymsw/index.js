@@ -1,5 +1,5 @@
 $(function () {
-    setInterval(taskManage, 1000 * 60 * 2); //每隔2分钟执行一次  1000 * 60 * 2
+    setInterval(taskManage, 1000 * 5); //每隔2分钟执行一次  1000 * 60 * 2
 })
 
 /**
