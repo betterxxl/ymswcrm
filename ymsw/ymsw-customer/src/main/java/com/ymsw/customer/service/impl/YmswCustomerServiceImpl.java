@@ -106,19 +106,28 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                 return AjaxResult.error("客户数已到上限（" + allowTotalCount + "），无法添加新客户！");
             }
         }else {
-            quotaManager = new QuotaManager();
-            quotaManager.setUserId(userId.intValue());
-            quotaManager.setAllowTotalCount(500);//总限额数
-            quotaManager.setNowTotalCount(0);//当前客户数
-            quotaManager.setAllowTodayCount(5);//今日配额数
-            quotaManager.setNowTodayCount(0);//今日已分配客户数
-            quotaManager.setQuotaStatus("1");//配额状态0 关闭 1开启
+            quotaManager=addQuoatManage(userId.intValue());
             quotaManagerMapper.insertQuotaManager(quotaManager);
         }
         ymswCustomer.setUserId(userId);//设置归属顾问为添加人（谁添加的，归属顾问就是谁）
         return insertCustomer(ymswCustomer,quotaManager);//新增客户
     }
 
+    /**
+     * 新增一条限额配额信息，并返回该对象
+     * @param usertId
+     * @return
+     */
+    public QuotaManager addQuoatManage(Integer usertId){
+        QuotaManager quotaManager = new QuotaManager();
+        quotaManager.setUserId(usertId);
+        quotaManager.setAllowTotalCount(500);//总限额数
+        quotaManager.setNowTotalCount(0);//当前客户数
+        quotaManager.setAllowTodayCount(5);//今日配额数
+        quotaManager.setNowTodayCount(0);//今日已分配客户数
+        quotaManager.setQuotaStatus("1");//配额状态0 关闭 1开启
+        return  quotaManager;
+    }
     /**
      * 新增客户，并修改当前客户数
      * @return 结果
@@ -145,7 +154,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                 return AjaxResult.error("添加失败，系统未配置允许天数！");
             }
         }
-        ymswCustomer.setCustomerStar(0);        //设置星级为0级
+        ymswCustomer.setCustomerStar("0");        //设置星级为0级
         ymswCustomer.setApplyTime(DateUtils.getNowDate());  //设置申请时间为当前时间
         ymswCustomer.setCustomerType("1");      //设置客户类型为“新客户”  1新客户  2再分配
         ymswCustomer.setCustomerStatus("0");    //设置客户状态为“新申请”
@@ -155,7 +164,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         quotaManager.setNowTotalCount(quotaManager.getNowTotalCount()+1);
         quotaManagerMapper.updateQuotaManager(quotaManager);
         if (i > 0) {
-            return AjaxResult.success();
+            return AjaxResult.success(ymswCustomer);
         } else {
             return AjaxResult.error();
         }
@@ -209,6 +218,18 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     }
 
     /**
+     * 新增用户时判断是否超过限额
+     * @param quotaManager
+     * @return
+     */
+    public  boolean Islimit(QuotaManager quotaManager){
+        Integer allowTotalCount = quotaManager.getAllowTotalCount();    //总限额数
+        Integer nowTotalCount = quotaManager.getNowTotalCount();//当前客户数
+        boolean notAllow = nowTotalCount + 1 > allowTotalCount ? true : false;
+        return  notAllow;
+    }
+
+    /**
      * 导入客户数据
      * @param ymswCustomerList 客户数据列表
      * @return 结果
@@ -239,15 +260,27 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                 ymswCustomer.setDistributeTime(nowDate);//设置分配时间为当前时间
                 ymswCustomer.setCustomerPhone(customerPhone);//去除电话号码前后空格，避免导入时报错
                 ymswCustomer.setUserId(userId);//通过员工名字查询员工id并设置归属顾问id
-                ymswCustomer.setCustomerType("1");//设置客户类型为新客户   1 新客户  2 再分配客户
+                ymswCustomer.setCustomerType("1");//设置客户类型为新客户   1 新客户  2 再分配客户l
                 //通过手机号查询该手机号最后一次申请时间的信息
                 YmswCustomer dbCustomer = ymswCustomerMapper.selectLastYmswCustomerByPhone(customerPhone);
+                //如果当前客户数+1后大于限额数，就不允许添加
+                QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);
+                boolean notAllow = Islimit(quotaManager);
+                if (StringUtils.isNotNull(quotaManager)){
+
+
+                    if (notAllow){
+                        failureMsg.append("客户数已到上限，无法添加新客户！");
+
+                    }
+                }
+                else {
+                    quotaManager=addQuoatManage(userId.intValue());
+                    quotaManagerMapper.insertQuotaManager(quotaManager);
+                }
                 //判断用户是否存在，1 存在  就查询字典表里允许天数  2  不存在直接添加
-                if (StringUtils.isNull(dbCustomer)) {
-                    ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
-                    addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId(),nowDate);//添加备注
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入成功");
+                if ((StringUtils.isNull(dbCustomer))&&(!notAllow)) {
+                    addSuccessMethod(quotaManager,ymswCustomer,successNum,successMsg,nowDate,userId);
                 } else {
                     SysDictData sysDictData = new SysDictData();
                     sysDictData.setDictType("ymsw_config");
@@ -260,10 +293,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                             failureNum++;
                             failureMsg.append("<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + "在" + daysValue + "天内已添加过，不可频繁添加！");
                         } else {
-                            ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
-                            addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId(),nowDate);//添加备注
-                            successNum++;
-                            successMsg.append("<br/>" + successNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入成功");
+                            addSuccessMethod(quotaManager,ymswCustomer,successNum,successMsg,nowDate,userId);
                         }
                     }else {
                         failureNum++;
@@ -287,13 +317,31 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
     }
 
     /**
+     *新增客户成功时执行的操作
+     * @param quotaManager
+     * @param ymswCustomer
+     * @param successNum
+     * @param successMsg
+     * @param nowDate
+     * @param userId
+     */
+    public void addSuccessMethod(QuotaManager quotaManager,YmswCustomer ymswCustomer,int successNum, StringBuilder successMsg, Date nowDate,Long userId){
+        ymswCustomerMapper.insertYmswCustomer(ymswCustomer);
+        //修改当前客户数
+        quotaManager.setNowTotalCount(quotaManager.getNowTotalCount()+1);
+        quotaManagerMapper.updateQuotaManager(quotaManager);
+        addRemark(ymswCustomer.getRemark(),userId,ymswCustomer.getCustomerId(),nowDate);//添加备注
+        successNum++;
+        successMsg.append("<br/>" + successNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入成功");
+    }
+    /**
      * 导入客户信息后，导入备注
      */
     private void addRemark(String content, Long userId, Long customerId, Date nowDate){
         if (StringUtils.isNotEmpty(content)){
             YmswRemark ymswRemark = new YmswRemark();
             ymswRemark.setIsCharge("0");//设置是否主管 0否  1是
-            ymswRemark.setRemarkTime(nowDate);//设置当前时间为备注时间
+            ymswRemark.setRemarkTime(nowDate);//设置当前时间为备注时间l
             ymswRemark.setRemarkContent(content);
             ymswRemark.setUserId(userId);
             ymswRemark.setCustomerId(customerId);

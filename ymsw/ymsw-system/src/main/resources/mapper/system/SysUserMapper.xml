@@ -59,7 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 left join sys_user_role ur on u.user_id = ur.user_id
 			 left join sys_role r on r.role_id = ur.role_id
     </sql>
-	
 	<select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.login_name, u.user_name,u.is_distribute, u.user_flag, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, u.leave_time, d.dept_name, d.leader, p.post_name from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id LEFT JOIN sys_user_post sup ON u.user_id = sup.user_id LEFT JOIN sys_post p ON p.post_id = sup.post_id

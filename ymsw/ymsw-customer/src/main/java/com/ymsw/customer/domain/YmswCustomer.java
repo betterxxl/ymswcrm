@@ -79,8 +79,8 @@ public class YmswCustomer extends BaseEntity
     private String hasSocial;
 
     /** 星级 */
-    @Excel(name = "星级")
-    private Integer customerStar;
+    @Excel(name = "星级",readConverterExp = "0=0星,1=1星,2=2星,3=3星,4=4星")
+    private String customerStar;
 
     /** 客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单 */
     @Excel(name = "状态", readConverterExp = "0=新申请,1=待跟进,2=已邀约,3=已签约,4=已放款,5=已拒绝,6=资质不符,7=捣乱申请,8=外地申请,9=黑名单")
@@ -205,11 +205,11 @@ public class YmswCustomer extends BaseEntity
         this.customerPhone = customerPhone;
     }
     @Range(min=0, max=4, message = "星级信息错误")
-    public Integer getCustomerStar() {
+    public String getCustomerStar() {
         return customerStar;
     }
 
-    public void setCustomerStar(Integer customerStar) {
+    public void setCustomerStar(String customerStar) {
         this.customerStar = customerStar;
     }
 
@@ -410,6 +410,7 @@ public class YmswCustomer extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("customerId", getCustomerId())
             .append("customerName", getCustomerName())
+            .append("customerStar",getCustomerStar())
             .append("customerSex", getCustomerSex())
             .append("customerPhone", getCustomerPhone())
             .append("customerStatus", getCustomerStatus())

@@ -54,10 +54,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <!--<if test="customerSex != null  and customerSex != ''"> and customer_sex = #{customerSex}</if>-->
             <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
             <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
+            <if test="customerStar != null  and customerStar != ''"> and customer_star = #{customerStar}</if>
             <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
             <!--<if test="customerBirth != null "> and customer_birth = #{customerBirth}</if>-->
             <!--<if test="customerQuota != null "> and customer_quota = #{customerQuota}</if>-->
-            <if test="customerStar != null "> and customer_star = #{customerStar}</if>
             <!--<if test="applyTime != null "> and apply_time = #{applyTime}</if>-->
             <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
             <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="customerPhone != null  and customerPhone != ''"> and customer_phone like concat('%', #{customerPhone}, '%')</if>
         <if test="customerStatus != null  and customerStatus != ''"> and customer_status = #{customerStatus}</if>
         <if test="phoneStatus != null  and phoneStatus != ''"> and phone_status = #{phoneStatus}</if>
-        <if test="customerStar != null "> and customer_star = #{customerStar}</if>
+        <if test="customerStar != null and customerStar!= '' "> and customer_star = #{customerStar}</if>
         <if test="hasHouse != null  and hasHouse != ''"> and has_house = #{hasHouse}</if>
         <if test="hasCar != null  and hasCar != ''"> and has_car = #{hasCar}</if>
         <if test="hasWarranty != null  and hasWarranty != ''"> and has_warranty = #{hasWarranty}</if>
