@@ -303,7 +303,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
             } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + " 导入失败：";
-                failureMsg.append(msg + e.getMessage());
+                failureMsg.append(msg);
                 log.error(msg, e);
             }
         }

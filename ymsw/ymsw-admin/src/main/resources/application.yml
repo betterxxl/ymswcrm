@@ -9,14 +9,14 @@ ymsw:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ymsw/uploadPath，Linux配置 /home/ymsw/uploadPath）
-  profile: D:/ymsw/uploadPath
+  profile: /home/ymsw/uploadPath
   # 获取ip地址开关
   addressEnabled: true
 
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8080
+  port: 80
   servlet:
     # 应用的访问路径
     context-path: /
@@ -132,15 +132,15 @@ xss:
 
 # 阿里短信服务相关配置
 aliconfig:
-  accessKeyId: XXXXX
-  accessKeySecret: XXXXX
+  accessKeyId: xxxx
+  accessKeySecret: xxxx
   templateCode: SMS_189555643
   signName: 英茂商务
 
 # 无需验证码，可直接登录的手机号
 myconfig:
   accessphones:
-    - 15827433325 #超级管理员
+    - 15827433325 #测试账号
     - 18520339949 #总经理 王文浩
     - 13682466560 #门店负责人 万佩
     - 15608644891 #门店负责人 陈振海
