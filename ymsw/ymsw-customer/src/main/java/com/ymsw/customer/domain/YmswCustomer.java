@@ -79,7 +79,7 @@ public class YmswCustomer extends BaseEntity
     private String hasSocial;
 
     /** 星级 */
-    @Excel(name = "星级",readConverterExp = "0=0星,1=1星,2=2星,3=3星,4=4星")
+    @Excel(name = "星级")
     private String customerStar;
 
     /** 客户状态0新申请1待跟进2已邀约3已签约4已放款5已拒绝6资质不符7捣乱申请8外地申请9黑名单 */
@@ -410,7 +410,6 @@ public class YmswCustomer extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("customerId", getCustomerId())
             .append("customerName", getCustomerName())
-            .append("customerStar",getCustomerStar())
             .append("customerSex", getCustomerSex())
             .append("customerPhone", getCustomerPhone())
             .append("customerStatus", getCustomerStatus())
