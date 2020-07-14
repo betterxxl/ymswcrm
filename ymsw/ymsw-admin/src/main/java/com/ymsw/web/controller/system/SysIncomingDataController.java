@@ -17,6 +17,7 @@ import com.ymsw.system.service.ISysDictDataService;
 import com.ymsw.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +49,7 @@ public class SysIncomingDataController extends BaseController {
      * @return
      */
     @RequestMapping("addData")
+    @CrossOrigin("http://47.114.135.94:8080")
     public AjaxResult incomingFromSpide(HttpServletRequest request){
         SysDictData sysDictData = new SysDictData();
         sysDictData.setDictLabel("incoming_data_status");
