@@ -28,6 +28,11 @@ public interface SysDictDataMapper
     public List<SysDictData> selectDictDataByType(String dictType);
 
     /**
+     * 根据type得到dictValues的结合
+     * @return
+     */
+    public List<String> selectDictValuesByType();
+    /**
      * 根据字典类型和字典键值查询字典数据信息
      * 
      * @param dictType 字典类型

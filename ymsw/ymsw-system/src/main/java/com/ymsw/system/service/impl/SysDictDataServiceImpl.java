@@ -123,4 +123,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     public int saveDataStatus(SysDictData sysDictData) {
         return dictDataMapper.saveDataStatus(sysDictData);
     }
+
+    @Override
+    public List<String> selectDictValuesByType() {
+        return dictDataMapper.selectDictValuesByType();
+    }
 }

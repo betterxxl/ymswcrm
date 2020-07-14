@@ -59,6 +59,12 @@ public class SysIncomingDataController extends BaseController {
         if("0".equals(sysDictData.getDictValue()) ){
             return  AjaxResult.error("接口数据已暂停，暂不引入数据");
         }
+        String channel = request.getParameter("channel"); //渠道
+        List<String> channels = sysDictDataService.selectDictValuesByType();
+        System.out.println("channels = " + channels);
+        if(!channels.contains(channel)){
+            return  AjaxResult.error("无此数据来源");
+        }
         String customerName = request.getParameter("customerName"); //客户姓名
         String customerSex = request.getParameter("customerSex");   //客户性别
         String customerPhone = request.getParameter("customerPhone"); //客户手机号
@@ -75,7 +81,7 @@ public class SysIncomingDataController extends BaseController {
         String isOverdue = request.getParameter("isOverdue"); // 逾期(有/无/未知)
         String customerOccupation = request.getParameter("hasCar"); // 职业(上班/做生意/未知)
         String customerSalary = request.getParameter("customerSalary"); // 薪资方式(代发/转账/现金/未知)
-        String channel = request.getParameter("channel"); //渠道
+
         System.out.println("customerName = " + customerName);
         System.out.println("customerPhone = " + customerPhone);
         if(StringUtils.isEmpty(customerName)||StringUtils.isEmpty(customerPhone)||StringUtils.isEmpty(customerQuota)){

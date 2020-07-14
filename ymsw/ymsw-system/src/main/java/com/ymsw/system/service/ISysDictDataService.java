@@ -80,4 +80,5 @@ public interface ISysDictDataService
      * 保存数据开关状态
      */
     int saveDataStatus(SysDictData sysDictData);
+    List<String> selectDictValuesByType();
 }

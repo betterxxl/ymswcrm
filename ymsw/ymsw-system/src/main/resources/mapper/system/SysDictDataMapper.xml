@@ -19,6 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateBy"   column="update_by"   />
 		<result property="updateTime" column="update_time" />
 	</resultMap>
+	<resultMap type="String" id="dictValuesResult">
+		<result property="dictValue"  column="dict_value"  />
+	</resultMap>
 	
 	<sql id="selectDictDataVo">
         select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark 
@@ -54,11 +57,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectDictDataVo"/>
 		where dict_code = #{dictCode}
 	</select>
-	
+
+
 	<select id="countDictDataByType" resultType="Integer">
 	    select count(1) from sys_dict_data where dict_type=#{dictType}  
 	</select>
-	
+	<select id="selectDictValuesByType" resultMap="dictValuesResult">
+
+		SELECT dict_value from sys_dict_data where dict_type='data_channel'
+	</select>
 	<delete id="deleteDictDataById" parameterType="Long">
  		delete from sys_dict_data where dict_code = #{dictCode}
  	</delete>
@@ -124,5 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="saveDataStatus" parameterType="SysDictData">
  		update sys_dict_data set dict_value = #{dictValue},update_by = #{updateBy},update_time = #{updateTime} where dict_type = #{dictType} and dict_label = #{dictLabel}
 	</update>
+
+
 	
 </mapper> 
