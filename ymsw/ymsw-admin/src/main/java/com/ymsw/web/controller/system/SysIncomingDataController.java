@@ -1,7 +1,9 @@
 package com.ymsw.web.controller.system;
 
+import com.ymsw.common.annotation.Log;
 import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
+import com.ymsw.common.enums.BusinessType;
 import com.ymsw.common.json.JSONObject;
 import com.ymsw.common.utils.StringUtils;
 import com.ymsw.common.utils.http.HttpUtils;
@@ -61,7 +63,6 @@ public class SysIncomingDataController extends BaseController {
         }
         String channel = request.getParameter("channel"); //渠道
         List<String> channels = sysDictDataService.selectDictValuesByType();
-        System.out.println("channels = " + channels);
         if(!channels.contains(channel)){
             return  AjaxResult.error("无此数据来源");
         }
@@ -81,9 +82,6 @@ public class SysIncomingDataController extends BaseController {
         String isOverdue = request.getParameter("isOverdue"); // 逾期(有/无/未知)
         String customerOccupation = request.getParameter("hasCar"); // 职业(上班/做生意/未知)
         String customerSalary = request.getParameter("customerSalary"); // 薪资方式(代发/转账/现金/未知)
-
-        System.out.println("customerName = " + customerName);
-        System.out.println("customerPhone = " + customerPhone);
         if(StringUtils.isEmpty(customerName)||StringUtils.isEmpty(customerPhone)||StringUtils.isEmpty(customerQuota)){
             return  AjaxResult.error("缺少参数,请检查");
         }
@@ -116,12 +114,12 @@ public class SysIncomingDataController extends BaseController {
         QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);// 查询该userId的配额信息
         return  iYmswCustomerService.insertCustomer(ymswCustomer, quotaManager);
     }
+    @Log(title = "传递数据接口", businessType = BusinessType.OTHER)
     @RequestMapping("outPutData")
     public  String outPutData(){
         String url="https://www.duodaiwang.com/spider/customer/addCustomer";
-        String param="name=test&mobile=18627058902&city=杭州&car=true&age=32&house=true&baodan_is=false&sex=男&money=20&source=英茂商务&shebao=true&gongjijin=false&isbankpay=true&qualification=null";
+        String param="name=rain&mobile=18627890502&city=上海&car=true&age=32&house=true&baodan_is=false&sex=男&money=20&source=英茂商务&shebao=true&gongjijin=false&isbankpay=true&qualification=null";
         String s = HttpUtils.sendPost(url, param,"application/x-www-form-urlencoded");
-        System.out.println("s = " + s);
         return  s;
     }
     //获取可以分配客户的userId

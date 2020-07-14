@@ -32,7 +32,7 @@ public interface IYmswCustomerService
 
     /**
      * 客户管理 -→ 客户列表页面 查询客户列表（使用数据范围）
-     * 数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户，而包括公共池里的客户）
+     * 数据范围：查询客户表里的所有客户（但不包括收藏夹里的客户以及公共池里的客户）
      */
     public List<YmswCustomer> selectManageList(YmswCustomer ymswCustomer);
 
