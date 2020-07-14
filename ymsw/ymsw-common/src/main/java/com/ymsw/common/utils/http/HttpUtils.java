@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.security.cert.X509Certificate;
 
 /**
@@ -82,6 +79,61 @@ public class HttpUtils
         return result.toString();
     }
 
+
+    public static String sendPost(String url, String param, String contentType) {
+        OutputStreamWriter out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            URL realUrl = new URL(url);
+            // 打开和URL之间的连接
+            HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();
+            // 设置通用的请求属性
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("Content-Type", contentType);
+            // 发送POST请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            // 获取URLConnection对象对应的输出流
+            // out = new PrintWriter(conn.getOutputStream());
+            out = new OutputStreamWriter(conn.getOutputStream(), "utf-8"); // 8859_1
+            out.write(param); // post的关键所在
+            // 发送请求参数
+            // out.print(param);
+            // flush输出流的缓冲
+            out.flush();
+            // 定义BufferedReader输入流来读取URL的响应
+            int code = conn.getResponseCode();
+            if (code == 200) {
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送 POST 请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输出流、输入流
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
     /**
      * 向指定 URL 发送POST方法的请求
      *

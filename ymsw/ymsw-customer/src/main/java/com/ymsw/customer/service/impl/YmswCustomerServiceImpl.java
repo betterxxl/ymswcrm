@@ -164,7 +164,7 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
         quotaManager.setNowTotalCount(quotaManager.getNowTotalCount()+1);
         quotaManagerMapper.updateQuotaManager(quotaManager);
         if (i > 0) {
-            return AjaxResult.success(ymswCustomer);
+            return AjaxResult.success();
         } else {
             return AjaxResult.error();
         }

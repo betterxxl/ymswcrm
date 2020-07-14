@@ -35,6 +35,10 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "电话")
     private String customerPhone;
 
+
+    /** 城市 武汉 */
+    @Excel(name = "城市",type = Excel.Type.EXPORT)
+    private  String customerCity;
     /** 性别 0男 1女 2未知 */
     @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知")
     private String customerSex;
@@ -42,7 +46,7 @@ public class YmswCustomer extends BaseEntity
     @Excel(name = "通话状态", readConverterExp = "0=未接,1=已接通",type = Excel.Type.EXPORT)
     private String phoneStatus;
 
-    /** 出生日期 */
+    /** 出生年份 */
     @Excel(name = "出生年份")
     private String customerBirth;
 
@@ -222,6 +226,14 @@ public class YmswCustomer extends BaseEntity
     {
         this.customerStatus = customerStatus;
     }
+    public String getCustomerCity() {
+        return customerCity;
+    }
+
+    public void setCustomerCity(String customerCity) {
+        this.customerCity = customerCity;
+    }
+
     @Pattern(regexp = "[0-9]{1}", message = "客户状态信息错误")
     public String getCustomerStatus() 
     {
@@ -411,6 +423,7 @@ public class YmswCustomer extends BaseEntity
             .append("customerId", getCustomerId())
             .append("customerName", getCustomerName())
             .append("customerSex", getCustomerSex())
+             .append("customerCity",getCustomerCity())
             .append("customerPhone", getCustomerPhone())
             .append("customerStatus", getCustomerStatus())
             .append("customerBirth", getCustomerBirth())

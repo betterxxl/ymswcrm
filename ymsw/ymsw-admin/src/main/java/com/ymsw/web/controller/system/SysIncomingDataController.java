@@ -4,6 +4,7 @@ import com.ymsw.common.core.controller.BaseController;
 import com.ymsw.common.core.domain.AjaxResult;
 import com.ymsw.common.json.JSONObject;
 import com.ymsw.common.utils.StringUtils;
+import com.ymsw.common.utils.http.HttpUtils;
 import com.ymsw.customer.domain.YmswCustomer;
 import com.ymsw.customer.service.IYmswCustomerService;
 import com.ymsw.framework.config.AccessPhoneConfig;
@@ -41,25 +42,43 @@ public class SysIncomingDataController extends BaseController {
     @Autowired
     private QuotaManagerMapper quotaManagerMapper;
 
+    /**
+     * 从蜘蛛接口取数据
+     * @param request
+     * @return
+     */
     @RequestMapping("addData")
-    public AjaxResult incomingFromOther(HttpServletRequest request){
+    public AjaxResult incomingFromSpide(HttpServletRequest request){
         SysDictData sysDictData = new SysDictData();
         sysDictData.setDictLabel("incoming_data_status");
         sysDictData.setDictType("ymsw_config");
         List<SysDictData> sysDictDataList = sysDictDataService.selectDictDataList(sysDictData);
         sysDictData = sysDictDataList.get(0);
-
-        JSONObject resInfo = new JSONObject();
-        resInfo.put("resStatus","0");
-        resInfo.put("resMsg", "数据引流接口已暂停");
         if("0".equals(sysDictData.getDictValue()) ){
-
-            return  AjaxResult.error("接口数据已暂停，暂不引入数据",resInfo);
+            return  AjaxResult.error("接口数据已暂停，暂不引入数据");
         }
-        String customerName = request.getParameter("customerName");
-        String customerSex = request.getParameter("customerSex");
-        String customerPhone = request.getParameter("customerPhone");
-        String customerQuota = request.getParameter("customerQuota");
+        String customerName = request.getParameter("customerName"); //客户姓名
+        String customerSex = request.getParameter("customerSex");   //客户性别
+        String customerPhone = request.getParameter("customerPhone"); //客户手机号
+        String customerQuota = request.getParameter("customerQuota"); //借款额度
+        String customerCity = request.getParameter("customerCity");   //城市
+        String customerBirth = request.getParameter("customerBirth"); //出生年份  1998
+        String hasCreditCard = request.getParameter("hasCreditCard"); //有无信用卡(有/无/未知)
+        String hasHouse = request.getParameter("hasHouse");  // 有无房(有/无/未知)
+        String hasCar = request.getParameter("hasCar");    //有无车(有/无/未知)
+        String hasAccumulation = request.getParameter("hasAccumulation");  //有无公积金(有/无/未知)
+        String hasSocial = request.getParameter("hasSocial");   //  有无社保(有/无/未知)
+        String hasWarranty = request.getParameter("hasWarranty");  // 有无保单(有/无/未知)
+        String hasWeilidai = request.getParameter("hasWeilidai"); // 微粒贷(有/无/未知)
+        String isOverdue = request.getParameter("isOverdue"); // 逾期(有/无/未知)
+        String customerOccupation = request.getParameter("hasCar"); // 职业(上班/做生意/未知)
+        String customerSalary = request.getParameter("customerSalary"); // 薪资方式(代发/转账/现金/未知)
+        String channel = request.getParameter("channel"); //渠道
+        System.out.println("customerName = " + customerName);
+        System.out.println("customerPhone = " + customerPhone);
+        if(StringUtils.isEmpty(customerName)||StringUtils.isEmpty(customerPhone)||StringUtils.isEmpty(customerQuota)){
+            return  AjaxResult.error("缺少参数,请检查");
+        }
         YmswCustomer ymswCustomer =new YmswCustomer();
         //获取能分配的用户列表
         List<SysUser> sysUserList = iSysUserService.selectIsDistributeUsers();
@@ -73,10 +92,30 @@ public class SysIncomingDataController extends BaseController {
         ymswCustomer.setCustomerSex(customerSex);
         ymswCustomer.setCustomerPhone(customerPhone);
         ymswCustomer.setCustomerQuota(Integer.valueOf(customerQuota));
+        ymswCustomer.setCustomerCity(customerCity);
+        ymswCustomer.setCustomerBirth(customerBirth);
+        ymswCustomer.setHasCreditCard(hasCreditCard);
+        ymswCustomer.setHasHouse(hasHouse);
+        ymswCustomer.setHasCar(hasCar);
+        ymswCustomer.setHasAccumulation(hasAccumulation);
+        ymswCustomer.setHasSocial(hasSocial);
+        ymswCustomer.setHasWarranty(hasWarranty);
+        ymswCustomer.setHasWeilidai(hasWeilidai);
+        ymswCustomer.setIsOverdue(isOverdue);
+        ymswCustomer.setCustomerOccupation(customerOccupation);
+        ymswCustomer.setCustomerSalary(customerSalary);
+        ymswCustomer.setChannel(channel);
         QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);// 查询该userId的配额信息
         return  iYmswCustomerService.insertCustomer(ymswCustomer, quotaManager);
     }
-
+    @RequestMapping("outPutData")
+    public  String outPutData(){
+        String url="https://www.duodaiwang.com/spider/customer/addCustomer";
+        String param="name=test&mobile=18627058902&city=杭州&car=true&age=32&house=true&baodan_is=false&sex=男&money=20&source=英茂商务&shebao=true&gongjijin=false&isbankpay=true&qualification=null";
+        String s = HttpUtils.sendPost(url, param,"application/x-www-form-urlencoded");
+        System.out.println("s = " + s);
+        return  s;
+    }
     //获取可以分配客户的userId
     private Long getUserId(List<SysUser> sysUserList){
         //随机进行分配
