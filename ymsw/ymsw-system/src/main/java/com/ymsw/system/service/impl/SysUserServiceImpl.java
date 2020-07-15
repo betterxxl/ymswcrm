@@ -484,6 +484,7 @@ public class SysUserServiceImpl implements ISysUserService
             user.setLeaveTime(new Date());  //设置离职时间为当前时间
             user.setPhonenumber("-");   //离职时清除手机号
         }else {
+            user.setCreateTime(new Date());
             user.setLeaveTime(null);//修改用户状态为在职时清除离职时间
         }
         return userMapper.updateUserTwo(user);
