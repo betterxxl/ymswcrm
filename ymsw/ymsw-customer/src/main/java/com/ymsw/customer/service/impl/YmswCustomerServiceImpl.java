@@ -266,19 +266,11 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                 //如果当前客户数+1后大于限额数，就不允许添加
                 QuotaManager quotaManager = quotaManagerMapper.selectQuotaManagerByUserId(userId);
                 boolean notAllow = Islimit(quotaManager);
-                if (StringUtils.isNotNull(quotaManager)){
-
-
-                    if (notAllow){
-                        failureMsg.append("客户数已到上限，无法添加新客户！");
-
-                    }
-                }
-                else {
+                if(StringUtils.isNull(quotaManager)) {
                     quotaManager=addQuoatManage(userId.intValue());
                     quotaManagerMapper.insertQuotaManager(quotaManager);
                 }
-                //判断用户是否存在，1 存在  就查询字典表里允许天数  2  不存在直接添加
+                //判断用户是否存在， 1  不存在直接添加  2 存在  就查询字典表里允许天数
                 if ((StringUtils.isNull(dbCustomer))&&(!notAllow)) {
                     addSuccessMethod(quotaManager,ymswCustomer,successNum,successMsg,nowDate,userId);
                 } else {
@@ -292,7 +284,12 @@ public class YmswCustomerServiceImpl implements IYmswCustomerService {
                         if (Long.valueOf(daysValue) > days1) {
                             failureNum++;
                             failureMsg.append("<br/>" + failureNum + "、客户 " + ymswCustomer.getCustomerPhone() + "在" + daysValue + "天内已添加过，不可频繁添加！");
-                        } else {
+                        }
+                        if(notAllow){
+                            failureNum++;
+                            failureMsg.append("客户数已到上限，无法添加新客户！");
+                        }
+                        else  {
                             addSuccessMethod(quotaManager,ymswCustomer,successNum,successMsg,nowDate,userId);
                         }
                     }else {
