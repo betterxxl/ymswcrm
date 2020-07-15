@@ -238,8 +238,9 @@ public class YmswCustomerController extends BaseController
     @RequiresPermissions("customer:main:import")
     @PostMapping("/importData")
     @ResponseBody
-    public AjaxResult importData(MultipartFile file) throws Exception
+    public AjaxResult importData(MultipartFile file,String type) throws Exception
     {
+        System.out.println("type = " + type);
         ExcelUtil<YmswCustomer> util = new ExcelUtil<>(YmswCustomer.class);
         List<YmswCustomer> ymswCustomerList = util.importExcel(file.getInputStream());
         String message = ymswCustomerService.importYmswCustomer(ymswCustomerList);
